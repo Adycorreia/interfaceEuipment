@@ -8,9 +8,12 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 
 import { ThemeModule } from 'app/@theme/theme.module';
-import { ApretlivreteComponent } from './apre-tlivrete.component';
+
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+
+
 import { DocService } from 'app/services/doc.service';
+import { AprecapComponent } from './apre-cap.component';
 
 @NgModule({
   imports: [
@@ -22,9 +25,9 @@ import { DocService } from 'app/services/doc.service';
 
   ],
   declarations: [
-    ApretlivreteComponent,
+    AprecapComponent,
   ],
   providers: [DocService],
 
 })
-export class TlivreteModule { }
+export class CapModule { }

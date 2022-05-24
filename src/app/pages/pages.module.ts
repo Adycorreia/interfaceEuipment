@@ -6,10 +6,12 @@ import { PagesComponent } from './pages.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { DefaultdModule } from './default/default.module';
 import { TaskModule } from './task/task.module';
-import { CartaModule } from './apre-carta/apre-carta.module';
-import { TlivreteModule } from './apre-tlivrete/apre-tlivrete.module';
+
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { efectivosModule } from './efectivos/efectivos.module';
+import { CartaModule } from './apreensão/apre-carta/apre-carta.module';
+import { TlivreteModule } from './apreensão/apre-tlivrete/apre-tlivrete.module';
+import { CapModule } from './apreensão/apre-cap/apre-cap.module';
 
 
 
@@ -26,6 +28,7 @@ import { efectivosModule } from './efectivos/efectivos.module';
     efectivosModule,
     NbIconModule,
     NbEvaIconsModule,
+    CapModule,
     
 
   

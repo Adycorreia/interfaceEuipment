@@ -11,6 +11,7 @@ id: number;
 matricula: string;
 condutor: string;
 n_carta: string;
+n_cap: string;
 proprietario: string;
 motivo: string;
 n_oficio: string;
@@ -22,3 +23,5 @@ v_apreendido: string;
 obs: string;
 
 }
+
+

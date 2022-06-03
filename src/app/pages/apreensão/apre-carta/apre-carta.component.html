@@ -1,0 +1,153 @@
+<nb-card>
+    <nb-card-header>
+      Cadastro de Carta de Condução Apreendido
+    </nb-card-header>  
+  
+    <nb-card-body>
+        <button style="margin-bottom: 1rem;" nbButton status="primary" (click)="openModalDoc(null)">Novo Cadastro</button>   
+        <ng2-smart-table #ng2TbCarta 
+          [settings]="tbUserConfig" 
+          [source]="source" 
+          (edit)="openModalDoc($event)" 
+          (delete)="openModalExclusion($event)">          
+        </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>
+  
+  
+  <ng-template #dialogCarta let-data let-ref="dialogRef">
+    <nb-card style="width: 25em">
+      <nb-card-header>Novo cadastro de Carta de Condução</nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="formCarta" autocomplete="true">
+          <!--
+          <div class="form-group">
+          <label for="tipo">Tipo de Documento</label>
+          <nb-select class="w-100" id="tipodoc" formControlName="tipodoc" placeholder="Escolha o tipo de documento" [(selected)]="selectedItem">
+            <nb-option [value]="tipodoc.value" *ngFor="let tipodoc of selecttipodoc"> {{tipodoc.tipodoc}}</nb-option>
+          </nb-select>
+          </div>  
+           -->
+          <div class="form-group">
+            <label for="n_carta">Introduza o numero de Carta *</label>
+            <input class="form-control" id="n_carta" formControlName="n_carta">
+          </div>  
+  
+          <div class="form-group">
+            <label for="condutor">Nome Completo do Condutor*</label>
+            <input id="condutor" type="condutor" class="form-control" formControlName="condutor">
+          </div>
+  
+          <div class="form-group">
+            <label for="motivo">Motivo de Apreensão *</label>
+            <input id="motivo" type="motivo" class="form-control" formControlName="motivo">
+          </div>
+
+          <div class="form-group" >
+            <label for="data_apreensao">Data Apreensão</label>
+            <input id="data_apreensao" type="date" class="form-control" formControlName="data_apreensao" >
+          </div>
+
+          <div class="form-group" >
+            <label for="data_apreensao">Observações</label>
+            <textarea class="form-control"  formControlName="obs" id="obs" type="obs" nbInput placeholder="Escrever Observações" >
+            </textarea>
+          </div>
+          
+          <nb-checkbox status="primary">Click aque se tiver Cap apreendido</nb-checkbox>
+
+     <!--   
+       <div *ngFor="let item of opCap">
+       <nb-checkbox status="basic" type="checkbox" [checked]="item.selecionado" (change)="item.selecionado = $event.target.checked"> {{item.label}} </nb-checkbox>
+       </div>
+
+       <label></label>
+
+       <ng-container *ngFor="let item of opCap">
+       <div *ngIf="!item.selecionado">        
+       <textarea class="form-control"  formControlName="obs" id="obs" type="obs" nbInput placeholder="Escrever Observações" 
+       [checked]="item.selecionado" (change)="item.selecionado = $event.target.checked">
+       </textarea>
+      </div>
+        </ng-container>
+      -->
+    
+        </form>
+
+      </nb-card-body>
+      <nb-card-footer>        
+        <button nbButton (click)="ref.close()">Cancelar</button>
+        <button class="btn-action-modal" nbButton status="primary" (click)="onSaveCarta($event)">Salvar</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+
+
+
+    <ng-template #dialogCarta let-data let-ref="dialogRef">
+    <nb-card style="width: 25em">
+      <nb-card-header>Novo cadastro de CAP</nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="formCarta" autocomplete="true">
+          <!--
+          <div class="form-group">
+          <label for="tipo">Tipo de Documento</label>
+          <nb-select class="w-100" id="tipodoc" formControlName="tipodoc" placeholder="Escolha o tipo de documento" [(selected)]="selectedItem">
+            <nb-option [value]="tipodoc.value" *ngFor="let tipodoc of selecttipodoc"> {{tipodoc.tipodoc}}</nb-option>
+          </nb-select>
+          </div>  
+           -->
+          <div class="form-group" >
+            <label for="n_carta">Introduza o numero de Cap *</label>
+            <input class="form-control" id="n_carta" formControlName="n_carta">
+          </div>  
+         
+  
+          <div class="form-group">
+            <label for="condutor">Nome Completo do Condutor*</label>
+            <input id="condutor" type="condutor" class="form-control" formControlName="condutor">
+          </div>
+  
+          <div class="form-group">
+            <label for="motivo">Motivo de Apreensão *</label>
+            <input id="motivo" type="motivo" class="form-control" formControlName="motivo">
+          </div>
+
+          <div class="form-group" >
+            <label for="data_apreensao">Data Apreensão</label>
+            <input id="data_apreensao" type="date" class="form-control" formControlName="data_apreensao" >
+          </div>
+
+          <div class="form-group" >
+            <label for="data_apreensao">Observações</label>
+            <textarea class="form-control"  formControlName="obs" id="obs" type="obs" nbInput placeholder="Escrever Observações" >
+            </textarea>
+          </div>
+
+        <!--
+       <div *ngFor="let item of opCap">
+       <nb-checkbox status="basic" type="checkbox" [checked]="item.selecionado" (change)="item.selecionado = $event.target.checked"> {{item.label}} </nb-checkbox>
+       </div>
+
+       <label></label>
+
+       <ng-container *ngFor="let item of opCap">
+       <div *ngIf="!item.selecionado">        
+       <textarea class="form-control"  formControlName="obs" id="obs" type="obs" nbInput placeholder="Escrever Observações" 
+       [checked]="item.selecionado" (change)="item.selecionado = $event.target.checked">
+       </textarea>
+      </div>
+        </ng-container>
+-->
+    <label></label>
+    
+        </form>
+
+      </nb-card-body>
+      <nb-card-footer>        
+        <button nbButton (click)="ref.close()">Cancelar</button>
+        <button class="btn-action-modal" nbButton status="primary"  (click)="onSaveCarta($event)">Salvar</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+

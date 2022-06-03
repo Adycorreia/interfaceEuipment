@@ -57,6 +57,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
             title: 'Titulo e Livrete',
             link: '/pages/apre-tlivrete',
           },
+          {
+            title: 'CAP',
+            link: '/pages/apre-cap',
+          },
         ],
       },
       {
@@ -366,9 +370,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
   ],
 },
 
+
 ],
 },
-
-
 
 ];

@@ -4,13 +4,13 @@ import {
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NbDialogRef, NbDialogService, NbToastrService } from '@nebular/theme';
+import { Documents } from 'app/pages/models/documents ';
+import { Tipodocs } from 'app/pages/models/tipodoc';
 import { DocService } from 'app/services/doc.service';
 import { LocalDataSource, Ng2SmartTableComponent } from 'ng2-smart-table';
 import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
 
-import { Documents } from '../models/documents ';
 
-import { Tipodocs } from '../models/tipodoc';
 
 @Component({
   selector: 'apre-tlivrete',
@@ -18,7 +18,7 @@ import { Tipodocs } from '../models/tipodoc';
   templateUrl: './apre-tlivrete.component.html',
 })
 export class ApretlivreteComponent implements OnInit {
-@ViewChild('ng2TbUser') ng2TbUser: Ng2SmartTableComponent;
+@ViewChild('ng2TbUser') ng2Tlivrete: Ng2SmartTableComponent;
 @ViewChild('dialogUser') dialogUser: TemplateRef<any>;
 
 source: LocalDataSource = new LocalDataSource();
@@ -34,13 +34,13 @@ selecttipodoc: Tipodocs[];
 ResponseAp: any
 
 
-formUser = this.formBuilder.group({
-  _id: [null],
+formTlivrete = this.formBuilder.group({
   matricula: [null, Validators.required],
   condutor: [null, [Validators.required]],
-  propriedade: [null, Validators.required],
+  proprietario: [null, Validators.required],
   motivo:  [null, Validators.required],
-  status:  [null, Validators.required],
+  data_apreensao:  [null, Validators.required],
+  tipodoc:[null, Validators.required],
 });
 
 
@@ -48,13 +48,14 @@ constructor(private formBuilder: FormBuilder,
             private dialogService: NbDialogService,
             private docService: DocService,
             private activatedRoute: ActivatedRoute,
+            private toastrService: NbToastrService,
             private router: Router, 
           ) {  }
 
 
 ngOnInit(): void { 
-  this.getListByTipoDoc()
-  this.setConfigTbUser()
+  this.getListByTipoDoc(),
+  this.setConfigTbUser(),
   this.selecttipodoc =[
     { tipodoc: "Carta" },
     { tipodoc: "Titulo e Propreidade"}
@@ -74,18 +75,49 @@ getListByTipoDoc(){
 
 }
 
+onSaveCarta(){
+  this.docService.create(this.findFormAdd()).subscribe((data) => {
+
+    this.toastrService.success('Tarefa criada com sucesso.', 'Sucesso');
+    this.dialogRef.close();
+    //this.ng2Tlivrete.source.refresh();
+    this.getListByTipoDoc();   
+  });
+}
+
+private setFormInvalid() {
+  this.toastrService.warning('Existem um ou mais campos obrigatórios que não foram preenchidos.', 'Atenção');
+  this.formTlivrete.get('n_carta').markAsTouched();
+  this.formTlivrete.get('condutor').markAsTouched();
+  this.formTlivrete.get('motivo').markAsTouched();
+  this.formTlivrete.get('tipodoc').markAsTouched();
+  this.formTlivrete.get('data_apreensao').markAsTouched();
+  this.formTlivrete.get('tipodoc').setValue("CARTA");
+ 
+}
+
+
+private findFormAdd() {
+  
+  this.formTlivrete.get('tipodoc').setValue("LIVRETE");
+  const doc = this.formTlivrete.value;
+
+  return doc;
+}
+
+
 
 public openModalExclusion(event: Row) {
 
 }
 
 public openModalDoc(event: Row) {
-  this.formUser.reset();
+  this.formTlivrete.reset();
 /*
   if (event) {
     const user: User = event.getData();
     this.userService.findById(user._id).subscribe((res) => {
-      this.formUser.patchValue(res.body);
+      this.formTlivrete.patchValue(res.body);
     });
   }*/
 

@@ -7,11 +7,10 @@ import { NbDialogRef, NbDialogService, NbToastrService } from '@nebular/theme';
 import { DocService } from 'app/services/doc.service';
 import { LocalDataSource, Ng2SmartTableComponent } from 'ng2-smart-table';
 import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
-import { Documents, StatusEnum } from '../models/documents ';
+import { Documents, StatusEnum } from '../../models/documents ';
 
 
 
-import { Tipodocs } from '../models/tipodoc';
 
 @Component({
   selector: 'apre-carta',
@@ -71,8 +70,9 @@ export class AprecartaComponent implements OnInit {
   
           
   ngOnInit(): void { 
+    this.getListByTipoDoc(),
+    this.setConfigTbUser(),
     this.getListByTipoDoc()
-    this.setConfigTbUser()
 
   }
   /*

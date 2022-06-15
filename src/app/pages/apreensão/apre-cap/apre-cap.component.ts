@@ -4,8 +4,8 @@ import {
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NbDialogRef, NbDialogService, NbToastrService } from '@nebular/theme';
-import { Documents, StatusEnum } from 'app/pages/models/documents ';
-import { Tipodocs } from 'app/pages/models/tipodoc';
+import { Documents, StatusEnum } from 'app/pages/models/documents';
+
 import { DocService } from 'app/services/doc.service';
 import { LocalDataSource, Ng2SmartTableComponent } from 'ng2-smart-table';
 import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
@@ -18,20 +18,21 @@ import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
   templateUrl: './apre-cap.component.html',
 })
 export class AprecapComponent implements OnInit {
-  @ViewChild('ng2TbCarta') ng2TbCarta: Ng2SmartTableComponent;
-  @ViewChild('dialogCarta') dialogCarta: TemplateRef<any>;
+  @ViewChild('ng2TbCap') ng2TbCap: Ng2SmartTableComponent;
+  @ViewChild('dialogCap') dialogCap: TemplateRef<any>;
+  @ViewChild('dialogDelete') dialogDelete: TemplateRef<any>;
   
   source: LocalDataSource = new LocalDataSource();
 
-
   dialogRef: NbDialogRef<any>;
-  
-  test= String;
+
+
   opcarta= StatusEnum.CARTA;
   opcap= StatusEnum.LIVRETE;
   tbDocData: Documents[];
   tbUserConfig: Object;
   tbdocConfig: Object;
+  docSelected: Documents;
   userSelected: Documents[];
   //selecttipodoc: Tipodocs[];
   ResponseAp: any;
@@ -42,17 +43,15 @@ export class AprecapComponent implements OnInit {
     { value: StatusEnum.LIVRETE, tipodoc: "Carteira de Aptidão Profissional [CAP]"}
   ]
  
-  formCarta = this.formBuilder.group({
-
-    n_carta: [null, Validators.required],
+  formCap = this.formBuilder.group({
+    iddoc: [null],
     condutor: [null, [Validators.required]],
     motivo:  [null, Validators.required],
-    cap:[null],
-    tipodoc:[null, Validators.required],
+    n_cap: [null, Validators.required],
+    tipodoc: [null],
     data_apreensao:[null, Validators.required], 
     obs:[null] 
   });
-
 
 
   opCap = [
@@ -72,7 +71,7 @@ export class AprecapComponent implements OnInit {
   ngOnInit(): void { 
     this.getListByTipoDoc()
     this.setConfigTbUser()
-
+  
   }
   /*
   getDocuments() {
@@ -99,54 +98,131 @@ export class AprecapComponent implements OnInit {
 
   }
 
-  onSaveCarta(){
+  private isAdd(): boolean {
+    return !this.formCap.get('iddoc').value;
+  }
+
+  public btnSave() {
+    if (this.formCap.invalid) return this.setFormInvalid();
+
+    if (this.isAdd()) this.onSaveCap();
+    else this.editCap();
+  }
+
+/*
+  public btnSave() {
+    if (this.formCap.invalid) { return this.setFormInvalid();  } else{ this.onSaveCarta(); }
+  }
+*/
+  onSaveCap(){
     this.docService.create(this.findFormAdd()).subscribe((data) => {
-  
-      this.toastrService.success('Tarefa criada com sucesso.', 'Sucesso');
+      if (this.formCap.invalid) return this.setFormInvalid();
+      
+      this.toastrService.success('Cap cadastrado com sucesso.', 'Sucesso'); 
       this.dialogRef.close();
-     // this.ng2TbCarta.source.refresh();
-     this.getListByTipoDoc();
-     
+      this.ng2TbCap.source.refresh();
+      this.getListByTipoDoc();
     });
+
+  
   }
 
   private setFormInvalid() {
     this.toastrService.warning('Existem um ou mais campos obrigatórios que não foram preenchidos.', 'Atenção');
-    this.formCarta.get('n_carta').markAsTouched();
-    this.formCarta.get('condutor').markAsTouched();
-    this.formCarta.get('motivo').markAsTouched();
-    this.formCarta.get('tipodoc').markAsTouched();
-    this.formCarta.get('data_apreensao').markAsTouched();
-    this.formCarta.get('tipodoc').setValue("CARTA");
+    this.formCap.get('n_cap').markAsTouched();
+    this.formCap.get('condutor').markAsTouched();
+    this.formCap.get('motivo').markAsTouched();
+    this.formCap.get('data_apreensao').markAsTouched();
+ 
    
   }
  
 
   private findFormAdd() {
     
-    this.formCarta.get('tipodoc').setValue("CAP");
-    const doc = this.formCarta.value;
+    this.formCap.get('tipodoc').setValue("CAP");
+    const doc = this.formCap.value;
   
     return doc;
   }
 
   
   public openModalExclusion(event: Row) {
-  
+
+      this.docSelected = event.getData();
+      this.dialogRef = this.dialogService.open(this.dialogDelete, { context: this.docSelected.n_cap });
+ 
   }
   
   public openModalDoc(event: Row) {
-    this.formCarta.reset();
+    this.formCap.reset();
   /*
     if (event) {
       const user: User = event.getData();
       this.userService.findById(user._id).subscribe((res) => {
-        this.formCarta.patchValue(res.body);
+        this.formCap.patchValue(res.body);
       });
     }*/
   
-    this.dialogRef = this.dialogService.open(this.dialogCarta);
+    this.dialogRef = this.dialogService.open(this.dialogCap);
   }
+
+
+  public btnDelete() {
+    this.docService.delete(this.docSelected.iddoc).subscribe((res) => {
+      console.log(this.docSelected.iddoc);
+     // this.tbDocData = this.tbDocData.filter(((documents) => documents.iddoc !== this.docSelected.iddoc));
+      this.toastrService.success('CAP excluída com sucesso.', 'Sucesso');
+      this.dialogRef.close();
+      this.ng2TbCap.source.refresh();
+      this.getListByTipoDoc();
+    });
+  }
+
+  
+  public openModalEdiDocs(event: Row) {
+    this.docService.getListDocuments().subscribe((res) => {
+     /* this.userSelected = res.body;
+      this.formCarta.reset();
+      this.formCarta.get('tipodoc').patchValue(StatusEnum.CARTA);
+*/
+      if (event) {
+        const documents: Documents = event.getData();
+        //console.log(documents);
+        this.docService.findById(documents.iddoc).subscribe((res) => {
+          //this.formCarta.patchValue(res.body);
+          this.formCap.get('iddoc').setValue(documents.iddoc);
+          this.formCap.get('n_cap').setValue(documents.n_cap);
+          this.formCap.get('condutor').setValue(documents.condutor);
+          this.formCap.get('motivo').setValue(documents.motivo);
+          this.formCap.get('data_apreensao').setValue(documents.data_apreensao);
+          this.formCap.get('tipodoc').setValue(documents.tipodoc);
+          this.formCap.get('obs').setValue(documents.obs);
+          
+         
+        });
+      }
+
+      this.dialogRef = this.dialogService.open(this.dialogCap);
+     });
+  }
+
+  private editCap(){
+    //console.log(this.formCap.value);
+    
+    this.docService.edit(this.formCap.value).subscribe(() => {
+     /*this.tbDocData = this.tbDocData.map((documents: Documents) => {
+        if (documents.iddoc === this.formCap.value.iddoc) 
+        //return new Documents(res.body);
+        return documents;
+      });
+      */
+      this.toastrService.success('Dados editado com sucesso.', 'Sucesso');
+      this.dialogRef.close();
+     this.getListByTipoDoc();
+    });
+  }
+
   
   private setConfigTbUser() {
     this.tbUserConfig = {
@@ -158,35 +234,48 @@ export class AprecapComponent implements OnInit {
       delete: {
         deleteButtonContent: '<span class="nb-trash"  title="Excluir"></span>',
       },
-      noDataMessage: 'Nenhum Carta de Condução cadastrado.',
+      noDataMessage: 'Nenhum Carteira de Aptidão Profissional [CAP] cadastrado.',
       columns: {
-        n_carta: {
-          title: 'Nº de Carta',
+        n_cap: {
+          title: 'Nº de Cap',
           type: "string",
+          width: "13%",
         },
         condutor: {
           title: 'Condutor',
           type: "string",
+          width: "25%",
         },
       
         motivo: {
           title: 'Motivo de Apreensão',
           type: "string",
+          width: "25%",
         },
+
         data_apreensao: {
-          title: 'Data de apreensao',
+          title: 'Data de Apreensao',
           type: "string",
+          width: "15%",
         },
         
         n_oficio: {
-          title: 'Numero de oficio',
+          title: 'Nº de Oficio',
           type: "string",
+          width: "11%",
         },
         destino: {
           title: 'Destino',
           type: "string",
+          width: "15%",
         },
       
       },
     };
-  }}
+  }
+
+
+
+
+
+}

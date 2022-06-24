@@ -1,0 +1,322 @@
+
+
+<nb-card accent="info">
+    <nb-card-header>
+      Cadastro de Efectivos </nb-card-header>  
+  
+    <nb-card-body>
+        <button style="margin-bottom: 1rem;" nbButton status="primary"  (click)="openModalDoc(null)">Novo Cadastro</button>   
+        <ng2-smart-table #ng2TbEfectivos 
+        [settings]="tbEfectConfig"
+        [source]="source"
+        (delete)="openModalExclusion($event)"  
+         >          
+        </ng2-smart-table>
+    </nb-card-body>
+ </nb-card>
+
+
+ <ng-template #dialogDelete let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>ELIMINAR EFECTIVO</nb-card-header>
+    <nb-card-body>
+      Tens certeza que deseja excluir efectivo <span style="font-weight: bold">{{ data }}</span>  ?  
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton  status="danger" (click)="ref.close()">Cancelar</button>
+      <button class="btn-action-modal" nbButton status="primary" (click)="btnDelete($event);">Excluir</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+
+ <ng-template #dialogEfectivo>
+ <nb-card style="width: 75em">
+  <nb-card-body>
+    <nb-stepper #stepper>
+      <nb-step [stepControl]="firstForm" label="Dados Pessoais">
+        <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
+          <div class="input-group" >
+            <input nbInput type="text" placeholder="Introduza o nome" class="form-control" id = "nome" formControlName="nome" 
+                  >       
+                 
+                  <input nbInput type="text" placeholder="Introduza o apelido" class="form-control" id = "apelido" formControlName="apelido"
+                  >
+                  
+          </div>
+          <!--
+          <div class="input-group">
+            <input nbInput type="text" placeholder="Enter favorite movie" class="form-control" id = "apelido" formControlName="apelido"
+                  >
+          </div>
+        -->
+          <br>
+          <div class="input-group">
+            <input nbInput type="date" placeholder="Introduza o data de nascimento" class="form-control" id="data_nasc" formControlName="data_nasc"
+                   >
+          </div>
+          <br>
+          <div class="input-group">
+            <input nbInput type="text" placeholder="Introduza o nomes dos pais" class="form-control" id="filiacao" formControlName="filiacao"
+                   >
+          </div>
+          <br>
+         
+          <div class="input-group">
+            <input nbInput type="number" placeholder="Introduza o nº de nif" class="form-control" id="nif" formControlName="nif"
+                   >
+          </div>
+          <br>
+          <div class="input-group">
+            <input nbInput type="text" placeholder="Introduza morada" class="form-control" id="morada" formControlName="morada"
+                   >
+          </div>
+          <br>
+          <div class="input-group">
+            <input nbInput type="text" placeholder="Introduza o sexo" class="form-control" id="sexo" formControlName="sexo"
+                   >
+          </div>
+          <br>
+          <div class="input-group">
+            <input nbInput type="text" placeholder="Introduza o nº de CNI" class="form-control" id="cni" formControlName="cni"
+                  >
+          </div>
+          <br>
+          <button nbButton nbStepperNext>seguinte</button>
+        </form>
+
+      </nb-step>
+      <nb-step [stepControl]="secondForm" label="Dados profissional ">
+        <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">
+          <div class="input-group">
+            <input nbInput type="number" placeholder="Introduza o nº de identificação de pn" class="form-control" id ="id_pn" formControlName="id_pn"
+                  >
+          </div>
+          <br>
+          <div class="input-group">
+            <input nbInput type="text" placeholder="Introduza o seu posto" class="form-control" id ="posto" formControlName="posto"
+                  >
+          </div>
+          <br>
+          <div class="input-group">
+            <input nbInput type="text" placeholder="Introduza o seu função" class="form-control" id ="função" formControlName="função"
+                  >
+          </div>
+          <br>
+          <button nbButton nbStepperPrevious>voltar</button>
+          <button nbButton nbStepperNext>seguinte</button>
+        </form>
+      </nb-step>
+      <nb-step [stepControl]="thirdForm" label="Contactos">
+        <form [formGroup]="thirdForm" (ngSubmit)="onThirdSubmit()" class="step-container">
+          <div class="input-group">
+            <input nbInput type="text" placeholder="Introduza o contactos" class="form-control" id="contacto" formControlName="contacto"
+                  >
+          </div>
+          <br>
+          <div class="input-group">
+            <input nbInput type="text" placeholder="Introduza o email" class="form-control" id="email" formControlName="email"
+                  >
+          </div>
+          <br>
+          <div class="input-group">
+            <textarea nbInput fullWidth placeholder="Observações" id="obs" formControlName="obs" class="mb-3" rows="4" cols="30"></textarea>
+           
+          </div>
+          <br>
+          <button nbButton nbStepperPrevious>voltar</button>
+          <button nbButton nbStepperNext>Confirmar</button>
+        </form>
+      </nb-step>
+      <nb-step [stepControl]="thirdForm" [hidden]="true" label="Finalizado">
+        <div class="step-container">
+          <h3>formulario concluido dedeja guardar este efectivo</h3>
+          <button nbButton (click)="stepper.reset()">Cancelar</button>
+          <button  nbButton status="primary" (click)="onSaveCarta($event)">Salvar</button>
+        </div>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>
+ </ng-template>
+
+<!--
+  <ng-template #dialogEfectivo   >
+    <nb-card style="width: 75em" >
+      <nb-card-body>
+        <button class="linear-mode-button"
+                nbButton
+                (click)="toggleLinearMode()">
+          {{ linearMode ? 'Disable' : 'Enable' }} linear mode
+        </button>
+    
+        <nb-stepper #stepper [linear]="linearMode">
+    
+          <nb-step [stepControl]="formEfectivo" label="Dados Pessoais">
+            <form  #formEfectivo="ngForm" class="step-container">
+              <div class="input-group">
+                <input type="text"
+                       placeholder="Introduza o nome"
+                       class="form-control"
+                       name="nome"
+                       required
+                       nbInput
+                       ngModel
+                       #name="ngModel"
+                      >
+              </div>
+              <br>
+              <div class="input-group">
+                <input type="text"
+                       placeholder="Introduza o apelido"
+                       class="form-control"
+                       name="apelido"
+                       required
+                       nbInput
+                       ngModel
+                       #name="ngModel"
+                      >
+              </div>
+              <br>
+              <div class="input-group">
+                <input type="text"
+                       placeholder="Introduza filiacao"
+                       class="form-control"
+                       name="filiacao"
+                       required
+                       nbInput
+                       ngModel
+                       #name="ngModel"
+                      >
+              </div>
+              <br>
+              <div class="input-group">
+                <input type="text"
+                       placeholder="Introduza morada"
+                       class="form-control"
+                       name="morada"
+                       required
+                       nbInput
+                       ngModel
+                       #name="ngModel"
+                      >
+              </div>
+              <br>
+              <div class="input-group">
+                <input type="text"
+                       placeholder="Introduza data nascimento"
+                       class="form-control"
+                       name="data_nasc"
+                       required
+                       nbInput
+                       ngModel
+                       #name="ngModel"
+                      >
+              </div>
+              <br>
+              <div class="input-group">
+                <input type="text"
+                       placeholder="Introduza CNI"
+                       class="form-control"
+                       name="cni"
+                       required
+                       nbInput
+                       ngModel
+                       #name="ngModel"
+                      >
+              </div>
+              <br>
+              <button nbButton nbStepperNext status="primary">Seguinte</button>
+            </form>
+          </nb-step>
+    
+          <nb-step [stepControl]="formEfectivo" label="Dados profissional ">
+            <form  #formEfectivo="ngForm" class="step-container">
+              <div class="input-group">
+                <input type="number"
+                       placeholder="Introduza o nº ID"
+                       class="form-control"
+                       name="ID"
+                       required
+                       nbInput
+                       ngModel
+                       #name="ngModel"
+                      >
+              </div>
+              <br>
+              <div class="input-group">
+                <input type="text"
+                       placeholder="Introduza o posto"
+                       class="form-control"
+                       name="posto"
+                       required
+                       nbInput
+                       ngModel
+                       #name="ngModel"
+                      >
+              </div>
+              <br>
+              <div class="input-group">
+                <input type="text"
+                       placeholder="Introduza o "
+                       class="form-control"
+                       name="função"
+                       required
+                       nbInput
+                       ngModel
+                       #name="ngModel"
+                      >
+              </div>
+              <br>
+              
+              <button nbButton nbStepperPrevious>prev</button>
+              <button nbButton nbStepperNext>next</button>
+            </form>
+          </nb-step>
+    
+          <nb-step [stepControl]="formEfectivo" label="Contacto">
+            <form #formEfectivo="ngForm" class="step-container">
+              <div class="input-group">
+                <input type="text"
+                       placeholder="Introduza o "
+                       class="form-control"
+                       name="email"
+                       required
+                       nbInput
+                       ngModel
+                       #name="ngModel"
+                      >
+              </div>
+              <br>
+              <div class="input-group">
+                <input type="text"
+                       placeholder="Introduza o nº telemovel"
+                       class="form-control"
+                       name="telemovel"
+                       required
+                       nbInput
+                       ngModel
+                       #name="ngModel"
+                      >
+              </div>
+           
+             
+              <br>
+              <button nbButton nbStepperPrevious>prev</button>
+              <button nbButton nbStepperNext>next</button>
+            </form>
+          </nb-step>
+    
+          <nb-step [hidden]="true">
+            <div class="step-container">
+              <h3>Wizard completed!</h3>
+              <button nbButton (click)="stepper.reset()">Try again</button>
+
+              <button  nbButton status="primary" (click)="onSaveCarta($event)">Salvar</button>
+            </div>
+          </nb-step>
+        </nb-stepper>
+      </nb-card-body>
+    </nb-card> </ng-template>
+
+  -->

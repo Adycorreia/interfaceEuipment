@@ -9,6 +9,7 @@ import { TaskComponent } from './task/task.component';
 import { AprecartaComponent } from './apreensão/apre-carta/apre-carta.component';
 import { ApretlivreteComponent } from './apreensão/apre-tlivrete/apre-tlivrete.component';
 import { AprecapComponent } from './apreensão/apre-cap/apre-cap.component';
+import { EfectivosComponent } from './efectivos-transito/efectivos/efectivos.component';
 
 
 const routes: Routes = [{
@@ -39,6 +40,11 @@ const routes: Routes = [{
     {
       path: 'apre-cap',
       component: AprecapComponent,
+    },
+
+    {
+      path: 'efectivos',
+      component: EfectivosComponent,
     },
   ],
 }];

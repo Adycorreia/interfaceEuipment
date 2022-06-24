@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbCardModule, NbCheckboxModule, NbToggleModule } from '@nebular/theme';
+import { NbAccordionModule, NbCardModule, NbCheckboxModule, NbToggleModule } from '@nebular/theme';
 
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -23,6 +23,9 @@ import { DocService } from 'app/services/doc.service';
     NbToggleModule,
     NbCheckboxModule,
     FormsModule,
+    NbAccordionModule,
+
+
   ],
   declarations: [
     AprecartaComponent,

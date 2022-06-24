@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbCardModule, NbCheckboxModule, NbToggleModule } from '@nebular/theme';
+import { NbAccordionModule, NbCardModule, NbCheckboxModule, NbStepperModule, NbToggleModule } from '@nebular/theme';
 
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -10,8 +10,10 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from 'app/@theme/theme.module';
 
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { DocService } from 'app/services/doc.service';
+
+
 import { EfectivosComponent } from './efectivos.component';
+import { EfectivosService } from 'app/services/efectivo.service';
 
 
 @NgModule({
@@ -24,11 +26,14 @@ import { EfectivosComponent } from './efectivos.component';
     NbToggleModule,
     NbCheckboxModule,
     FormsModule,
+    NbAccordionModule,
+    NbStepperModule,
+   
   ],
   declarations: [
     EfectivosComponent,
   ],
-  providers: [DocService],
+  providers: [EfectivosService],
 
 })
 export class efectivosModule { }

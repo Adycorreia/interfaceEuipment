@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component, EventEmitter, OnInit, TemplateRef, ViewChild,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -14,12 +15,17 @@ import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
   selector: 'apre-carta',
   styleUrls: ['apre-carta.component.scss'],
   templateUrl: './apre-carta.component.html',
+  
 })
 export class AprecartaComponent implements OnInit {
   @ViewChild('ng2TbCarta') ng2TbCarta: Ng2SmartTableComponent;
   @ViewChild('dialogCarta') dialogCarta: TemplateRef<any>;
   @ViewChild('dialogDelete') dialogDelete: TemplateRef<any>;
+
   
+  close(){
+    this.danger = false;
+  }
 
 
   source: LocalDataSource = new LocalDataSource();
@@ -36,6 +42,8 @@ export class AprecartaComponent implements OnInit {
   opcao1: boolean = false;
   docSelected: Documents;
   ResponseAp: any;
+
+  danger: boolean = false;
   /*
   selecttipodoc =[
     { value: StatusEnum.CARTA, tipodoc: "Carta de Condução"},
@@ -103,6 +111,7 @@ export class AprecartaComponent implements OnInit {
     if (this.isAdd()) this.onSaveCarta();
     else this.editDoc();
   }
+
 
 /*
   public btnSave() {
@@ -251,6 +260,30 @@ export class AprecartaComponent implements OnInit {
     });
   }
 
+  iddoctest:String;
+
+  public onUserSelect($event){
+    console.log($event);
+    console.log($event.data.iddoc);
+    if ($event.data.iddoc) {
+      let iddoc = $event.data.iddoc;
+     
+
+      this.docService.findById(iddoc).subscribe(
+        (data: any) => {
+          console.log(data.details[0]);
+          this.danger = true;
+          this.iddoctest= data.details[0];
+          console.log(this.iddoctest);
+
+        }
+       
+      );
+    }
+
+  }
+
+
 
   private setConfigTbUser() {
     this.tbUserConfig = {
@@ -263,6 +296,8 @@ export class AprecartaComponent implements OnInit {
         deleteButtonContent: '<span class="nb-trash"  title="Excluir"></span>',
       },
       noDataMessage: 'Nenhum Carta de Condução cadastrado.',
+
+      
       columns: {
         n_carta: {
           title: 'Nº de Carta',
@@ -273,6 +308,7 @@ export class AprecartaComponent implements OnInit {
           title: 'Nome Completo do Condutor',
           type: "string",
           width: "25%",
+          sort: true,
         },
       
         motivo: {

@@ -1,4 +1,3 @@
-import { Params } from "@angular/router";
 
 export enum StatusEnum {
     CARTA = 'CARTA',
@@ -7,7 +6,7 @@ export enum StatusEnum {
 }
 
 export interface Documents {
-id: number;
+iddoc: Number;
 matricula: string;
 condutor: string;
 n_carta: string;
@@ -18,7 +17,7 @@ n_oficio: string;
 destino: string;
 data_apreensao: string;
 data_entrega: string;
-tipodoc: StatusEnum;
+tipodoc: string;
 v_apreendido: string;
 obs: string;
 

@@ -8,10 +8,13 @@ import { DefaultdModule } from './default/default.module';
 import { TaskModule } from './task/task.module';
 
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { efectivosModule } from './efectivos/efectivos.module';
+
 import { CartaModule } from './apreensão/apre-carta/apre-carta.module';
 import { TlivreteModule } from './apreensão/apre-tlivrete/apre-tlivrete.module';
 import { CapModule } from './apreensão/apre-cap/apre-cap.module';
+
+
+
 
 
 
@@ -25,13 +28,10 @@ import { CapModule } from './apreensão/apre-cap/apre-cap.module';
     TaskModule,
     CartaModule,
     TlivreteModule,
-    efectivosModule,
     NbIconModule,
     NbEvaIconsModule,
     CapModule,
     
-
-  
 
   ],
   declarations: [

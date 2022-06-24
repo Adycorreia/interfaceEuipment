@@ -1,20 +1,108 @@
-<nb-card>
+  
+  <nb-card accent="danger" *ngIf ="danger" ngFor="">
+    <nb-card-header><button nbButton outline status="primary"  (click)="close()">Fichar detalhes</button></nb-card-header>
+    <nb-card-header>Detalhes de Apreensão Carta de Condução nº<strong> {{iddoctest.n_carta}}</strong>
+    </nb-card-header>
+   
+    <nb-card-body>
+      <nb-accordion accent="danger">
+        <nb-accordion-item>
+          <nb-accordion-item-header>
+            Data & Hora
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>
+           <strong>Data:</strong> {{iddoctest.data_apreensao}}   
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+        <nb-accordion-item>
+          <nb-accordion-item-header>
+            Autuante
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>
+           <strong>Agente:</strong> {{iddoctest.condutor}} ||  
+           <strong>Posto:</strong> {{iddoctest.condutor}}  ||   
+           <strong>Contacto:</strong> {{iddoctest.condutor}}  || 
+           <strong>Morada:</strong> {{iddoctest.condutor}}  ||  
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+
+        <nb-accordion-item>
+          <nb-accordion-item-header>
+           Localidade
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>  
+            <strong>Ilha:</strong> {{iddoctest.condutor}} ||  
+            <strong>Concelho:</strong> {{iddoctest.condutor}}  ||   
+            <strong>Freguesia:</strong> {{iddoctest.condutor}}  || 
+            <strong>Localidade:</strong> {{iddoctest.condutor}}  || 
+            <strong>Zona:</strong> {{iddoctest.condutor}}  || 
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+
+        <nb-accordion-item>
+          <nb-accordion-item-header>
+            Motivo
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>
+           <strong>Infração:</strong> {{iddoctest.motivo}} ||  
+           <strong>valor de Coima:</strong> {{iddoctest.condutor}}  ||   
+           <strong>Contra Ordenação:</strong> {{iddoctest.condutor}}  || 
+           <strong>Veiculo matricula:</strong> {{iddoctest.matricula}}  || 
+           <strong>Obs</strong> {{iddoctest.obs}}  ||   
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+
+        <nb-accordion-item>
+          <nb-accordion-item-header>
+           Envio & Entrega
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>  
+            <strong>Data de envio:</strong> {{iddoctest.condutor}} ||  
+            <strong>Numero de Oficio:</strong> {{iddoctest.condutor}}  ||   
+            <strong>Destino:</strong> {{iddoctest.condutor}}  || 
+            <strong>Enviodo Por</strong> {{iddoctest.condutor}} ||  
+            <strong>Anexo de Nota</strong> {{iddoctest.condutor}} || 
+
+            <strong>Entregado no dia:</strong> {{iddoctest.condutor}} ||  
+            <strong>Entregado à:</strong> {{iddoctest.condutor}}  ||   
+            <strong>Entregado por:</strong> {{iddoctest.condutor}}  || 
+            <strong>Anexo de guia</strong> {{iddoctest.condutor}} ||  
+           
+
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+
+        <nb-accordion-item>
+          <nb-accordion-item-header>
+            Historico
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>  
+           
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+        
+      </nb-accordion>
+    </nb-card-body>
+    
+  </nb-card>
+
+
+<nb-card accent="info">
     <nb-card-header>
-      Cadastro de Carta de Condução Apreendido
-    </nb-card-header>  
+      Cadastro de Carta de Condução </nb-card-header>  
   
     <nb-card-body>
         <button style="margin-bottom: 1rem;" nbButton status="primary" (click)="openModalDoc(null)">Novo Cadastro</button>   
         <ng2-smart-table #ng2TbCarta 
           [settings]="tbUserConfig" 
           [source]="source" 
-          (edit)="openModalDoc($event)" 
+          (userRowSelect)="onUserSelect($event)"
+          (edit)="openModalEdiDoc($event)" 
           (delete)="openModalExclusion($event)">          
         </ng2-smart-table>
     </nb-card-body>
-  </nb-card>
-  
-  
+ </nb-card>
+
   <ng-template #dialogCarta let-data let-ref="dialogRef">
     <nb-card style="width: 25em">
       <nb-card-header>Novo cadastro de Carta de Condução</nb-card-header>
@@ -30,22 +118,23 @@
            -->
           <div class="form-group">
             <label for="n_carta">Introduza o numero de Carta *</label>
-            <input class="form-control" id="n_carta" formControlName="n_carta">
+    
+            <input class="form-control" id="n_carta" formControlName="n_carta" value placeholder="Search">
           </div>  
   
           <div class="form-group">
             <label for="condutor">Nome Completo do Condutor*</label>
-            <input id="condutor" type="condutor" class="form-control" formControlName="condutor">
+            <input id="condutor" type="condutor" class="form-control" formControlName="condutor" placeholder="Nome Condutor">
           </div>
   
           <div class="form-group">
             <label for="motivo">Motivo de Apreensão *</label>
-            <input id="motivo" type="motivo" class="form-control" formControlName="motivo">
+            <input id="motivo" type="motivo" class="form-control" formControlName="motivo" placeholder="Motivo">
           </div>
 
           <div class="form-group" >
             <label for="data_apreensao">Data Apreensão</label>
-            <input id="data_apreensao" type="date" class="form-control" formControlName="data_apreensao" >
+            <input id="data_apreensao" type="date" class="form-control" formControlName="data_apreensao"  >
           </div>
 
           <div class="form-group" >
@@ -54,7 +143,7 @@
             </textarea>
           </div>
           
-          <nb-checkbox status="primary">Click aque se tiver Cap apreendido</nb-checkbox>
+          <nb-checkbox status="primary" [checked]="opcao1">Click aque se tiver Cap apreendido</nb-checkbox>
 
      <!--   
        <div *ngFor="let item of opCap">
@@ -75,79 +164,24 @@
         </form>
 
       </nb-card-body>
-      <nb-card-footer>        
-        <button nbButton (click)="ref.close()">Cancelar</button>
-        <button class="btn-action-modal" nbButton status="primary" (click)="onSaveCarta($event)">Salvar</button>
+      <nb-card-footer>
+        <button nbButton status="danger" (click)="ref.close()">Cancelar</button>
+        <button class="btn-action-modal" nbButton status="primary" (click)="btnSave($event)">Salvar</button>
       </nb-card-footer>
     </nb-card>
   </ng-template>
 
-
-
-    <ng-template #dialogCarta let-data let-ref="dialogRef">
-    <nb-card style="width: 25em">
-      <nb-card-header>Novo cadastro de CAP</nb-card-header>
+  <ng-template #dialogDelete let-data let-ref="dialogRef">
+    <nb-card>
+      <nb-card-header>ELIMINAR CARTA DE CONDUÇÃO</nb-card-header>
       <nb-card-body>
-        <form [formGroup]="formCarta" autocomplete="true">
-          <!--
-          <div class="form-group">
-          <label for="tipo">Tipo de Documento</label>
-          <nb-select class="w-100" id="tipodoc" formControlName="tipodoc" placeholder="Escolha o tipo de documento" [(selected)]="selectedItem">
-            <nb-option [value]="tipodoc.value" *ngFor="let tipodoc of selecttipodoc"> {{tipodoc.tipodoc}}</nb-option>
-          </nb-select>
-          </div>  
-           -->
-          <div class="form-group" >
-            <label for="n_carta">Introduza o numero de Cap *</label>
-            <input class="form-control" id="n_carta" formControlName="n_carta">
-          </div>  
-         
-  
-          <div class="form-group">
-            <label for="condutor">Nome Completo do Condutor*</label>
-            <input id="condutor" type="condutor" class="form-control" formControlName="condutor">
-          </div>
-  
-          <div class="form-group">
-            <label for="motivo">Motivo de Apreensão *</label>
-            <input id="motivo" type="motivo" class="form-control" formControlName="motivo">
-          </div>
-
-          <div class="form-group" >
-            <label for="data_apreensao">Data Apreensão</label>
-            <input id="data_apreensao" type="date" class="form-control" formControlName="data_apreensao" >
-          </div>
-
-          <div class="form-group" >
-            <label for="data_apreensao">Observações</label>
-            <textarea class="form-control"  formControlName="obs" id="obs" type="obs" nbInput placeholder="Escrever Observações" >
-            </textarea>
-          </div>
-
-        <!--
-       <div *ngFor="let item of opCap">
-       <nb-checkbox status="basic" type="checkbox" [checked]="item.selecionado" (change)="item.selecionado = $event.target.checked"> {{item.label}} </nb-checkbox>
-       </div>
-
-       <label></label>
-
-       <ng-container *ngFor="let item of opCap">
-       <div *ngIf="!item.selecionado">        
-       <textarea class="form-control"  formControlName="obs" id="obs" type="obs" nbInput placeholder="Escrever Observações" 
-       [checked]="item.selecionado" (change)="item.selecionado = $event.target.checked">
-       </textarea>
-      </div>
-        </ng-container>
--->
-    <label></label>
-    
-        </form>
-
+        Tens certeza que deseja excluir Carta nº <span style="font-weight: bold">{{ data }}</span>  ?  
       </nb-card-body>
-      <nb-card-footer>        
-        <button nbButton (click)="ref.close()">Cancelar</button>
-        <button class="btn-action-modal" nbButton status="primary"  (click)="onSaveCarta($event)">Salvar</button>
+      <nb-card-footer>
+        <button nbButton  status="danger" (click)="ref.close()">Cancelar</button>
+        <button class="btn-action-modal" nbButton status="primary" (click)="btnDelete($event);">Excluir</button>
       </nb-card-footer>
     </nb-card>
   </ng-template>
 
+ 

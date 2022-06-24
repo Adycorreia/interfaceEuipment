@@ -25,8 +25,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Lista de efectivos',
-        link: '/pages/apre-documents',
+        link: '/pages/efectivos',
         icon: 'archive-outline',
+      },
+      {
+        title: 'Armamento',
+        link: '/pages/apre-documents',
+        icon: 'paper-plane-outline',
       },
       {
         title: 'Ferias',

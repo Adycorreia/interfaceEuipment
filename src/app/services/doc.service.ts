@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Documents, StatusEnum } from 'app/pages/models/documents ';
+import { Documents } from 'app/pages/models/documents';
 import { ResponseApp } from 'app/pages/models/response';
 
 
@@ -26,19 +26,32 @@ export class DocService extends DefaultService {
   }
 */
 
+  getListDocuments() {
+  return this.http.get<ResponseApp<Documents[]>>(`${this.url}`);
+  }
+                       
   getListByTipoDoc(statusEnum: string): Observable<ResponseApp<Documents[]>> {
     return this.http.get<ResponseApp<Documents[]>>(`${this.url}/${statusEnum}`);
   }
 
+  findById(id: Number): Observable<ResponseApp<Documents>> {
+    return this.http.get<ResponseApp<Documents>>(`${this.url}/id/${id}`);
+  }
   
-  /*create(documents:Documents){
-    return this.http.post<ResponseApp<Documents[]>>(`${this.url}`,documents);
-  }*/
-
+ 
   create(documents:Documents){
     return this.http.post<ResponseApp<Documents[]>>(`${this.url}`,documents);
   }
 
+  delete(id: Number): Observable<ResponseApp<Documents>> {
+    return this.http.delete<ResponseApp<Documents>>(`${this.url}/${id}`);
+  }
+
+  edit(documents:Documents): Observable<ResponseApp<Documents>> {
+    return this.http.put<ResponseApp<Documents>>(`${this.url}/${documents.iddoc}`, documents);
+  }
+
+ 
 
  /*
   private listadocuments(){

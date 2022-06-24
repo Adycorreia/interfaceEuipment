@@ -1,24 +1,24 @@
 <nb-card>
     <nb-card-header>
-      Cadastro de Carteira de Aptidão Profissional [CAP]
+      Cadastro de Carteira de Aptidão Profissional [CAP] - Apreendido
     </nb-card-header>  
   
     <nb-card-body>
         <button style="margin-bottom: 1rem;" nbButton status="primary" (click)="openModalDoc(null)">Novo Cadastro</button>   
-        <ng2-smart-table #ng2TbTask 
+        <ng2-smart-table #ng2TbCap 
           [settings]="tbUserConfig" 
           [source]="source" 
-          (edit)="openModalDoc($event)" 
+          (edit)="openModalEdiDocs($event)" 
           (delete)="openModalExclusion($event)">          
         </ng2-smart-table>
     </nb-card-body>
   </nb-card>
   
-  <ng-template #dialogCarta let-data let-ref="dialogRef">
+  <ng-template #dialogCap let-data let-ref="dialogRef">
     <nb-card style="width: 25em">
       <nb-card-header>Novo cadastro de CAP</nb-card-header>
       <nb-card-body>
-        <form [formGroup]="formCarta" autocomplete="true">
+        <form [formGroup]="formCap" autocomplete="true">
           <!--
           <div class="form-group">
           <label for="tipo">Tipo de Documento</label>
@@ -28,11 +28,11 @@
           </div>  
            -->
           <div class="form-group" >
-            <label for="n_carta">Introduza o numero de Cap *</label>
-            <input class="form-control" id="n_carta" formControlName="n_carta">
+            <label for="n_cap">Introduza o numero de Cap *</label>
+            
+            <input class="form-control" id="n_cap" formControlName="n_cap" value placeholder="Search">
           </div>  
          
-  
           <div class="form-group">
             <label for="condutor">Nome Completo do Condutor*</label>
             <input id="condutor" type="condutor" class="form-control" formControlName="condutor">
@@ -49,7 +49,7 @@
           </div>
 
           <div class="form-group" >
-            <label for="data_apreensao">Observações</label>
+            <label for="obs">Observações</label>
             <textarea class="form-control"  formControlName="obs" id="obs" type="obs" nbInput placeholder="Escrever Observações" >
             </textarea>
           </div>
@@ -76,7 +76,20 @@
       </nb-card-body>
       <nb-card-footer>        
         <button nbButton (click)="ref.close()">Cancelar</button>
-        <button class="btn-action-modal" nbButton status="primary"  (click)="onSaveCarta($event)">Salvar</button>
+        <button class="btn-action-modal" nbButton status="primary"  (click)="btnSave($event)">Salvar</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+
+  <ng-template #dialogDelete let-data let-ref="dialogRef">
+    <nb-card>
+      <nb-card-header>Eliminar CAP</nb-card-header>
+      <nb-card-body>
+        Tens certeza que deseja excluir o <span style="font-weight: bold">{{ data }}</span> ?  
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton (click)="ref.close()">Cancelar</button>
+        <button class="btn-action-modal" nbButton status="danger" (click)="btnDelete($event);">Excluir</button>
       </nb-card-footer>
     </nb-card>
   </ng-template>

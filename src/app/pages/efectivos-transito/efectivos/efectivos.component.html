@@ -1,5 +1,210 @@
 
+<!--
+<nb-card accent="danger" *ngIf ="danger" ngFor="">
+  <nb-card-header><button nbButton outline status="primary"  (click)="close()">Fichar detalhes</button></nb-card-header>
+  <nb-card-header>Detalhes do Efectivo<strong> {{idefecttest.nome}} {{idefecttest.apelido}}</strong>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-accordion accent="danger">
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+         Dados Geral
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
 
+          <div class="card-row">
+            <div class="card-col">
+              <nb-card size="tiny">
+                <nb-card-header>Dados Professional</nb-card-header>
+             
+            
+                  <nb-card nbSpinnerSize="small">
+                    <nb-card-body>
+                      <div class="row">
+                        <div class="col-sm-5">
+                          <div class="form-group">
+                            <label for="inputFirstName">Nº ID </label>
+                            <input type="text" class="form-control" value="{{idefecttest.id_pn}}" disabled/>
+                          </div>
+                        </div>
+                        <div class="col-sm-5">
+                          <div class="form-group">
+                            <label for="inputLastName">Posto</label>
+                            <input type="text" class="form-control" value="{{idefecttest.posto}}" disabled />
+                          </div>
+                        </div>
+                        <div class="col-sm-5">
+                          <div class="form-group">
+                            <label for="inputBirthdayDate">Função</label>
+                            <input type="text" class="form-control" value="{{idefecttest.funcao}}" disabled/>
+                          </div>
+                        </div>
+                        <div class="col-sm-5">
+                          <div class="form-group">
+                            <label for="inputBirthdayDate">Nº Arma</label>
+                            <input type="text" class="form-control" value="{{idefecttest.funcao}}" disabled/>
+                          </div>
+                        </div>
+                      </div>
+                 
+              
+                    </nb-card-body>
+                  </nb-card>
+        
+          
+              </nb-card>
+
+              <nb-card size="tiny">
+                <nb-card-header>Tiny card</nb-card-header>
+              </nb-card>
+            </div>
+
+            <div class="card-col">
+              <nb-card size="medium">
+                <nb-card-header>Dados Pessoais</nb-card-header>
+                <nb-card nbSpinnerSize="small">
+                  <nb-card-body>
+                    <div class="row">
+                      <div class="col-sm-7">
+                        <div class="form-group">
+                          <label for="inputFirstName">Nome Completo </label>
+                          <input type="text" class="form-control" value="{{idefecttest.nome}} + {{idefecttest.apelido}} " style="width: 35em;" disabled/>
+                        </div>
+                      </div>
+                      <br>
+                      <div class="col-sm-7">
+                        <div class="form-group">
+                          <label for="inputLastName">Filiação</label>
+                          <input type="text" class="form-control" value="{{idefecttest.filiacao}}" style="width: 35em;" disabled />
+                        </div>
+                      </div>
+                      <div class="col-sm-7">
+                        <div class="form-group">
+                          <label for="inputLastName">Morada</label>
+                          <input type="text" class="form-control" value="{{idefecttest.morada}}" disabled />
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Sexo</label>
+                          <input type="text" class="form-control" value="{{idefecttest.sexo}}"  style="width: 12em;" disabled/>
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Nº CNI</label>
+                          <input type="text" class="form-control" value="{{idefecttest.cni}}" disabled/>
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Nº NIF</label>
+                          <input type="text" class="form-control" value="{{idefecttest.nif}}" disabled/>
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Data Nasciment</label>
+                          <input type="text" class="form-control" value="{{idefecttest.data_nasc}}" disabled/>
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Idade</label>
+                          <input type="text" class="form-control" value="{{idefecttest.Idade}}" disabled/>
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Conctato</label>
+                          <input type="text" class="form-control" value="{{idefecttest.contacto}}" disabled/>
+                        </div>
+                      </div>
+                    </div>
+               
+            
+                  </nb-card-body>
+                </nb-card>
+              </nb-card>
+            </div>
+          </div>
+            
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+         Armamento
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+         <strong>Numero:</strong> 
+         <strong>Marca:</strong> 
+         <strong>Calibre:</strong>
+         <strong>Modelo:</strong> 
+         <strong>Nº Carregador:</strong> 
+         <strong>Nº Munições:</strong>  
+         <strong>Estado</strong>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+        Ferias
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>  
+          <strong>Inicio:</strong> 
+          <strong>Fim:</strong>  
+          <strong>Local:</strong> 
+          <strong>Localidade:</strong>  
+          <strong>Despacho:</strong> 
+          <strong>Estado:</strong> 
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          Caderneta
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+         <strong>Infração:</strong> 
+         <strong>valor de Coima:</strong> 
+         <strong>Veiculo matricula:</strong> 
+         <strong>Obs</strong>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+         Remunerado
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>  
+          <strong>Data de envio:</strong>
+          <strong>Numero de Oficio:</strong>
+          <strong>Destino:</strong> 
+          <strong>Enviodo Por</strong> 
+          <strong>Anexo de Nota</strong> 
+
+          <strong>Entregado no dia:</strong> 
+          <strong>Entregado à:</strong>
+          <strong>Entregado por:</strong> 
+          <strong>Anexo de guia</strong> 
+         
+
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          Historico
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>  
+         
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+      
+    </nb-accordion>
+  </nb-card-body>
+</nb-card>
+-->
 <nb-card accent="info">
     <nb-card-header>
       Cadastro de Efectivos </nb-card-header>  
@@ -9,6 +214,7 @@
         <ng2-smart-table #ng2TbEfectivos 
         [settings]="tbEfectConfig"
         [source]="source"
+        (userRowSelect)="onUserSelect($event)"
         (delete)="openModalExclusion($event)"  
          >          
         </ng2-smart-table>
@@ -37,19 +243,16 @@
       <nb-step [stepControl]="firstForm" label="Dados Pessoais">
         <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
           <div class="input-group" >
-            <input nbInput type="text" placeholder="Introduza o nome" class="form-control" id = "nome" formControlName="nome" 
-                  >       
-                 
-                  <input nbInput type="text" placeholder="Introduza o apelido" class="form-control" id = "apelido" formControlName="apelido"
-                  >
-                  
+            <label for="motivo">Nome:</label>     
           </div>
-          <!--
+          <div class="input-group" >
+            <input nbInput type="text" placeholder="Introduza o nome" class="form-control" id = "nome" formControlName="nome" >            
+          </div>
+         
+         <br>
           <div class="input-group">
-            <input nbInput type="text" placeholder="Enter favorite movie" class="form-control" id = "apelido" formControlName="apelido"
-                  >
+            <input nbInput type="text" placeholder="Introduza o apelido" class="form-control" id = "apelido" formControlName="apelido" >
           </div>
-        -->
           <br>
           <div class="input-group">
             <input nbInput type="date" placeholder="Introduza o data de nascimento" class="form-control" id="data_nasc" formControlName="data_nasc"
@@ -72,9 +275,17 @@
                    >
           </div>
           <br>
+        
+
           <div class="input-group">
-            <input nbInput type="text" placeholder="Introduza o sexo" class="form-control" id="sexo" formControlName="sexo"
-                   >
+
+            <nb-select class="w-100" id="sexo" formControlName="sexo" >
+              <option value="" disabled>Sexo</option>
+              <nb-option *ngFor="let status of selectEXo" [value]="status.value">
+                {{status.value}}
+              </nb-option>
+            </nb-select>
+          
           </div>
           <br>
           <div class="input-group">
@@ -99,7 +310,7 @@
           </div>
           <br>
           <div class="input-group">
-            <input nbInput type="text" placeholder="Introduza o seu função" class="form-control" id ="função" formControlName="função"
+            <input nbInput type="text" placeholder="Introduza o seu função" class="form-control" id ="funcao" formControlName="funcao"
                   >
           </div>
           <br>
@@ -139,6 +350,8 @@
   </nb-card-body>
 </nb-card>
  </ng-template>
+
+
 
 <!--
   <ng-template #dialogEfectivo   >

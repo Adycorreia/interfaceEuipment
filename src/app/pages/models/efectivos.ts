@@ -33,9 +33,11 @@ export interface Efectivos {
     
     update: Date;
 
-    obs:string
+    obs:string;
 
-    fotografia: string
+    fotografia: string;
+
+    assinatura: string;
 }
 
 

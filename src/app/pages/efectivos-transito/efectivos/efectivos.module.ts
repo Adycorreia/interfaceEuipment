@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbAccordionModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbInputModule, NbStepperModule, NbTabsetModule, NbToggleModule } from '@nebular/theme';
+import { NbAccordionModule, NbCardModule, NbCheckboxModule, NbStepperModule, NbToggleModule } from '@nebular/theme';
 
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -28,9 +28,6 @@ import { EfectivosService } from 'app/services/efectivo.service';
     FormsModule,
     NbAccordionModule,
     NbStepperModule,
-    NbTabsetModule,
-    NbInputModule,
- 
    
   ],
   declarations: [

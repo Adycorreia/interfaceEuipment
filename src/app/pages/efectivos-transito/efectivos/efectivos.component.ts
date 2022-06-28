@@ -1,11 +1,9 @@
 import {
-  ChangeDetectionStrategy,
   Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogRef, NbDialogService, NbStepperComponent, NbToastrService } from '@nebular/theme';
-import { SexoEnum } from 'app/helpers/commons';
 import { Efectivos } from 'app/pages/models/efectivos';
 import { EfectivosService } from 'app/services/efectivo.service';
 import { LocalDataSource, Ng2SmartTableComponent } from 'ng2-smart-table';
@@ -23,14 +21,6 @@ export class EfectivosComponent implements OnInit {
     @ViewChild('dialogEfectivo') dialogEfectivo: TemplateRef<any>;
     @ViewChild('dialogDelete') dialogDelete: TemplateRef<any>;
 
-
-
-
-  danger: boolean = false;
-    close(){
-      this.danger = false;
-    }
-
    firstForm: FormGroup;
    secondForm: FormGroup;
    thirdForm: FormGroup;
@@ -41,15 +31,6 @@ export class EfectivosComponent implements OnInit {
   tbEfectConfig: Object;
   tbdocConfig: Object;
   efectSelected: Efectivos;
-
-
-  selectEXo =[
-    { value: SexoEnum.F, tipsexo: "MASCULINO"},
-    { value: SexoEnum.M, tipsexo: "FEMININO"},
-    { value: SexoEnum.X, tipsexo: "INDETERMINADO"}
-  ]
- 
-
   
   source: LocalDataSource = new LocalDataSource();
 
@@ -91,13 +72,11 @@ export class EfectivosComponent implements OnInit {
       nome: ['', Validators.required],
       apelido: ['', Validators.required],
       data_nasc: ['', Validators.required],
-      filiacao: [null],
+      filiacao: ['', Validators.required],
       nif: ['', Validators.required],
       morada: ['', Validators.required],
       sexo: ['', Validators.required],
       cni: ['', Validators.required],
-      fotografia: [null],
-      
      
     });
   
@@ -109,8 +88,8 @@ export class EfectivosComponent implements OnInit {
   
     this.thirdForm = this.formBuilder.group({
       contacto: ['', Validators.required],
-      email: [null],
-      obs: [null],
+      email: ['', Validators.required],
+      obs: ['', Validators.required],
     });
  }
   public openModalDoc(event: Row) {
@@ -157,7 +136,6 @@ export class EfectivosComponent implements OnInit {
       morada: this.firstForm.value.morada,
       sexo: this.firstForm.value.sexo, 
       cni: this.firstForm.value.cni, 
-      fotografia: this.firstForm.value.fotografia, 
 
       id_pn: this.secondForm.value.id_pn, 
       posto: this.secondForm.value.posto, 
@@ -167,7 +145,7 @@ export class EfectivosComponent implements OnInit {
       email: this.thirdForm.value.email, 
       obs: this.thirdForm.value.obs,  
     } 
-    //console.log(resusaModel);
+    console.log(resusaModel);
     return resusaModel;
   }
 
@@ -190,7 +168,6 @@ export class EfectivosComponent implements OnInit {
         //this.organicList = data.details;
         this.source.load(data.details);
         console.log(data);
-        
       },
       (err) => {}
     );
@@ -215,32 +192,6 @@ export class EfectivosComponent implements OnInit {
     });
   }
 
-
-  idefecttest:String;
-
-  public onUserSelect($event){
-    console.log($event);
-    console.log($event.data.idagente);
-    if ($event.data.idagente) {
-      let idagente = $event.data.idagente;
-     
-
-      this.efectivosService.findById(idagente).subscribe(
-        (data: any) => {
-          console.log(data.details[0]);
-          this.danger = true;
-          this.idefecttest= data.details[0];
-          console.log(this.idefecttest);
-
-        }
-       
-      );
-    }
-
-  }
-
-
-
   private setConfigTbUser() {
     this.tbEfectConfig = {
       mode: 'external',
@@ -260,7 +211,7 @@ export class EfectivosComponent implements OnInit {
           width: "15%",
         },
         nome: {
-          title: 'Nome Completo',
+          title: 'Nome Completo dos efectivos',
           type: "string",
           width: "29%",
           valuePrepareFunction: (cell, row) => { return row.nome + " " + row.apelido }

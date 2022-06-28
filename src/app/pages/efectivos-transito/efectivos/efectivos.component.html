@@ -90,7 +90,7 @@
                       <div class="col-sm-7">
                         <div class="form-group">
                           <label for="inputFirstName">Nome Completo </label>
-                          <input type="text" class="form-control" value="{{idefecttest.nome}} + {{idefecttest.apelido}} " style="width: 35em;" disabled/>
+                          <input type="text" class="form-control" value="{{idefecttest.nome}} {{idefecttest.apelido}} " style="width: 35em;" disabled/>
                         </div>
                       </div>
                       <br>
@@ -269,133 +269,90 @@
 
           <label for="inputFirstName">Nome </label> 
           <div class="input-group" >
-            <input nbInput type="text" placeholder="Introduza o nome" class="form-control" id = "nome" formControlName="nome" 
+            <input nbInput type="text" placeholder="Introduza o Nome (obrigatório)" class="form-control" id = "nome" formControlName="nome" 
                   >        
           </div>
           <br>
           <label for="inputFirstName">Apelido </label>        
           <div class="input-group">
-            <input nbInput type="text" placeholder="Introduza o apelido" class="form-control" id = "apelido" formControlName="apelido"
+            <input nbInput type="text" placeholder="Introduza o apelido (obrigatório)" class="form-control" id = "apelido" formControlName="apelido"
                    >
           </div>
           <br>
           <label for="inputFirstName">Data de Nascimento </label>        
           <div class="input-group">
-            <input nbInput type="date" placeholder="Introduza o data de nascimento" class="form-control" id="data_nasc" formControlName="data_nasc"
+            <input nbInput type="date" placeholder="Introduza o data de nascimento (obrigatório)" class="form-control" id="data_nasc" formControlName="data_nasc"
                    >
           </div>
           <br>
-          <label for="inputFirstName">Nº Filiação </label>
+          <label for="inputFirstName">Filiação </label>
           <div class="input-group">
-            <input nbInput type="text" placeholder="Introduza o nomes dos pais" class="form-control" id="filiacao" formControlName="filiacao"
+            <input nbInput type="text" placeholder="Introduza Nome do Pai e da Mãe" class="form-control" id="filiacao" formControlName="filiacao"
                    >
           </div>
           <br>
-          <label for="inputFirstName">Nº NIF </label>
-          <div class="input-group">
-            <input nbInput type="number" placeholder="Introduza o nº de nif" class="form-control" id="nif" formControlName="nif"
-                   >
-          </div>
-          <br>
-          <label for="inputFirstName">Morada </label>
-          <div class="input-group">
-            <input nbInput type="text" placeholder="Introduza morada" class="form-control" id="morada" formControlName="morada"
-                   >
-          </div>
-          <br>
-          <label for="inputFirstName">Nº Sexo </label>
-          <div class="input-group">
-            <input nbInput type="text" placeholder="Introduza o sexo" class="form-control" id="sexo" formControlName="sexo"
-                   >
-          </div>
-          <br>
-          <label for="inputFirstName">Nº CNI</label>
-          <div class="input-group">
-            <input nbInput type="text" placeholder="Introduza o nº de CNI" class="form-control" id="cni" formControlName="cni"
-                  >
-          </div>
-          <br>
-          <button class="btn-action-modal" nbButton status="primary" nbStepperNext>Seguinte</button>
+          <button class="btn-action-modal" nbButton status="primary" nbStepperNext  [disabled]="!firstForm.valid">Seguinte</button>
         </form>
 
       </nb-step>
-      <!--
-                          // Dados Pessoais Continuação
-      <nb-step [stepControl]="firstForm" label="Dados Pessoais(Continuação)">
-                            <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
+    
+                          <!-- Dados Pessoais Continuaçãol--> 
+      <nb-step [stepControl]="firstFormCont" label="Dados Pessoais(Continuação)">
+           <form [formGroup]="firstFormCont" (ngSubmit)="onFirstContSubmit()" class="step-container">
                     
-                              <label for="inputFirstName">Nome </label> 
-                              <div class="input-group" >
-                                <input nbInput type="text" placeholder="Introduza o nome" class="form-control" id = "nome" formControlName="nome" 
-                                      >        
-                              </div>
-                              <br>
-                              <label for="inputFirstName">Apelido </label>        
-                              <div class="input-group">
-                                <input nbInput type="text" placeholder="Introduza o apelido" class="form-control" id = "apelido" formControlName="apelido"
+                 <label for="inputFirstName">Nº NIF </label>
+                 <div class="input-group">
+                <input nbInput type="number" placeholder="Introduza o nº de nif (obrigatório)" class="form-control" id="nif" formControlName="nif"
                                        >
-                              </div>
-                              <br>
-                              <label for="inputFirstName">Data de Nascimento </label>        
-                              <div class="input-group">
-                                <input nbInput type="date" placeholder="Introduza o data de nascimento" class="form-control" id="data_nasc" formControlName="data_nasc"
+            </div>
+                 <br>
+                  <label for="inputFirstName">Morada </label>
+                   <div class="input-group">
+                   <input nbInput type="text" placeholder="Introduza morada (obrigatório)" class="form-control" id="morada" formControlName="morada"
                                        >
-                              </div>
-                              <br>
-                              <label for="inputFirstName">Nº Filiação </label>
-                              <div class="input-group">
-                                <input nbInput type="text" placeholder="Introduza o nomes dos pais" class="form-control" id="filiacao" formControlName="filiacao"
-                                       >
-                              </div>
-                              <br>
-                              <label for="inputFirstName">Nº NIF </label>
-                              <div class="input-group">
-                                <input nbInput type="number" placeholder="Introduza o nº de nif" class="form-control" id="nif" formControlName="nif"
-                                       >
-                              </div>
-                              <br>
-                              <label for="inputFirstName">Morada </label>
-                              <div class="input-group">
-                                <input nbInput type="text" placeholder="Introduza morada" class="form-control" id="morada" formControlName="morada"
-                                       >
-                              </div>
-                              <br>
-                              <label for="inputFirstName">Nº Sexo </label>
-                              <div class="input-group">
-                                <input nbInput type="text" placeholder="Introduza o sexo" class="form-control" id="sexo" formControlName="sexo"
-                                       >
-                              </div>
-                              <br>
-                              <label for="inputFirstName">Nº CNI</label>
-                              <div class="input-group">
-                                <input nbInput type="text" placeholder="Introduza o nº de CNI" class="form-control" id="cni" formControlName="cni"
+                   </div>
+               <br>
+                   <label for="inputFirstName">Nº Sexo </label>
+                   <div class="input-group">
+                  <!--<input nbInput type="text" placeholder="Introduza o sexo(obrigatório)" class="form-control" id="sexo" formControlName="sexo" > -->
+                  <nb-select placeholder="Select Showcase" [(selected)]="selectedItem"  style="width: 22em" id="sexo" formControlName="sexo">
+                    <nb-option [value]="descricao.value" *ngFor="let descricao of selectSexo"> {{descricao.sexo}}</nb-option>
+                  </nb-select>
+                   </div>
+                   <br>
+                  <label for="inputFirstName">Nº CNI</label>
+               <div class="input-group">
+                 <input nbInput type="text" placeholder="Introduza o nº de CNI (obrigatório)" class="form-control" id="cni" formControlName="cni"
                                       >
-                              </div>
-                              <br>
-                              <button nbButton nbStepperNext>seguinte</button>
-                            </form>
+                 </div>
+                <br>
+                 <nb-card-footer>
+                  <button nbButton  status="danger" nbStepperPrevious >Voltar</button>
+                  <button class="btn-action-modal" nbButton status="primary" nbStepperNext>Seguinte</button>
+                   </nb-card-footer>
+             </form>
                     
       </nb-step>
-    -->
+   
                           <!-- Dados Profissional-->
       <nb-step [stepControl]="secondForm" label="Dados profissional ">
         <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">
 
           <label for="inputFirstName">Nº Identficação do Efectivo</label>
           <div class="input-group">
-            <input nbInput type="number" placeholder="Introduza o nº de identificação de pn" class="form-control" id ="id_pn" formControlName="id_pn"
+            <input nbInput type="number" placeholder="Introduza o nº de identificação de PN (obrigatório)" class="form-control" id ="id_pn" formControlName="id_pn"
                   >
           </div>
           <br>
           <label for="inputFirstName">Posto</label>
           <div class="input-group">
-            <input nbInput type="text" placeholder="Introduza o seu posto" class="form-control" id ="posto" formControlName="posto"
+            <input nbInput type="text" placeholder="Introduza o seu posto (obrigatório)" class="form-control" id ="posto" formControlName="posto"
                   >
           </div>
           <br>
           <label for="inputFirstName">Função</label>
           <div class="input-group">
-            <input nbInput type="text" placeholder="Introduza o seu função" class="form-control" id ="funcao" formControlName="funcao"
+            <input nbInput type="text" placeholder="Introduza o seu função (obrigatório)" class="form-control" id ="funcao" formControlName="funcao"
                   >
           </div>
           <br>
@@ -416,7 +373,7 @@
 
           <label for="inputFirstName">Contacto</label>
           <div class="input-group">
-            <input nbInput type="text" placeholder="Introduza o contactos" class="form-control" id="contacto" formControlName="contacto"
+            <input nbInput type="text" placeholder="Introduza o contactos (obrigatório)" class="form-control" id="contacto" formControlName="contacto"
                   >
           </div>
           <br>
@@ -451,8 +408,8 @@
 -->
         </div>
         <nb-card-footer>
-          <button nbButton  status="danger" nbStepperPrevious  (click)="stepper.reset()">Voltar</button>
-          <button class="btn-action-modal" nbButton status="primary" nbStepperNext (click)="onSaveCarta($event)">Seguinte</button>
+          <button nbButton  status="danger" nbStepperPrevious  (click)="stepper.reset()">Cancelar</button>
+          <button class="btn-action-modal" nbButton status="primary" nbStepperNext (click)="onSaveCarta($event)">Salvar</button>
         </nb-card-footer>
       </nb-step>
 

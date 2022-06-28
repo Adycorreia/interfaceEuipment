@@ -4,10 +4,12 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogRef, NbDialogService, NbStepperComponent, NbToastrService } from '@nebular/theme';
+import { SexoEnum } from 'app/helpers/commons';
 import { Efectivos } from 'app/pages/models/efectivos';
 import { EfectivosService } from 'app/services/efectivo.service';
 import { LocalDataSource, Ng2SmartTableComponent } from 'ng2-smart-table';
 import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
+import { emitWarning } from 'process';
 
 
 
@@ -24,6 +26,7 @@ export class EfectivosComponent implements OnInit {
    firstForm: FormGroup;
    secondForm: FormGroup;
    thirdForm: FormGroup;
+   firstFormCont: FormGroup;
 
    aria: boolean = true
    danger: boolean = false;
@@ -31,6 +34,12 @@ export class EfectivosComponent implements OnInit {
    close(){
     this.danger = false;
   }
+
+  selectSexo =[
+    { value: SexoEnum.M, sexo: "MASCULINO"},
+    { value: SexoEnum.F, sexo: "FEMININO"},
+    { value: SexoEnum.X, sexo: "INDETERMINADO"}
+  ]
 
   tbEfectData: Efectivos[];
   tbEfectConfig: Object;
@@ -40,6 +49,11 @@ export class EfectivosComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
 
   dialogRef: NbDialogRef<any>;
+
+
+  public get efectivoficoGroup(): FormGroup {
+    return this.firstForm.get("nome") as FormGroup;
+  }
 
 
   formEfectivo = this.formBuilder.group({
@@ -74,21 +88,40 @@ export class EfectivosComponent implements OnInit {
 
   formulario(){
     this.firstForm = this.formBuilder.group({
-      nome: ['', Validators.required],
-      apelido: ['', Validators.required],
-      data_nasc: ['', Validators.required],
+      nome: [ "",
+      [
+        Validators.minLength(1),
+        Validators.required,
+        Validators.pattern("^[^0-9]+$"),
+      ], 
+    ],
+      apelido: ["", [Validators.pattern("^[^0-9]+$"),  Validators.required,]],
+      data_nasc: [ "",
+      [
+        Validators.required,
+        Validators.pattern(
+          "^[0-9]{4}-(((0[13578]|(10|12))-(0[1-9]|[1-2][0-9]|3[0-1]))|(02-(0[1-9]|[1-2][0-9]))|((0[469]|11)-(0[1-9]|[1-2][0-9]|30)))$"
+        ),
+      ],],
       filiacao: [null],
+     
+     
+    });
+
+    this.firstFormCont = this.formBuilder.group({
       nif: ['', Validators.required],
       morada: ['', Validators.required],
-      sexo: ['', Validators.required],
+      sexo: ["", [Validators.pattern("^[^0-9]+$")]],
       cni: ['', Validators.required],
      
     });
+
+    
   
     this.secondForm = this.formBuilder.group({
       id_pn: ['', Validators.required],
-      posto: ['', Validators.required],
-      funcao: ['', Validators.required],
+      posto: ["", [Validators.pattern("^[^0-9]+$")]],
+      funcao:["", [Validators.pattern("^[^0-9]+$")]],
     });
   
     this.thirdForm = this.formBuilder.group({
@@ -137,10 +170,10 @@ export class EfectivosComponent implements OnInit {
       apelido: this.firstForm.value.apelido, 
       data_nasc: this.firstForm.value.data_nasc, 
       filiacao: this.firstForm.value.filiacao, 
-      nif: this.firstForm.value.nif, 
-      morada: this.firstForm.value.morada,
-      sexo: this.firstForm.value.sexo, 
-      cni: this.firstForm.value.cni, 
+      nif: this.firstFormCont.value.nif, 
+      morada: this.firstFormCont.value.morada,
+      sexo: this.firstFormCont.value.sexo, 
+      cni: this.firstFormCont.value.cni, 
 
       id_pn: this.secondForm.value.id_pn, 
       posto: this.secondForm.value.posto, 
@@ -155,28 +188,35 @@ export class EfectivosComponent implements OnInit {
   }
 
   onFirstSubmit() {
+   // this.firstForm.markAsDirty();
+   this.toastrService.warning('Existem um ou mais campos obrigatórios que não foram preenchidos.', 'Atenção');
+   this.firstForm.get('nome').markAsTouched();
+   this.firstForm.get('apelido').markAsTouched();
+   this.firstForm.get('data_nasc').markAsTouched();
+
+
+  }
+
+  onFirstContSubmit() {
     this.firstForm.markAsDirty();
     this.toastrService.warning('Existem um ou mais campos obrigatórios que não foram preenchidos.', 'Atenção');
-    this.firstForm.get('nome').markAsTouched();
-    this.firstForm.get('apelido').markAsTouched();
-    this.firstForm.get('data_nasc').markAsTouched();
-    this.firstForm.get('nif').markAsTouched();
-    this.firstForm.get('morada').markAsTouched();
-    this.firstForm.get('cni').markAsTouched();
+    //this.firstForm.get('nif').markAsTouched();
+    //this.firstForm.get('morada').markAsTouched();
+    //.firstForm.get('cni').markAsTouched();
   }
 
   onSecondSubmit() {
-    this.secondForm.markAsDirty();
+   this.secondForm.markAsDirty();
     this.toastrService.warning('Existem um ou mais campos obrigatórios que não foram preenchidos.', 'Atenção');
-    this.firstForm.get('id_pn').markAsTouched();
-    this.firstForm.get('posto').markAsTouched();
-    this.firstForm.get('funcao').markAsTouched();
+   // this.firstForm.get('id_pn').markAsTouched();
+    //this.firstForm.get('posto').markAsTouched();
+    //this.firstForm.get('funcao').markAsTouched();
   }
 
   onThirdSubmit() {
     this.thirdForm.markAsDirty();
     this.toastrService.warning('Existem um ou mais campos obrigatórios que não foram preenchidos.', 'Atenção');
-    this.firstForm.get('contacto').markAsTouched();
+    //this.firstForm.get('contacto').markAsTouched();
   
   }
 
@@ -257,25 +297,25 @@ export class EfectivosComponent implements OnInit {
           valuePrepareFunction: (cell, row) => { return row.nome + " " + row.apelido }
         },
         posto: {
-          title: 'Posto',
+          title: 'Postos',
           type: "string",
           width: "11%",
           sort: true,
         },
       
         funcao: {
-          title: 'Função',
+          title: 'Funções',
           type: "string",
           width: "18%",
         },
         contacto: {
-          title: 'Contacto',
+          title: 'Contactos',
           type: "string",
           width: "11%",
         },
         
         morada: {
-          title: 'Morada',
+          title: 'Moradas',
           type: "string",
           width: "21%",
         },

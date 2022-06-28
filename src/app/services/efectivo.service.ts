@@ -23,7 +23,7 @@ import { DefaultService } from "./default.service";
       }
   
     findById(id: string): Observable<ResponseApp<Efectivos>> {
-      return this.http.get<ResponseApp<Efectivos>>(`${this.url}/${id}`);
+      return this.http.get<ResponseApp<Efectivos>>(`${this.url}/id/${id}`);
     }
   
     create(efectivos: Efectivos): Observable<ResponseApp<Efectivos>> {

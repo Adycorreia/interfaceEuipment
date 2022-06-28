@@ -77,7 +77,7 @@ export class EfectivosComponent implements OnInit {
       nome: ['', Validators.required],
       apelido: ['', Validators.required],
       data_nasc: ['', Validators.required],
-      filiacao: ['', Validators.required],
+      filiacao: [null],
       nif: ['', Validators.required],
       morada: ['', Validators.required],
       sexo: ['', Validators.required],
@@ -93,8 +93,8 @@ export class EfectivosComponent implements OnInit {
   
     this.thirdForm = this.formBuilder.group({
       contacto: ['', Validators.required],
-      email: ['', Validators.required],
-      obs: ['', Validators.required],
+      email: [null],
+      obs: [null],
     });
  }
   public openModalDoc(event: Row) {
@@ -156,14 +156,28 @@ export class EfectivosComponent implements OnInit {
 
   onFirstSubmit() {
     this.firstForm.markAsDirty();
+    this.toastrService.warning('Existem um ou mais campos obrigatórios que não foram preenchidos.', 'Atenção');
+    this.firstForm.get('nome').markAsTouched();
+    this.firstForm.get('apelido').markAsTouched();
+    this.firstForm.get('data_nasc').markAsTouched();
+    this.firstForm.get('nif').markAsTouched();
+    this.firstForm.get('morada').markAsTouched();
+    this.firstForm.get('cni').markAsTouched();
   }
 
   onSecondSubmit() {
     this.secondForm.markAsDirty();
+    this.toastrService.warning('Existem um ou mais campos obrigatórios que não foram preenchidos.', 'Atenção');
+    this.firstForm.get('id_pn').markAsTouched();
+    this.firstForm.get('posto').markAsTouched();
+    this.firstForm.get('funcao').markAsTouched();
   }
 
   onThirdSubmit() {
     this.thirdForm.markAsDirty();
+    this.toastrService.warning('Existem um ou mais campos obrigatórios que não foram preenchidos.', 'Atenção');
+    this.firstForm.get('contacto').markAsTouched();
+  
   }
 
 
@@ -190,7 +204,7 @@ export class EfectivosComponent implements OnInit {
     this.efectivosService.delete(this.efectSelected.idagente).subscribe((res) => {
       //console.log(this.docSelected.iddoc);
      // this.tbDocData = this.tbDocData.filter(((documents) => documents.iddoc !== this.docSelected.iddoc));
-      this.toastrService.success('Carta de Condução excluída com sucesso.', 'Sucesso');
+      this.toastrService.success('Efectivo excluída com sucesso.', 'Sucesso');
       this.dialogRef.close();
      // this.ng2TbCarta.source.refresh();
       this.getListefectivos();

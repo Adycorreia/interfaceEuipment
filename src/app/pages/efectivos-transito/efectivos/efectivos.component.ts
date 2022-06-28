@@ -26,6 +26,11 @@ export class EfectivosComponent implements OnInit {
    thirdForm: FormGroup;
 
    aria: boolean = true
+   danger: boolean = false;
+
+   close(){
+    this.danger = false;
+  }
 
   tbEfectData: Efectivos[];
   tbEfectConfig: Object;
@@ -191,6 +196,27 @@ export class EfectivosComponent implements OnInit {
       this.getListefectivos();
     });
   }
+
+
+  idefecttest:String;
+
+  public onEfectSelect($event){
+    console.log($event);
+    console.log($event.data.idagente);
+    if ($event.data.idagente) {
+      let idagente = $event.data.idagente;
+    
+      this.efectivosService.findById(idagente).subscribe(
+        (data: any) => {
+          console.log(data.details[0]);
+          this.danger = true;
+          this.idefecttest= data.details[0];
+          console.log(this.idefecttest);
+        }
+      );
+    }
+  }
+
 
   private setConfigTbUser() {
     this.tbEfectConfig = {

@@ -4,7 +4,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogRef, NbDialogService, NbStepperComponent, NbToastrService } from '@nebular/theme';
-import { SexoEnum } from 'app/helpers/commons';
+import { Listfuncao, Listposto, SexoEnum } from 'app/helpers/commons';
 import { Efectivos } from 'app/pages/models/efectivos';
 import { EfectivosService } from 'app/services/efectivo.service';
 import { LocalDataSource, Ng2SmartTableComponent } from 'ng2-smart-table';
@@ -31,7 +31,17 @@ export class EfectivosComponent implements OnInit {
    aria: boolean = true
    danger: boolean = false;
 
-   close(){
+  tbEfectData: Efectivos[];
+  tbEfectConfig: Object;
+  tbdocConfig: Object;
+  efectSelected: Efectivos;
+  
+  source: LocalDataSource = new LocalDataSource();
+
+  dialogRef: NbDialogRef<any>;
+  refresh(): void { window.location.reload();}
+
+  close(){
     this.danger = false;
   }
 
@@ -41,20 +51,27 @@ export class EfectivosComponent implements OnInit {
     { value: SexoEnum.X, sexo: "INDETERMINADO"}
   ]
 
-  tbEfectData: Efectivos[];
-  tbEfectConfig: Object;
-  tbdocConfig: Object;
-  efectSelected: Efectivos;
-  
-  source: LocalDataSource = new LocalDataSource();
+  selectPosto =[
+    { value: Listposto.AG, postos: "AGENTE"},
+    { value: Listposto.SU, postos: "SUBCHEFE"},
+    { value: Listposto.Of, postos: "OFICIAL"}
+  ]
 
-  dialogRef: NbDialogRef<any>;
+  selectFuncao =[
+    { value: Listfuncao.AG, funcao: "Patrulheiro"},
+    { value: Listfuncao.SU, funcao: "Graduado de Serviço"},
+    { value: Listfuncao.CO, funcao: "Comandante"},
+    { value: Listfuncao.COJ, funcao: "Comandante Adjunto"},
+    { value: Listfuncao.CS, funcao: "Chefe Secretaria"},
+    { value: Listfuncao.AP, funcao: "Atendimento ao Publico"},
+    { value: Listfuncao.SCRE, funcao: "Operadora de Secretaria"},
+    { value: Listfuncao.OPE, funcao: "Operador de Estatística"},
+    { value: Listfuncao.OS, funcao: "Operador de Sinistro"}
+  ]
 
-
-  public get efectivoficoGroup(): FormGroup {
-    return this.firstForm.get("nome") as FormGroup;
-  }
-
+ // public get efectivoficoGroup(): FormGroup {
+   // return this.firstForm.get("nome") as FormGroup;
+  //}
 
   formEfectivo = this.formBuilder.group({
     nome: [null],
@@ -82,6 +99,7 @@ export class EfectivosComponent implements OnInit {
     this.getListefectivos();
    this.setConfigTbUser();
    this.formulario();
+  
   }
 
 
@@ -149,14 +167,17 @@ export class EfectivosComponent implements OnInit {
      this.linearMode = !this.linearMode;
    }
  
+ 
+
    onSaveCarta(){
 
     this.efectivosService.create(this.findFormAdd()).subscribe((data) => {
     
       this.toastrService.success('Tarefa criada com sucesso.', 'Sucesso');
       this.dialogRef.close();
-     // this.ng2TbCarta.source.refresh();
-     this.getListefectivos();
+      this.refresh();
+      this.getListefectivos();
+   
     });
   }
 
@@ -288,7 +309,7 @@ export class EfectivosComponent implements OnInit {
         id_pn: {
           title: 'Nº ID',
           type: "string",
-          width: "15%",
+          width: "11%",
         },
         nome: {
           title: 'Nome Completo dos efectivos',
@@ -306,7 +327,7 @@ export class EfectivosComponent implements OnInit {
         funcao: {
           title: 'Funções',
           type: "string",
-          width: "18%",
+          width: "20%",
         },
         contacto: {
           title: 'Contactos',

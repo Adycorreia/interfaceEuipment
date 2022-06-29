@@ -229,8 +229,7 @@
 
 
 <nb-card accent="info">
-    <nb-card-header>
-      Cadastro de Efectivos </nb-card-header>  
+    <nb-card-header> Cadastro dos Efectivos Esquadra Trânsito</nb-card-header>  
   
     <nb-card-body>
         <button style="margin-bottom: 1rem;" nbButton status="primary"  (click)="openModalDoc(null)">Novo Cadastro</button>   
@@ -249,7 +248,7 @@
   <nb-card>
     <nb-card-header>ELIMINAR EFECTIVO</nb-card-header>
     <nb-card-body>
-      Tens certeza que deseja excluir efectivo <span style="font-weight: bold">{{ data }}</span>  ?  
+      Tens certeza que deseja excluir efectivo <span style="font-weight: bold"> {{ data }}</span>  ?  
     </nb-card-body>
     <nb-card-footer>
       <button nbButton  status="danger" (click)="ref.close()">Cancelar</button>
@@ -259,9 +258,10 @@
 </ng-template>
 
 
- <ng-template #dialogEfectivo>
- <nb-card style="width: 45em">
-  <nb-card-body>
+ <ng-template #dialogEfectivo >
+ <nb-card style="width: 45em" accent="danger">
+  <nb-card-header class="titulo"  > Cadastro de novo Efectivo</nb-card-header>  
+  <nb-card-body >
     <nb-stepper #stepper>
                          <!-- Dados Pessoais-->
       <nb-step [stepControl]="firstForm" label="Dados Pessoais">
@@ -300,7 +300,7 @@
       <nb-step [stepControl]="firstFormCont" label="Dados Pessoais(Continuação)">
            <form [formGroup]="firstFormCont" (ngSubmit)="onFirstContSubmit()" class="step-container">
                     
-                 <label for="inputFirstName">Nº NIF </label>
+                 <label for="inputFirstName">Numero de NIF </label>
                  <div class="input-group">
                 <input nbInput type="number" placeholder="Introduza o nº de nif (obrigatório)" class="form-control" id="nif" formControlName="nif"
                                        >
@@ -312,15 +312,15 @@
                                        >
                    </div>
                <br>
-                   <label for="inputFirstName">Nº Sexo </label>
+                   <label for="inputFirstName">Sexo </label>
                    <div class="input-group">
                   <!--<input nbInput type="text" placeholder="Introduza o sexo(obrigatório)" class="form-control" id="sexo" formControlName="sexo" > -->
-                  <nb-select placeholder="Select Showcase" [(selected)]="selectedItem"  style="width: 22em" id="sexo" formControlName="sexo">
+                  <nb-select placeholder="Selecione Sexo" [(selected)]="selectedItem"  style="width: 22em" id="sexo" formControlName="sexo">
                     <nb-option [value]="descricao.value" *ngFor="let descricao of selectSexo"> {{descricao.sexo}}</nb-option>
                   </nb-select>
                    </div>
                    <br>
-                  <label for="inputFirstName">Nº CNI</label>
+                  <label for="inputFirstName">Numero de CNI</label>
                <div class="input-group">
                  <input nbInput type="text" placeholder="Introduza o nº de CNI (obrigatório)" class="form-control" id="cni" formControlName="cni"
                                       >
@@ -346,14 +346,18 @@
           <br>
           <label for="inputFirstName">Posto</label>
           <div class="input-group">
-            <input nbInput type="text" placeholder="Introduza o seu posto (obrigatório)" class="form-control" id ="posto" formControlName="posto"
-                  >
+           <!-- <input nbInput type="text" placeholder="Introduza o seu posto (obrigatório)" class="form-control" id ="posto" formControlName="posto"> -->
+                  <nb-select placeholder="Selecione Posto"  style="width: 22em" id="posto" formControlName="posto">
+                    <nb-option [value]="descricao.value" *ngFor="let descricao of selectPosto"> {{descricao.postos}}</nb-option>
+                  </nb-select>
           </div>
           <br>
           <label for="inputFirstName">Função</label>
           <div class="input-group">
-            <input nbInput type="text" placeholder="Introduza o seu função (obrigatório)" class="form-control" id ="funcao" formControlName="funcao"
-                  >
+           <!-- <input nbInput type="text" placeholder="Introduza o seu função (obrigatório)" class="form-control" id ="funcao" formControlName="funcao" > -->
+            <nb-select placeholder="Selecione Funcão" style="width: 22em" id="funcao" formControlName="funcao">
+              <nb-option [value]="descricao.value" *ngFor="let descricao of selectFuncao"> {{descricao.funcao}}</nb-option>
+            </nb-select>
           </div>
           <br>
           <nb-card-footer>

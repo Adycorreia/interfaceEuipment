@@ -1,7 +1,7 @@
 export enum SexoEnum {
-  M = "Masculino",
-  F = "Feminino",
-  X = "Indeterminado",
+  M = "M",
+  F = "F",
+  X = "X",
 }
 
 export enum EstadoCivilEnum {
@@ -12,9 +12,24 @@ export enum EstadoCivilEnum {
   UF = "UNIÃO DE FACTO",
 }
 
-export enum DomainEnum {
-  GENDER = "DM_TIPO_SEXO",
-  MARITAL_STATUS = "DM_ESTADO_CIVIL",
+export enum Listposto {
+
+  AG = "Agente",
+  SU = "Suchefe",
+  Of = "Oficial",
+
+}
+
+export enum Listfuncao {
+  AG = "Patrulheiro",
+  SU = "Graduado de Serviço",
+  CO = "Comandante",
+  COJ = "Comandante Adjunto",
+  CS = "Chefe Secretaria",
+  AP = "Atendimento ao Publico",
+  SCRE = "Operadora de Secretaria ",
+  OPE = "Operador de Estatística ",
+  OS = "Operador de Sinistro",
 }
 
 export enum ApplicationEnum {

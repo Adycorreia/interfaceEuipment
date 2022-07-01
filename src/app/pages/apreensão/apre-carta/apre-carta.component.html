@@ -105,7 +105,7 @@
 
   <ng-template #dialogCarta let-data let-ref="dialogRef">
     <nb-card style="width: 25em">
-      <nb-card-header>Novo cadastro de Carta de Condução</nb-card-header>
+      <nb-card-header>{{ findOperation() }} de Carta de Condução</nb-card-header>
       <nb-card-body>
         <form [formGroup]="formCarta" autocomplete="true">
           <!--

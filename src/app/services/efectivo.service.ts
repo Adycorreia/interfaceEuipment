@@ -22,7 +22,7 @@ import { DefaultService } from "./default.service";
       return this.http.get<ResponseApp<Efectivos[]>>(`${this.url}`);
       }
   
-    findById(id: string): Observable<ResponseApp<Efectivos>> {
+    findById(id: Number): Observable<ResponseApp<Efectivos>> {
       return this.http.get<ResponseApp<Efectivos>>(`${this.url}/id/${id}`);
     }
   
@@ -33,6 +33,11 @@ import { DefaultService } from "./default.service";
     delete(id: Number): Observable<ResponseApp<Efectivos>> {
       return this.http.delete<ResponseApp<Efectivos>>(`${this.url}/${id}`);
     }
+
+    edit(efectivos: Efectivos): Observable<ResponseApp<Efectivos>> {
+      return this.http.put<ResponseApp<Efectivos>>(`${this.url}/${efectivos.idagente}`, efectivos);
+    }
+  
   
   }
   

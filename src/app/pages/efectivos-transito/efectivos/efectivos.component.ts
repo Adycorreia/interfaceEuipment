@@ -45,6 +45,11 @@ export class EfectivosComponent implements OnInit {
     this.danger = false;
   }
 
+  public findOperation(): string {
+    return this.isAdd() ? 'Cadastro de novo Efectivo' : 'Editar dado do Efectivo';
+  }
+
+
   selectSexo =[
     { value: SexoEnum.M, sexo: "MASCULINO"},
     { value: SexoEnum.F, sexo: "FEMININO"},
@@ -106,6 +111,7 @@ export class EfectivosComponent implements OnInit {
 
   formulario(){
     this.firstForm = this.formBuilder.group({
+      idagente: [null],
       nome: [ "",
       [
         Validators.minLength(1),
@@ -127,6 +133,7 @@ export class EfectivosComponent implements OnInit {
     });
 
     this.firstFormCont = this.formBuilder.group({
+      idagente: [null],
       nif: ['', Validators.required],
       morada: ['', Validators.required],
       sexo: ["", [Validators.pattern("^[^0-9]+$")]],
@@ -137,18 +144,20 @@ export class EfectivosComponent implements OnInit {
     
   
     this.secondForm = this.formBuilder.group({
+      idagente: [null],
       id_pn: ['', Validators.required],
       posto: ["", [Validators.pattern("^[^0-9]+$")]],
       funcao:["", [Validators.pattern("^[^0-9]+$")]],
     });
   
     this.thirdForm = this.formBuilder.group({
+      idagente: [null],
       contacto: ['', Validators.required],
       email: [null],
       obs: [null],
     });
  }
-  public openModalDoc(event: Row) {
+  public openModalEfect(event: Row) {
    // this.formEfectivo.reset();
    /*
      if (event) {
@@ -157,7 +166,7 @@ export class EfectivosComponent implements OnInit {
          this.formCarta.patchValue(res.body);
        });
      }*/
-     
+  
    this.dialogRef = this.dialogService.open(this.dialogEfectivo);
    }
 
@@ -166,47 +175,6 @@ export class EfectivosComponent implements OnInit {
    toggleLinearMode() {
      this.linearMode = !this.linearMode;
    }
- 
- 
-
-   onSaveCarta(){
-
-    this.efectivosService.create(this.findFormAdd()).subscribe((data) => {
-    
-      this.toastrService.success('Tarefa criada com sucesso.', 'Sucesso');
-      this.dialogRef.close();
-      this.refresh();
-      this.getListefectivos();
-   
-    });
-  }
-
-  findFormAdd(){
-  
-   // this.validarEvent.emit(this.firstForm.value);
-    //this.validarEvent.emit(this.secondForm.value);
-    //this.validarEvent.emit(this.thirdForm.value);
-    const resusaModel = <Efectivos> {
-      nome: this.firstForm.value.nome, 
-      apelido: this.firstForm.value.apelido, 
-      data_nasc: this.firstForm.value.data_nasc, 
-      filiacao: this.firstForm.value.filiacao, 
-      nif: this.firstFormCont.value.nif, 
-      morada: this.firstFormCont.value.morada,
-      sexo: this.firstFormCont.value.sexo, 
-      cni: this.firstFormCont.value.cni, 
-
-      id_pn: this.secondForm.value.id_pn, 
-      posto: this.secondForm.value.posto, 
-      funcao: this.secondForm.value.funcao, 
-
-      contacto: this.thirdForm.value.contacto,
-      email: this.thirdForm.value.email, 
-      obs: this.thirdForm.value.obs,  
-    } 
-    console.log(resusaModel);
-    return resusaModel;
-  }
 
   onFirstSubmit() {
    // this.firstForm.markAsDirty();
@@ -260,6 +228,98 @@ export class EfectivosComponent implements OnInit {
 
 }
 
+findFormAdd(){
+  
+  // this.validarEvent.emit(this.firstForm.value);
+   //this.validarEvent.emit(this.secondForm.value);
+   //this.validarEvent.emit(this.thirdForm.value);
+   const reseverModel = <Efectivos> {
+     idagente: this.firstForm.value.idagente, 
+     nome: this.firstForm.value.nome, 
+     apelido: this.firstForm.value.apelido, 
+     data_nasc: this.firstForm.value.data_nasc, 
+     filiacao: this.firstForm.value.filiacao, 
+     nif: this.firstFormCont.value.nif, 
+     morada: this.firstFormCont.value.morada,
+     sexo: this.firstFormCont.value.sexo, 
+     cni: this.firstFormCont.value.cni, 
+
+     id_pn: this.secondForm.value.id_pn, 
+     posto: this.secondForm.value.posto, 
+     funcao: this.secondForm.value.funcao, 
+
+     contacto: this.thirdForm.value.contacto,
+     email: this.thirdForm.value.email, 
+     obs: this.thirdForm.value.obs,  
+   } 
+  // console.log(reseverModel);
+   return reseverModel;
+ }
+
+ public openModalEdiEfect(event: Row) {
+  this.efectivosService.getListEfectivos().subscribe((res) => {
+   /* this.userSelected = res.body;
+    this.formCarta.reset();
+    this.formCarta.get('tipodoc').patchValue(StatusEnum.CARTA);
+*/
+    if (event) {
+      const efectivos: Efectivos = event.getData();
+     // console.log(efectivos);
+      this.efectivosService.findById(efectivos.idagente).subscribe((res) => {
+        //this.formCarta.patchValue(res.body);
+        this.firstForm.get('idagente').setValue(efectivos.idagente);
+        this.firstForm.get('nome').setValue(efectivos.nome);
+        this.firstForm.get('apelido').setValue(efectivos.apelido);
+        this.firstForm.get('data_nasc').setValue(efectivos.data_nasc);
+        this.firstForm.get('filiacao').setValue(efectivos.filiacao);
+
+        this.firstFormCont.get('idagente').setValue(efectivos.idagente);
+        this.firstFormCont.get('nif').setValue(efectivos.nif);
+        this.firstFormCont.get('morada').setValue(efectivos.morada);
+        this.firstFormCont.get('sexo').setValue(efectivos.sexo);
+        this.firstFormCont.get('cni').setValue(efectivos.cni);
+        
+        this.secondForm.get('idagente').setValue(efectivos.idagente);
+        this.secondForm.get('id_pn').setValue(efectivos.id_pn);
+        this.secondForm.get('posto').setValue(efectivos.posto);
+        this.secondForm.get('funcao').setValue(efectivos.funcao);
+       
+        this.thirdForm.get('idagente').setValue(efectivos.idagente);
+        this.thirdForm.get('contacto').setValue(efectivos.contacto);
+        this.thirdForm.get('email').setValue(efectivos.email);
+        this.thirdForm.get('obs').setValue(efectivos.obs);
+              
+      });
+    }
+   
+    this.dialogRef = this.dialogService.open(this.dialogEfectivo);
+  });
+}
+
+
+
+private isAdd(): boolean {
+  return !this.thirdForm.get('idagente').value;
+}
+
+ public btnSave() {
+
+  if (this.isAdd()) this.onSaveCarta();
+  else this.editDoc();
+}
+
+ onSaveCarta(){
+
+  this.efectivosService.create(this.findFormAdd()).subscribe((data) => {
+  
+    this.toastrService.success('Tarefa criada com sucesso.', 'Sucesso');
+    this.dialogRef.close();
+    //this.refresh();
+    this.getListefectivos();
+ 
+  });
+}
+
 
   public btnDelete() {
     this.efectivosService.delete(this.efectSelected.idagente).subscribe((res) => {
@@ -272,6 +332,20 @@ export class EfectivosComponent implements OnInit {
     });
   }
 
+  
+  private editDoc(){
+    this.efectivosService.edit(this.findFormAdd()).subscribe((res) => {
+     /* this.tbDocData = this.tbDocData.map((documents: Documents) => {
+        if (documents.iddoc === this.formCarta.value.iddoc) 
+        //return new Documents(res.body);
+        return documents;
+      });*/
+      this.toastrService.success('Dados editado com sucesso.', 'Sucesso');
+      this.dialogRef.close();
+     // this.refresh();
+      this.getListefectivos();
+    });
+  }
 
   idefecttest:String;
 
@@ -287,6 +361,7 @@ export class EfectivosComponent implements OnInit {
           this.danger = true;
           this.idefecttest= data.details[0];
           console.log(this.idefecttest);
+
         }
       );
     }
@@ -310,6 +385,7 @@ export class EfectivosComponent implements OnInit {
           title: 'Nº ID',
           type: "string",
           width: "11%",
+          valuePrepareFunction: (cell, row) => { return "PN"+ row.id_pn }
         },
         nome: {
           title: 'Nome Completo dos efectivos',

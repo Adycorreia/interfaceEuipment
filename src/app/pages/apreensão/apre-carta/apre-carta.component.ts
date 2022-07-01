@@ -27,6 +27,11 @@ export class AprecartaComponent implements OnInit {
     this.danger = false;
   }
 
+ 
+  public findOperation(): string {
+    return this.isAdd() ? 'Novo cadastro' : 'Edição';
+  }
+
 
   source: LocalDataSource = new LocalDataSource();
   
@@ -104,6 +109,7 @@ export class AprecartaComponent implements OnInit {
   private isAdd(): boolean {
     return !this.formCarta.get('iddoc').value;
   }
+
 
   public btnSave() {
     if (this.formCarta.invalid) return this.setFormInvalid();

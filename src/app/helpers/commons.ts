@@ -1,7 +1,7 @@
 export enum SexoEnum {
-  M = "M",
-  F = "F",
-  X = "X",
+  M = "Masculino",
+  F = "Feminino",
+  X = "Indeterminado",
 }
 
 export enum EstadoCivilEnum {

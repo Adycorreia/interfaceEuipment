@@ -1,3 +1,5 @@
+import { LocalData } from "ng2-completer";
+
 export interface Efectivos {
     idagente: number;
 
@@ -7,13 +9,13 @@ export interface Efectivos {
 
     apelido: string;
 
-    data_nasc: Date;
+    data_nasc: LocalData;
 
     sexo: string;
 
     filiacao: string;
 
-    idade: string;
+    idade: number;
 
     cni: string;
 

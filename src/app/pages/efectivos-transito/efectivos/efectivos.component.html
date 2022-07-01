@@ -1,6 +1,6 @@
 <nb-card accent="danger" *ngIf ="danger" ngFor="">
 <nb-card-header><button nbButton outline status="primary"  (click)="close()">Fichar detalhes</button></nb-card-header>
-  <nb-card-header>Detalhes do Efectivo<strong> {{idefecttest.nome}} {{idefecttest.apelido}}</strong>
+  <nb-card-header>Detalhes do Efectivo <strong><h>>>>></h> {{idefecttest.nome}} {{idefecttest.apelido}}</strong>
   </nb-card-header>
   <nb-card-body>
     <nb-accordion accent="danger">
@@ -47,8 +47,8 @@
                       <div class="row">
                         <div class="col-sm-5">
                           <div class="form-group">
-                            <label for="inputFirstName">Nº ID </label>
-                            <input type="text" class="form-control" value="{{idefecttest.id_pn}}" disabled/>
+                            <label for="inputFirstName">Nº ID da PN </label>
+                            <input type="text" class="form-control" value="PN{{idefecttest.id_pn}}" disabled/>
                           </div>
                         </div>
                         <div class="col-sm-5">
@@ -60,13 +60,13 @@
                         <div class="col-sm-5">
                           <div class="form-group">
                             <label for="inputBirthdayDate">Função</label>
-                            <input type="text" class="form-control" value="{{idefecttest.funcao}}" disabled/>
+                            <input type="text" class="form-control" value="{{idefecttest.funcao}}" style="width: 15em;"disabled/>
                           </div>
                         </div>
                         <div class="col-sm-5">
                           <div class="form-group">
                             <label for="inputBirthdayDate">Nº Arma</label>
-                            <input type="text" class="form-control" value="{{idefecttest.funcao}}" disabled/>
+                            <input type="text" class="form-control" value="{{idefecttest.funcao}}"  disabled/>
                           </div>
                         </div>
                       </div>
@@ -126,20 +126,26 @@
                       </div>
                       <div class="col-sm-5">
                         <div class="form-group">
-                          <label for="inputBirthdayDate">Data Nasciment</label>
-                          <input type="text" class="form-control" value="{{idefecttest.data_nasc}}" disabled/>
+                          <label for="inputBirthdayDate">Data de Nascimento</label>
+                          <input type="text" class="form-control"  value="{{idefecttest.data_nasc | date: 'dd/MM/yyyy'}}" disabled/>
                         </div>
                       </div>
                       <div class="col-sm-5">
                         <div class="form-group">
                           <label for="inputBirthdayDate">Idade</label>
-                          <input type="text" class="form-control" value="{{idefecttest.Idade}}" disabled/>
+                          <input type="text" class="form-control" value="{{idefecttest.idade}} Anos " disabled/>
                         </div>
                       </div>
                       <div class="col-sm-5">
                         <div class="form-group">
-                          <label for="inputBirthdayDate">Conctato</label>
+                          <label for="inputBirthdayDate">Contacto</label>
                           <input type="text" class="form-control" value="{{idefecttest.contacto}}" disabled/>
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Email</label>
+                          <input type="text" class="form-control" value="{{idefecttest.email}}" style="width: 18em;" disabled/>
                         </div>
                       </div>
                     </div>
@@ -229,14 +235,15 @@
 
 
 <nb-card accent="info">
-    <nb-card-header> Cadastro dos Efectivos Esquadra Trânsito</nb-card-header>  
+    <nb-card-header> Cadastros dos Efectivos Esquadra Trânsito</nb-card-header>  
   
     <nb-card-body>
-        <button style="margin-bottom: 1rem;" nbButton status="primary"  (click)="openModalDoc(null)">Novo Cadastro</button>   
+        <button style="margin-bottom: 1rem;" nbButton status="primary" (click)="openModalEfect(null)">Novo Cadastro</button>   
         <ng2-smart-table #ng2TbEfectivos 
         [settings]="tbEfectConfig"
         (userRowSelect)="onEfectSelect($event)"
         [source]="source"
+        (edit)="openModalEdiEfect($event)" 
         (delete)="openModalExclusion($event)"  
          >          
         </ng2-smart-table>
@@ -260,7 +267,7 @@
 
  <ng-template #dialogEfectivo >
  <nb-card style="width: 45em" accent="danger">
-  <nb-card-header class="titulo"  > Cadastro de novo Efectivo</nb-card-header>  
+  <nb-card-header class="titulo"  >  {{ findOperation() }} {{data}}</nb-card-header>  
   <nb-card-body >
     <nb-stepper #stepper>
                          <!-- Dados Pessoais-->
@@ -282,7 +289,7 @@
           <label for="inputFirstName">Data de Nascimento </label>        
           <div class="input-group">
             <input nbInput type="date" placeholder="Introduza o data de nascimento (obrigatório)" class="form-control" id="data_nasc" formControlName="data_nasc"
-                   >
+            >
           </div>
           <br>
           <label for="inputFirstName">Filiação </label>
@@ -355,7 +362,7 @@
           <label for="inputFirstName">Função</label>
           <div class="input-group">
            <!-- <input nbInput type="text" placeholder="Introduza o seu função (obrigatório)" class="form-control" id ="funcao" formControlName="funcao" > -->
-            <nb-select placeholder="Selecione Funcão" style="width: 22em" id="funcao" formControlName="funcao">
+            <nb-select placeholder="Selecione Funcão"  style="width: 22em" id="funcao" formControlName="funcao">
               <nb-option [value]="descricao.value" *ngFor="let descricao of selectFuncao"> {{descricao.funcao}}</nb-option>
             </nb-select>
           </div>
@@ -413,7 +420,7 @@
         </div>
         <nb-card-footer>
           <button nbButton  status="danger" nbStepperPrevious  (click)="stepper.reset()">Cancelar</button>
-          <button class="btn-action-modal" nbButton status="primary" nbStepperNext (click)="onSaveCarta($event)">Salvar</button>
+          <button class="btn-action-modal" nbButton status="primary" nbStepperNext (click)="btnSave($event)">Salvar</button>
         </nb-card-footer>
       </nb-step>
 

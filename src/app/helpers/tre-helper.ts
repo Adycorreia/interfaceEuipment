@@ -1,3 +1,18 @@
+
+  export function calcularDataNascimento(formData: any) {
+    var efectivo = new efectivo();
+
+    efectivo.data_nasc = formData.data_nasc;
+    efectivo.idade = formData.idade;
+ 
+
+
+    return efectivo;
+  }
+
+
+
+
 /*
 import { RootObject } from "../models/estrangeiro/rootObject";
 import { Biografico } from "../models/estrangeiro/biografico";

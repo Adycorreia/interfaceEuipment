@@ -13,21 +13,15 @@ import { CartaModule } from './apreensão/apre-carta/apre-carta.module';
 import { TlivreteModule } from './apreensão/apre-tlivrete/apre-tlivrete.module';
 import { CapModule } from './apreensão/apre-cap/apre-cap.module';
 
-
-
-
-
-
-
 @NgModule({
   imports: [
     PagesRoutingModule,
     ThemeModule,
     NbMenuModule,
     DefaultdModule,
-    TaskModule,
-    CartaModule,
-    TlivreteModule,
+    //TaskModule,
+  //  CartaModule,
+   // TlivreteModule,
     NbIconModule,
     NbEvaIconsModule,
     CapModule,
@@ -36,6 +30,7 @@ import { CapModule } from './apreensão/apre-cap/apre-cap.module';
   ],
   declarations: [
     PagesComponent,
+   
   ],
 })
 export class PagesModule {

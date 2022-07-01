@@ -10,6 +10,7 @@ import { AprecartaComponent } from './apreensão/apre-carta/apre-carta.component
 import { ApretlivreteComponent } from './apreensão/apre-tlivrete/apre-tlivrete.component';
 import { AprecapComponent } from './apreensão/apre-cap/apre-cap.component';
 import { EfectivosComponent } from './efectivos-transito/efectivos/efectivos.component';
+import { ArmamentoComponent } from './efectivos-transito/armamento/armamento.component';
 
 
 const routes: Routes = [{
@@ -45,6 +46,11 @@ const routes: Routes = [{
     {
       path: 'efectivos',
       component: EfectivosComponent,
+    },
+
+    {
+      path: 'armamentos',
+      component: ArmamentoComponent,
     },
   ],
 }];

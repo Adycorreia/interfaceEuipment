@@ -30,7 +30,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Armamento',
-        link: '/pages/apre-documents',
+        link: '/pages/armamentos',
         icon: 'paper-plane-outline',
       },
       {

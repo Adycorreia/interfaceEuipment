@@ -25,6 +25,10 @@ import { DefaultService } from "./default.service";
     findById(id: Number): Observable<ResponseApp<Armamento>> {
       return this.http.get<ResponseApp<Armamento>>(`${this.url}/id/${id}`);
     }
+
+    findByIdAgenteId(id: Number): Observable<ResponseApp<Armamento>> {
+      return this.http.get<ResponseApp<Armamento>>(`${this.url}/idarma/${id}`);
+    }
   
     create(armamento: Armamento): Observable<ResponseApp<Armamento>> {
       return this.http.post<ResponseApp<Armamento>>(this.url, armamento);

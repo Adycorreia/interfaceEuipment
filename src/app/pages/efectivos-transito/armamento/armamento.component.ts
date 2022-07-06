@@ -62,7 +62,7 @@ export class ArmamentoComponent implements OnInit {
 
 
   public findOperation(): string {
-    return this.isAdd() ? 'Cadastro de nova' : 'Editar dado da';
+    return this.isAdd() ? 'Cadastro de Nova' : 'Editar dado da';
   }
 
   private isAdd(): boolean {
@@ -145,7 +145,7 @@ export class ArmamentoComponent implements OnInit {
   public openModalExclusion(event: Row) {
 
     this.ArmaSelected = event.getData();
-    this.dialogRef = this.dialogService.open(this.dialogDelete);
+    this.dialogRef = this.dialogService.open(this.dialogDelete, { context: this.ArmaSelected.nome_efectivo + this.ArmaSelected.apelido_efectivo });
 
 }
 
@@ -170,7 +170,7 @@ export class ArmamentoComponent implements OnInit {
 */
       if (event) {
         const armamento: Armamento = event.getData();
-       // console.log(documents);
+       console.log(armamento);
         this.armamentoService.findById(armamento.idarma).subscribe((res) => {
           //this.formCarta.patchValue(res.body);
           this.formArma.get('numero').setValue(armamento.numero);
@@ -207,42 +207,35 @@ export class ArmamentoComponent implements OnInit {
         numero: {
           title: 'Nº de Arma',
           type: "string",
-          width: "13%",
+          width: "10%",
         },
         marca: {
           title: 'Marca',
           type: "string",
-          sort: true,
+          width: "15%",
         },
       
         modelo: {
           title: 'Modelo',
           type: "string",
+          width: "15%",
         },
         calibre: {
           title: 'Calibre',
           type: "string",
+          width: "10%",
         },
-        
-        n_carregador: {
-          title: 'Nº de Carregador',
-          type: "string",
-  
-        },
-        n_municoes: {
-          title: 'Nº de Muniçoes',
-          type: "string",
-          width: "15%",
-        },
-
-        id_agente: {
+      
+        nome_agente: {
           title: 'Agente Nome',
           type: "string",
+          valuePrepareFunction: (cell, row) => { return row.nome_efectivo + " " + row.apelido_efectivo }
         },
 
         estado: {
           title: 'Estado',
           type: "string",
+          width: "9%",
 
         },
       

@@ -8,8 +8,9 @@
         <nb-accordion-item-header>
          Dados Geral
         </nb-accordion-item-header>
-        <nb-accordion-item-body>
 
+         <!-- Dados Biometrico-->
+        <nb-accordion-item-body>
           <div class="card-row">
             <div class="card-col">
               <nb-card size="tiny">
@@ -155,25 +156,88 @@
                 </nb-card>
               </nb-card>
             </div>
-          </div>
-            
+          </div>  
         </nb-accordion-item-body>
       </nb-accordion-item>
+  
       <nb-accordion-item>
         <nb-accordion-item-header>
          Armamento
         </nb-accordion-item-header>
+
+         <!-- Dados de Efectivos-->
         <nb-accordion-item-body>
-         <strong>Numero:</strong> 
-         <strong>Marca:</strong> 
-         <strong>Calibre:</strong>
-         <strong>Modelo:</strong> 
-         <strong>Nº Carregador:</strong> 
-         <strong>Nº Munições:</strong>  
-         <strong>Estado</strong>
+          <div class="card-row">
+           
+            <div class="card-col">
+              <nb-card size="medium">
+                <nb-card-header>Arma do Efectivo</nb-card-header>
+                <nb-card nbSpinnerSize="small">
+                  <nb-card-body>
+                    <div class="row">
+                      <div class="col-sm-7">
+                        <div class="form-group">
+                          <label for="inputFirstName"> Numero de Arma</label>
+                          <input type="number" class="form-control" value="{{idefecttest.n_arma}}" style="width: 35em;" disabled/>
+  </div>
+                      </div>
+                    
+                      <div class="col-sm-7">
+                        <div class="form-group">
+                          <label for="inputLastName">Marca</label>
+                          <input type="text" class="form-control" value="{{idefecttest.marca}}" style="width: 35em;" disabled />
+ </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputLastName">Modelo</label>
+                          <input type="text" class="form-control" value="{{idefecttest.modelo}}" disabled />
+ </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Nº de Carregador</label>
+                          <input type="text" class="form-control" value="{{idefecttest.calibre}}"  style="width: 12em;" disabled/>
+ </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Nº de Carregador</label>
+                          <input type="number" class="form-control" value="{{idefecttest.n_carregador}}" disabled/>
+ </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Nº de Munições</label>
+                          <input type="number" class="form-control" value="{{idefecttest.n_municoes}}" disabled/>
+ </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Estado da Arma</label>
+                          <input type="text" class="form-control" value="{{idefecttest.estado_arma}}" disabled/>
+ </div>
+                      </div>
+
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Data de inspeção</label>
+                          <input type="text" class="form-control" value="{{idefecttest.data_inspeArma | date: 'dd/MM/yyyy'}}" disabled/>
+ </div>
+                      </div>
+                     
+                    
+                    </div>
+               
+            
+                  </nb-card-body>
+                </nb-card>
+              </nb-card>
+            </div>
+          </div>  
         </nb-accordion-item-body>
       </nb-accordion-item>
-
+      
       <nb-accordion-item>
         <nb-accordion-item-header>
         Ferias

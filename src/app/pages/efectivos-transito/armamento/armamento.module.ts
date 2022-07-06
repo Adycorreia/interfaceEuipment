@@ -3,8 +3,9 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { NbAccordionModule, NbCardModule, NbCheckboxModule, NbStepperModule, NbToggleModule } from "@nebular/theme";
 import { ThemeModule } from "app/@theme/theme.module";
+import { ArmamentoService } from "app/services/armamento.service";
 import { EfectivosService } from "app/services/efectivo.service";
-import { Ng2SmartTableModule } from "ng2-smart-table";
+import {Ng2SmartTableModule } from "ng2-smart-table";
 import { ArmamentoComponent } from "./armamento.component";
 
 
@@ -26,7 +27,7 @@ import { ArmamentoComponent } from "./armamento.component";
   declarations: [
     ArmamentoComponent,
   ],
-  providers: [EfectivosService],
+  providers: [ArmamentoService, EfectivosService],
 
 })
 export class armamentoModule { }

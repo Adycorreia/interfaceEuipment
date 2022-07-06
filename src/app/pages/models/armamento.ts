@@ -22,6 +22,10 @@ export interface Armamento {
 
     id_agente: number;
 
+    nome_efectivo: string;
+
+    apelido_efectivo: string;
+
     creation: Date;
     
     update: Date;

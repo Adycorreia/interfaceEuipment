@@ -39,7 +39,21 @@ export interface Efectivos {
 
     fotografia: string;
 
-    assinatura: string;
+    n_arma: number;
+
+    marca: string;
+
+    modelo: string;
+
+    n_carregador: number;
+
+    n_municoes: number;
+
+    estado_arma: string;
+    
+    data_inspeArma: Date;
+
+
 }
 
 

@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogRef, NbDialogService, NbStepperComponent, NbToastrService } from '@nebular/theme';
 import { Listfuncao, Listposto, SexoEnum } from 'app/helpers/commons';
 import { Efectivos } from 'app/pages/models/efectivos';
+import { ArmamentoService } from 'app/services/armamento.service';
 import { EfectivosService } from 'app/services/efectivo.service';
 import { LocalDataSource, Ng2SmartTableComponent } from 'ng2-smart-table';
 import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
@@ -94,6 +95,7 @@ export class EfectivosComponent implements OnInit {
     private dialogService: NbDialogService,
     private toastrService: NbToastrService,
     private efectivosService: EfectivosService,
+    private armamentoService: ArmamentoService,
     private activatedRoute: ActivatedRoute,
     private router: Router, 
   ) {  }
@@ -158,7 +160,10 @@ export class EfectivosComponent implements OnInit {
     });
  }
   public openModalEfect(event: Row) {
-   // this.formEfectivo.reset();
+   this.firstForm.reset();
+   this.firstFormCont.reset();
+   this.secondForm.reset();
+   this.thirdForm.reset();
    /*
      if (event) {
        const user: User = event.getData();
@@ -346,7 +351,7 @@ private isAdd(): boolean {
       this.getListefectivos();
     });
   }
-
+  
   idefecttest:String;
 
   public onEfectSelect($event){
@@ -361,10 +366,8 @@ private isAdd(): boolean {
           this.danger = true;
           this.idefecttest= data.details[0];
           console.log(this.idefecttest);
-
-        }
-      );
-    }
+          } );
+    };
   }
 
 

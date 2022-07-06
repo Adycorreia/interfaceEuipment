@@ -11,6 +11,7 @@ import { ApretlivreteComponent } from './apreensão/apre-tlivrete/apre-tlivrete.
 import { AprecapComponent } from './apreensão/apre-cap/apre-cap.component';
 import { EfectivosComponent } from './efectivos-transito/efectivos/efectivos.component';
 import { ArmamentoComponent } from './efectivos-transito/armamento/armamento.component';
+import { FeriasComponent } from './efectivos-transito/ferias/ferias.component';
 
 
 const routes: Routes = [{
@@ -51,6 +52,11 @@ const routes: Routes = [{
     {
       path: 'armamentos',
       component: ArmamentoComponent,
+    },
+
+    {
+      path: 'ferias',
+      component: FeriasComponent,
     },
   ],
 }];

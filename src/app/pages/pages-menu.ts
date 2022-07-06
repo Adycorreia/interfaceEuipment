@@ -35,7 +35,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Ferias',
-        link: '/pages/apre-documents',
+        link: '/pages/ferias',
         icon: 'book-open-outline',
       },
       {

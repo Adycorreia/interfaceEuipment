@@ -26,6 +26,7 @@ import { CapModule } from './apreensão/apre-cap/apre-cap.module';
     NbEvaIconsModule,
     CapModule,
     
+    
 
   ],
   declarations: [

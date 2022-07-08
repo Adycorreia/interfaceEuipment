@@ -1,8 +1,9 @@
 
 <nb-card accent="info">
     <nb-card-header>
-      Cadastros Inspecao das Armamentos </nb-card-header>  
-    <nb-card-body>  
+      Registos das Ferias dos Efectivos </nb-card-header>  
+    <nb-card-body> 
+      <button style="margin-bottom: 1rem;" nbButton status="primary" (click)="openModalFerias(null)">Marcar Ferias</button>       
         <ng2-smart-table #ng2TbArma 
           [settings]="tbArmaConfig" 
           [source]="source" 

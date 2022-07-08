@@ -49,25 +49,25 @@
                         <div class="col-sm-5">
                           <div class="form-group">
                             <label for="inputFirstName">Nº ID da PN </label>
-                            <input type="text" class="form-control" value="PN{{idefecttest.id_pn}}" disabled/>
+                            <input type="text" class="form-control" value="PN{{idefecttest.id_pn}}" style="width: 10em;" disabled/>
                           </div>
                         </div>
-                        <div class="col-sm-5">
+                        <div class="col-sm-6">
                           <div class="form-group">
                             <label for="inputLastName">Posto</label>
-                            <input type="text" class="form-control" value="{{idefecttest.posto}}" disabled />
+                            <input type="text" class="form-control" value="{{idefecttest.posto}}" style="width: 15em;" disabled />
                           </div>
                         </div>
                         <div class="col-sm-5">
                           <div class="form-group">
                             <label for="inputBirthdayDate">Função</label>
-                            <input type="text" class="form-control" value="{{idefecttest.funcao}}" style="width: 15em;"disabled/>
+                            <input type="text" class="form-control" value="{{idefecttest.funcao}}" style="width: 13em;" disabled/>
                           </div>
                         </div>
-                        <div class="col-sm-5">
+                        <div class="col-sm-6">
                           <div class="form-group">
                             <label for="inputBirthdayDate">Nº Arma</label>
-                            <input type="text" class="form-control" value="{{idefecttest.funcao}}"  disabled/>
+                            <input type="text" class="form-control" value="{{idefecttest.n_arma}}" style="width: 10em;" disabled/>
                           </div>
                         </div>
                       </div>
@@ -171,33 +171,33 @@
            
             <div class="card-col">
               <nb-card size="medium">
-                <nb-card-header>Arma do Efectivo</nb-card-header>
+                <nb-card-header>Dados da Arma</nb-card-header>
                 <nb-card nbSpinnerSize="small">
                   <nb-card-body>
                     <div class="row">
-                      <div class="col-sm-7">
+                      <div class="col-sm-5">
                         <div class="form-group">
-                          <label for="inputFirstName"> Numero de Arma</label>
-                          <input type="number" class="form-control" value="{{idefecttest.n_arma}}" style="width: 35em;" disabled/>
+                          <label for="inputFirstName">Numero de Arma</label>
+                          <input type="number" class="form-control" value="{{idefecttest.n_arma}}" style="width: 15em;" disabled/>
   </div>
                       </div>
                     
-                      <div class="col-sm-7">
+                      <div class="col-sm-5">
                         <div class="form-group">
                           <label for="inputLastName">Marca</label>
-                          <input type="text" class="form-control" value="{{idefecttest.marca}}" style="width: 35em;" disabled />
+                          <input type="text" class="form-control" value="{{idefecttest.marca}}" style="width: 15em;" disabled />
  </div>
                       </div>
                       <div class="col-sm-5">
                         <div class="form-group">
                           <label for="inputLastName">Modelo</label>
-                          <input type="text" class="form-control" value="{{idefecttest.modelo}}" disabled />
+                          <input type="text" class="form-control" value="{{idefecttest.modelo}}" style="width: 25em;" disabled />
  </div>
                       </div>
                       <div class="col-sm-5">
                         <div class="form-group">
-                          <label for="inputBirthdayDate">Nº de Carregador</label>
-                          <input type="text" class="form-control" value="{{idefecttest.calibre}}"  style="width: 12em;" disabled/>
+                          <label for="inputBirthdayDate">Calibre</label>
+                          <input type="text" class="form-control" value="{{idefecttest.calibre}}"  style="width: 15em;" disabled/>
  </div>
                       </div>
                       <div class="col-sm-5">
@@ -330,12 +330,12 @@
 
 
  <ng-template #dialogEfectivo >
- <nb-card style="width: 45em" accent="danger">
+ <nb-card style="width: 50em" accent="danger">
   <nb-card-header class="titulo"  >  {{ findOperation() }} {{data}}</nb-card-header>  
   <nb-card-body >
     <nb-stepper #stepper>
                          <!-- Dados Pessoais-->
-      <nb-step [stepControl]="firstForm" label="Dados Pessoais">
+      <nb-step [stepControl]="firstForm" label="Dados Pessoais(DP)">
         <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
 
           <label for="inputFirstName">Nome </label> 
@@ -368,7 +368,7 @@
       </nb-step>
     
                           <!-- Dados Pessoais Continuaçãol--> 
-      <nb-step [stepControl]="firstFormCont" label="Dados Pessoais(Continuação)">
+      <nb-step [stepControl]="firstFormCont" label="DP(Continuação)">
            <form [formGroup]="firstFormCont" (ngSubmit)="onFirstContSubmit()" class="step-container">
                     
                  <label for="inputFirstName">Numero de NIF </label>
@@ -469,6 +469,62 @@
           </nb-card-footer>
         </form>
       </nb-step>
+
+                           <!-- Dados de Armamento-->
+                           <nb-step [stepControl]="fortForm" label="Armamento">
+                            <form [formGroup]="fortForm" (ngSubmit)="onFortFormSubmit()" class="step-container">
+                    
+                              <label for="inputFirstName">Numero de Arma</label>
+                              <div class="input-group">
+                                <input nbInput type="number" placeholder="Introduza o numero de Arma (obrigatório)" class="form-control" id="n_arma" formControlName="n_arma"
+                                      >
+                              </div>
+                              <br>
+                              <label for="inputFirstName">Marca</label>
+                              <div class="input-group">
+                                <input nbInput type="text" placeholder="Introduza a marca" class="form-control" id="marca" formControlName="marca"
+                                      >
+                              </div>
+                              <br>
+                              <label for="inputFirstName">Modelo</label>
+                              <div class="input-group">
+                                <input nbInput type="text" placeholder="Introduza o modelo" class="form-control" id="modelo" formControlName="modelo"
+                                      >
+                              </div>
+                              <br>
+                              <br>
+                              <label for="inputFirstName">Calibre</label>
+                              <div class="input-group">
+                                <input nbInput type="text" placeholder="Introduza o calibre" class="form-control" id="calibre" formControlName="calibre"
+                                      >
+                              </div>
+                              <br>
+                              <label for="inputFirstName">Quantidade de Carregador</label>
+                              <div class="input-group">
+                                <input nbInput type="text" placeholder="Introduza Calibre" class="form-control" style="width: 15em;" id="n_carregador" formControlName="n_carregador"
+                                      >
+                              </div>
+                              <br>
+                              <label for="inputFirstName">Quantidade de Munições</label>
+                              <div class="input-group">
+                                <input nbInput type="number" placeholder="Introduza quantidade de municoes" class="form-control" style="width: 15em;" id="n_municoes" formControlName="n_municoes"
+                                      >
+                              </div>
+                              <!--
+                              <br>
+                              <label for="inputFirstName">Estado da Arma</label>
+                              <div class="input-group">
+                                <input nbInput type="text" placeholder="Introduza  estado de arma" class="form-control" id="estado_arma" formControlName="estado_arma"
+                                      >
+                              </div>
+                            -->
+                            <br>
+                              <nb-card-footer>
+                                <button nbButton  status="danger" nbStepperPrevious >Voltar</button>
+                                <button class="btn-action-modal" nbButton status="primary" nbStepperNext>Seguinte</button>
+                              </nb-card-footer>
+                            </form>
+                          </nb-step>
 
                           <!-- Finalização do Cadastro-->
       <nb-step [stepControl]="thirdForm" [hidden]="true" label="Finalizado">

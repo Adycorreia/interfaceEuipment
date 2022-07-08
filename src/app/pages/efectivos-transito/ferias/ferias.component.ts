@@ -2,18 +2,18 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogRef, NbDialogService, NbToastrService } from '@nebular/theme';
-import { Armamento } from 'app/pages/models/armamento';
-import { ArmamentoService } from 'app/services/armamento.service';
+import { Ferias } from 'app/pages/models/ferias';
 import { EfectivosService } from 'app/services/efectivo.service';
+import { FeriasService } from 'app/services/ferias.service';
 import { LocalDataSource, Ng2SmartTableComponent } from 'ng2-smart-table';
 import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
 
 @Component({
-  selector: 'armamento',
-  templateUrl: './armamento.component.html',
-  styleUrls: ['./armamento.component.scss']
+  selector: 'ferias',
+  templateUrl: './ferias.component.html',
+  styleUrls: ['./ferias.component.scss']
 })
-export class ArmamentoComponent implements OnInit {
+export class FeriasComponent implements OnInit {
 
   @ViewChild('ng2TbArma') ng2TbArma: Ng2SmartTableComponent;
   @ViewChild('dialogArma') dialogArma: TemplateRef<any>;
@@ -25,7 +25,7 @@ export class ArmamentoComponent implements OnInit {
   constructor(
               private formBuilder: FormBuilder,
               private dialogService: NbDialogService,
-              private armamentoService: ArmamentoService,
+              private feriasService: FeriasService,
               private efectivoService: EfectivosService,
               private toastrService: NbToastrService,
               private activatedRoute: ActivatedRoute,
@@ -35,14 +35,14 @@ export class ArmamentoComponent implements OnInit {
   ngOnInit(): void {
    // this.getListarmamento();
     this.setConfigTbArma();
-    this.getListefectivo();
+    this.getListeferias();
   }
 
-  tbArmaData: Armamento[];
+  tbArmaData: Ferias[];
   tbArmaConfig: Object;
   tbarmConfig: Object;
   efectivocList: Object;
-  ArmaSelected: Armamento;
+  ArmaSelected: Ferias;
 
 
   formArma = this.formBuilder.group({
@@ -84,18 +84,18 @@ export class ArmamentoComponent implements OnInit {
 
   onSaveCarta(){
 
-    this.armamentoService.create(this.findFormAdd()).subscribe((data) => {
+    this.feriasService.create(this.findFormAdd()).subscribe((data) => {
     
       this.toastrService.success('Tarefa criada com sucesso.', 'Sucesso');
       this.dialogRef.close();
       //this.refresh();
-      this.getListefectivo();
+      this.getListeferias();
    
     });
   }
 
-  getListefectivo(){
-    this.efectivoService.getListEfectivos().subscribe(
+  getListeferias(){
+    this.feriasService.getListFerias().subscribe(
       (data: any) => {
         this.efectivocList = data.details;
         this.source.load(data.details);
@@ -118,18 +118,18 @@ export class ArmamentoComponent implements OnInit {
   }
 */
   public btnDelete() {
-    this.armamentoService.delete(this.ArmaSelected.idarma).subscribe((res) => {
+    this.feriasService.delete(this.ArmaSelected.idferia).subscribe((res) => {
       //console.log(this.docSelected.iddoc);
      // this.tbDocData = this.tbDocData.filter(((documents) => documents.iddoc !== this.docSelected.iddoc));
       this.toastrService.success('Efectivo excluída com sucesso.', 'Sucesso');
       this.dialogRef.close();
      // this.ng2TbCarta.source.refresh();
-      this.getListefectivo();
+      this.getListeferias();
     });
   }
 
   private editDoc(){
-    this.armamentoService.edit(this.findFormAdd()).subscribe((res) => {
+    this.feriasService.edit(this.findFormAdd()).subscribe((res) => {
      /* this.tbDocData = this.tbDocData.map((documents: Documents) => {
         if (documents.iddoc === this.formCarta.value.iddoc) 
         //return new Documents(res.body);
@@ -138,7 +138,7 @@ export class ArmamentoComponent implements OnInit {
       this.toastrService.success('Dados editado com sucesso.', 'Sucesso');
       this.dialogRef.close();
      // this.refresh();
-      this.getListefectivo();
+      this.getListeferias();
     });
   }
 
@@ -149,7 +149,7 @@ export class ArmamentoComponent implements OnInit {
 
 }
 
-  public openModalDoc(event: Row) {
+  public openModalFerias(event: Row) {
     this.formArma.reset();
    /*
      if (event) {
@@ -163,25 +163,27 @@ export class ArmamentoComponent implements OnInit {
    }
 
    public openModalEdiDoc(event: Row) {
-    this.armamentoService.getListArmamentos().subscribe((res) => {
+    this.feriasService.getListFerias().subscribe((res) => {
      /* this.userSelected = res.body;
       this.formCarta.reset();
       this.formCarta.get('tipodoc').patchValue(StatusEnum.CARTA);
 */
       if (event) {
-        const armamento: Armamento = event.getData();
-       console.log(armamento);
-        this.armamentoService.findById(armamento.idarma).subscribe((res) => {
+        const ferias: Ferias = event.getData();
+       console.log(ferias);
+        this.feriasService.findById(ferias.id_agente).subscribe((res) => {
           //this.formCarta.patchValue(res.body);
-          this.formArma.get('numero').setValue(armamento.numero);
-          this.formArma.get('marca').setValue(armamento.marca);
-          this.formArma.get('modelo').setValue(armamento.modelo);
-          this.formArma.get('calibre').setValue(armamento.calibre);
-          this.formArma.get('n_carregador').setValue(armamento.n_carregador);
-          this.formArma.get('n_municoes').setValue(armamento.n_municoes);
-          this.formArma.get('id_agente').setValue(armamento.id_agente);
-          this.formArma.get('estado').setValue(armamento.estado);
-          this.formArma.get('obs').setValue(armamento.obs);
+          this.formArma.get('id_agente').setValue(ferias.id_agente);
+          this.formArma.get('data_inicio').setValue(ferias.data_inicio);
+          this.formArma.get('data_fim').setValue(ferias.data_fim);
+          this.formArma.get('nome_efectivo').setValue(ferias.nome_efectivo);
+          this.formArma.get('apelido_efectivo').setValue(ferias.apelido_efectivo);
+          this.formArma.get('local_feria').setValue(ferias.local_feria);
+          this.formArma.get('entrega_arma').setValue(ferias.entrega_arma);
+          this.formArma.get('n_oficio').setValue(ferias.n_oficio);
+          this.formArma.get('despacho').setValue(ferias.despacho);
+          this.formArma.get('estado').setValue(ferias.estado);
+          this.formArma.get('obs').setValue(ferias.obs);
           
          
         });
@@ -193,48 +195,57 @@ export class ArmamentoComponent implements OnInit {
    private setConfigTbArma() {
     this.tbArmaConfig = {
       mode: 'external',
-      actions: { columnTitle: 'Ações', add: false, delete: false, position: 'right' },
+      actions: { columnTitle: 'Ações', add: false, position: 'right' },
       edit: {
-        editButtonContent: '<span class="nb-edit" width: "9%"  title="Editar"></span>',
+        editButtonContent: '<span class="nb-edit"  title="Editar"></span>',
+      },
+      delete: {
+        deleteButtonContent: '<span class="nb-trash"  title="Excluir"></span>',
       },
       
       noDataMessage: 'Nenhum Arma cadastrado.',
 
       columns: {
-        n_arma: {
-          title: 'Nº de Arma',
+        id_agente: {
+          title: 'Efectivos',
           type: "string",
-          width: "12%",
+          width: "35%",
+          valuePrepareFunction: (cell, row) => { return row.nome_efectivo + " " + row.apelido_efectivo }
         },
-        marca: {
-          title: 'Marca',
+        
+        data_inicio: {
+          title: 'Incio Feria',
+          type: "string",
+          width: "13%",
+        },
+        data_fim: {
+          title: 'Fim Feria',
           type: "string",
           width: "13%",
         },
       
-        calibre: {
-          title: 'Calibre',
+        local_feria: {
+          title: 'Local',
           type: "string",
-          width: "11%",
+          width: "16%",
         },
       
-        nome: {
-          title: 'Nome Completo dos efectivos',
+        entrega_arma: {
+          title: 'Entregou Arma',
           type: "string",
-          width: "29%",
-          valuePrepareFunction: (cell, row) => { return row.nome + " " + row.apelido }
+          width: "32%",
         },
 
-        data_inspeArma: {
-          title: 'Data de inspecao',
+        n_oficio: {
+          title: 'Oficio',
           type: "string",
-          width: "13%",
+          width: "9%",
         },
 
-        estado_arma: {
-          title: 'Estado',
+        despacho: {
+          title: 'Despacho',
           type: "string",
-          width: "11%",
+          width: "9%",
 
         },
       

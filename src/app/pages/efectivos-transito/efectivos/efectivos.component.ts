@@ -28,6 +28,8 @@ export class EfectivosComponent implements OnInit {
    secondForm: FormGroup;
    thirdForm: FormGroup;
    firstFormCont: FormGroup;
+   fortForm: FormGroup;
+   
 
    aria: boolean = true
    danger: boolean = false;
@@ -143,8 +145,6 @@ export class EfectivosComponent implements OnInit {
      
     });
 
-    
-  
     this.secondForm = this.formBuilder.group({
       idagente: [null],
       id_pn: ['', Validators.required],
@@ -158,12 +158,25 @@ export class EfectivosComponent implements OnInit {
       email: [null],
       obs: [null],
     });
+
+    this.fortForm = this.formBuilder.group({
+      idagente: [null],
+      n_arma: ['', Validators.required],
+      marca: ['', Validators.required],
+      modelo: ['', Validators.required],
+      calibre: ['', Validators.required],
+      n_carregador: ['', Validators.required],
+      n_municoes: ['', Validators.required],
+      estado_arma: [null],
+   
+    });
  }
   public openModalEfect(event: Row) {
    this.firstForm.reset();
    this.firstFormCont.reset();
    this.secondForm.reset();
    this.thirdForm.reset();
+   this.fortForm.reset();
    /*
      if (event) {
        const user: User = event.getData();
@@ -214,6 +227,13 @@ export class EfectivosComponent implements OnInit {
   
   }
 
+  onFortFormSubmit() {
+    this.thirdForm.markAsDirty();
+    this.toastrService.warning('Existem um ou mais campos obrigatórios que não foram preenchidos.', 'Atenção');
+    //this.firstForm.get('contacto').markAsTouched();
+  
+  }
+
 
   getListefectivos(){
     this.efectivosService.getListEfectivos().subscribe(
@@ -255,7 +275,15 @@ findFormAdd(){
 
      contacto: this.thirdForm.value.contacto,
      email: this.thirdForm.value.email, 
-     obs: this.thirdForm.value.obs,  
+     obs: this.thirdForm.value.obs, 
+     
+     n_arma: this.fortForm.value.n_arma, 
+     marca: this.fortForm.value.marca, 
+     modelo: this.fortForm.value.modelo,
+     calibre: this.fortForm.value.calibre,  
+     n_carregador: this.fortForm.value.n_carregador,
+     n_municoes: this.fortForm.value.n_municoes, 
+     estado_arma: this.fortForm.value.estado_arma, 
    } 
   // console.log(reseverModel);
    return reseverModel;
@@ -293,6 +321,15 @@ findFormAdd(){
         this.thirdForm.get('contacto').setValue(efectivos.contacto);
         this.thirdForm.get('email').setValue(efectivos.email);
         this.thirdForm.get('obs').setValue(efectivos.obs);
+
+        this.fortForm.get('idagente').setValue(efectivos.idagente);
+        this.fortForm.get('n_arma').setValue(efectivos.n_arma);
+        this.fortForm.get('marca').setValue(efectivos.marca);
+        this.fortForm.get('modelo').setValue(efectivos.modelo);
+        this.fortForm.get('calibre').setValue(efectivos.calibre);
+        this.fortForm.get('n_carregador').setValue(efectivos.n_carregador);
+        this.fortForm.get('n_municoes').setValue(efectivos.n_municoes);
+        this.fortForm.get('estado_arma').setValue(efectivos.estado_arma);
               
       });
     }

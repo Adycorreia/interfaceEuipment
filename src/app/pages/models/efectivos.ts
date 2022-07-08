@@ -45,6 +45,8 @@ export interface Efectivos {
 
     modelo: string;
 
+    calibre: string;
+
     n_carregador: number;
 
     n_municoes: number;

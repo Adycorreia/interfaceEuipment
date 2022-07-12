@@ -40,3 +40,8 @@ export enum UserRoles{
   analise = "Analise",
   despacho = "despacho",
 }
+
+export enum FeriasGoz{
+  Nacional = "Nacional Territorio",
+  Estrangeiro = "Estrangeiro",
+}

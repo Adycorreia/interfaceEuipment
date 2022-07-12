@@ -22,14 +22,15 @@ import { DefaultService } from "./default.service";
       return this.http.get<ResponseApp<Ferias[]>>(`${this.url}`);
       }
   
-    findById(id: Number): Observable<ResponseApp<Ferias>> {
-      return this.http.get<ResponseApp<Ferias>>(`${this.url}/id/${id}`);
+      findById(id: Number): Observable<ResponseApp<Ferias>> {
+        return this.http.get<ResponseApp<Ferias>>(`${this.url}/id/${id}`);
+      }
+
+    findByIdEfect(id: Number): Observable<ResponseApp<Ferias>> {
+      return this.http.get<ResponseApp<Ferias>>(`${this.url}/idferia/${id}`);
     }
 
-    findByIdAgenteId(id: Number): Observable<ResponseApp<Ferias>> {
-      return this.http.get<ResponseApp<Ferias>>(`${this.url}/idarma/${id}`);
-    }
-  
+      
     create(ferias: Ferias): Observable<ResponseApp<Ferias>> {
       return this.http.post<ResponseApp<Ferias>>(this.url, ferias);
     }

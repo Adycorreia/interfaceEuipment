@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogRef, NbDialogService, NbToastrService } from '@nebular/theme';
+import { FeriasGoz } from 'app/helpers/commons';
 import { Ferias } from 'app/pages/models/ferias';
 import { EfectivosService } from 'app/services/efectivo.service';
 import { FeriasService } from 'app/services/ferias.service';
@@ -15,8 +16,8 @@ import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
 })
 export class FeriasComponent implements OnInit {
 
-  @ViewChild('ng2TbArma') ng2TbArma: Ng2SmartTableComponent;
-  @ViewChild('dialogArma') dialogArma: TemplateRef<any>;
+  @ViewChild('ng2Tbferia') ng2Tbferia: Ng2SmartTableComponent;
+  @ViewChild('dialogferia') dialogferia: TemplateRef<any>;
   @ViewChild('dialogDelete') dialogDelete: TemplateRef<any>;
 
   dialogRef: NbDialogRef<any>;
@@ -34,29 +35,34 @@ export class FeriasComponent implements OnInit {
 
   ngOnInit(): void {
    // this.getListarmamento();
-    this.setConfigTbArma();
+    this.setConfigTbFeria();
     this.getListeferias();
+    
   }
 
+  selectFeriaGz =[
+    { value: FeriasGoz.Nacional, x: "Territorio Nacional"},
+    { value: FeriasGoz.Estrangeiro, x: "Estrangeiro"}
+  ]
+
+
   tbArmaData: Ferias[];
-  tbArmaConfig: Object;
+  tbFeriasConfig: Object;
   tbarmConfig: Object;
   efectivocList: Object;
-  ArmaSelected: Ferias;
+  FeriaSelected: Ferias;
 
 
-  formArma = this.formBuilder.group({
+  formFerias = this.formBuilder.group({
 
-    idarma: [null],
-    numero: [null, Validators.required],
-    marca: [null, [Validators.required]],
-    modelo:  [null, Validators.required],
-    calibre:  [null, Validators.required],
-    n_carregador:[null, Validators.required], 
-    n_municoes:[null, Validators.required],
-    estado:[null, Validators.required],
+    idferia: [null],
+    data_inicio: [null, Validators.required],
+    data_fim: [null, [Validators.required]],
+    local_feria:  [null, Validators.required],
+    entrega_arma:[null, Validators.required], 
+    n_oficio:[null],
+    despacho:[null],
     id_agente:[null, Validators.required],
-    fotografia:[null, Validators.required],
     obs:[null],
   });
 
@@ -66,7 +72,7 @@ export class FeriasComponent implements OnInit {
   }
 
   private isAdd(): boolean {
-    return !this.formArma.get('idarma').value;
+    return !this.formFerias.get('idferia').value;
   }
   
    public btnSave() {
@@ -75,15 +81,35 @@ export class FeriasComponent implements OnInit {
     else this.editDoc();
   }
 
+ // private findFormAdd() {
+
+    //this.formArma.get('agente').setValue("1");
+   // const doc = this.formFerias.value;
+   // return doc;
+  //}
+
   private findFormAdd() {
 
     //this.formArma.get('agente').setValue("1");
-    const doc = this.formArma.value;
-    return doc;
+    const editarFeria = <Ferias> {
+    
+      idferia: this.formFerias.value.idferia,
+      data_inicio: this.formFerias.value.data_inicio,
+      data_fim: this.formFerias.value.data_fim,
+      local_feria: this.formFerias.value.local_feria,
+      entrega_arma: this.formFerias.value.entrega_arma,
+      n_oficio: this.formFerias.value.n_oficio,
+      despacho: this.formFerias.value.despacho,
+      id_agente: this.formFerias.value.id_agente,
+      obs: this.formFerias.value.obs,
+  
+    }
+
+    return editarFeria;
   }
 
   onSaveCarta(){
-
+   
     this.feriasService.create(this.findFormAdd()).subscribe((data) => {
     
       this.toastrService.success('Tarefa criada com sucesso.', 'Sucesso');
@@ -99,7 +125,18 @@ export class FeriasComponent implements OnInit {
       (data: any) => {
         this.efectivocList = data.details;
         this.source.load(data.details);
-        console.log(data);
+       console.log(data);
+      },
+      (err) => {}
+    );
+  }
+
+  getListefectivo(){
+    this.efectivoService.getListEfectivos().subscribe(
+      (data: any) => {
+        this.efectivocList = data.details;
+        //this.source.load(data.details);
+       // console.log(data);
       },
       (err) => {}
     );
@@ -118,10 +155,10 @@ export class FeriasComponent implements OnInit {
   }
 */
   public btnDelete() {
-    this.feriasService.delete(this.ArmaSelected.idferia).subscribe((res) => {
+    this.feriasService.delete(this.FeriaSelected.idferia).subscribe((res) => {
       //console.log(this.docSelected.iddoc);
      // this.tbDocData = this.tbDocData.filter(((documents) => documents.iddoc !== this.docSelected.iddoc));
-      this.toastrService.success('Efectivo excluída com sucesso.', 'Sucesso');
+      this.toastrService.success('Feria excluída com sucesso.', 'Sucesso');
       this.dialogRef.close();
      // this.ng2TbCarta.source.refresh();
       this.getListeferias();
@@ -143,14 +180,15 @@ export class FeriasComponent implements OnInit {
   }
 
   public openModalExclusion(event: Row) {
-
-    this.ArmaSelected = event.getData();
-    this.dialogRef = this.dialogService.open(this.dialogDelete, { context: this.ArmaSelected.nome_efectivo + this.ArmaSelected.apelido_efectivo });
+    this.getListefectivo();
+    this.FeriaSelected = event.getData();
+    this.dialogRef = this.dialogService.open(this.dialogDelete, { context: this.FeriaSelected.nome_efectivo +  this.FeriaSelected.apelido_efectivo });
 
 }
 
   public openModalFerias(event: Row) {
-    this.formArma.reset();
+    this.formFerias.reset();
+    this.getListefectivo();
    /*
      if (event) {
        const user: User = event.getData();
@@ -159,10 +197,12 @@ export class FeriasComponent implements OnInit {
        });
      }*/
      
-   this.dialogRef = this.dialogService.open(this.dialogArma);
+   this.dialogRef = this.dialogService.open(this.dialogferia);
    }
 
    public openModalEdiDoc(event: Row) {
+
+    this.getListefectivo();
     this.feriasService.getListFerias().subscribe((res) => {
      /* this.userSelected = res.body;
       this.formCarta.reset();
@@ -170,30 +210,31 @@ export class FeriasComponent implements OnInit {
 */
       if (event) {
         const ferias: Ferias = event.getData();
-       console.log(ferias);
-        this.feriasService.findById(ferias.id_agente).subscribe((res) => {
+       //console.log(ferias);
+          this.feriasService.findById(ferias.idferia).subscribe((res) => {
           //this.formCarta.patchValue(res.body);
-          this.formArma.get('id_agente').setValue(ferias.id_agente);
-          this.formArma.get('data_inicio').setValue(ferias.data_inicio);
-          this.formArma.get('data_fim').setValue(ferias.data_fim);
-          this.formArma.get('nome_efectivo').setValue(ferias.nome_efectivo);
-          this.formArma.get('apelido_efectivo').setValue(ferias.apelido_efectivo);
-          this.formArma.get('local_feria').setValue(ferias.local_feria);
-          this.formArma.get('entrega_arma').setValue(ferias.entrega_arma);
-          this.formArma.get('n_oficio').setValue(ferias.n_oficio);
-          this.formArma.get('despacho').setValue(ferias.despacho);
-          this.formArma.get('estado').setValue(ferias.estado);
-          this.formArma.get('obs').setValue(ferias.obs);
+          this.formFerias.get('idferia').setValue(ferias.idferia);
+          this.formFerias.get('id_agente').setValue(ferias.id_agente);
+          this.formFerias.get('data_inicio').setValue(ferias.data_inicio);
+          this.formFerias.get('data_fim').setValue(ferias.data_fim);
+          //this.formFerias.get('nome_efectivo').setValue(ferias.nome_efectivo);
+         // this.formFerias.get('apelido_efectivo').setValue(ferias.apelido_efectivo);
+          this.formFerias.get('local_feria').setValue(ferias.local_feria);
+          this.formFerias.get('entrega_arma').setValue(ferias.entrega_arma);
+          this.formFerias.get('n_oficio').setValue(ferias.n_oficio);
+          this.formFerias.get('despacho').setValue(ferias.despacho);
+         // this.formFerias.get('estado').setValue(ferias.estado);
+          this.formFerias.get('obs').setValue(ferias.obs);
           
          
         });
       }
 
-      this.dialogRef = this.dialogService.open(this.dialogArma);
+      this.dialogRef = this.dialogService.open(this.dialogferia);
     });
   }
-   private setConfigTbArma() {
-    this.tbArmaConfig = {
+   private setConfigTbFeria() {
+    this.tbFeriasConfig = {
       mode: 'external',
       actions: { columnTitle: 'Ações', add: false, position: 'right' },
       edit: {
@@ -207,7 +248,7 @@ export class FeriasComponent implements OnInit {
 
       columns: {
         id_agente: {
-          title: 'Efectivos',
+          title: 'Nome Completo dos Efectivos',
           type: "string",
           width: "35%",
           valuePrepareFunction: (cell, row) => { return row.nome_efectivo + " " + row.apelido_efectivo }
@@ -231,9 +272,9 @@ export class FeriasComponent implements OnInit {
         },
       
         entrega_arma: {
-          title: 'Entregou Arma',
+          title: 'Entrega de Arma',
           type: "string",
-          width: "32%",
+          width: "15%",
         },
 
         n_oficio: {
@@ -256,3 +297,7 @@ export class FeriasComponent implements OnInit {
 
 
 }
+
+
+
+

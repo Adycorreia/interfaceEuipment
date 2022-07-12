@@ -8,6 +8,7 @@ import { Listfuncao, Listposto, SexoEnum } from 'app/helpers/commons';
 import { Efectivos } from 'app/pages/models/efectivos';
 import { ArmamentoService } from 'app/services/armamento.service';
 import { EfectivosService } from 'app/services/efectivo.service';
+import { FeriasService } from 'app/services/ferias.service';
 import { LocalDataSource, Ng2SmartTableComponent } from 'ng2-smart-table';
 import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
 import { emitWarning } from 'process';
@@ -97,6 +98,7 @@ export class EfectivosComponent implements OnInit {
     private dialogService: NbDialogService,
     private toastrService: NbToastrService,
     private efectivosService: EfectivosService,
+    private feriasService: FeriasService,
     private armamentoService: ArmamentoService,
     private activatedRoute: ActivatedRoute,
     private router: Router, 
@@ -338,8 +340,6 @@ findFormAdd(){
   });
 }
 
-
-
 private isAdd(): boolean {
   return !this.thirdForm.get('idagente').value;
 }
@@ -390,6 +390,7 @@ private isAdd(): boolean {
   }
   
   idefecttest:String;
+  ideferiaAgente:String
 
   public onEfectSelect($event){
     console.log($event);
@@ -404,6 +405,14 @@ private isAdd(): boolean {
           this.idefecttest= data.details[0];
           console.log(this.idefecttest);
           } );
+
+          this.feriasService.findByIdEfect(idagente).subscribe(
+            (data: any) => {
+              console.log(data.details[0]);
+              //this.danger = true;
+              this.ideferiaAgente= data.details[0];
+              console.log(this.ideferiaAgente);
+              } );
     };
   }
 

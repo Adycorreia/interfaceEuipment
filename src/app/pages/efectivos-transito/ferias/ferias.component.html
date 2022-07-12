@@ -4,8 +4,8 @@
       Registos das Ferias dos Efectivos </nb-card-header>  
     <nb-card-body> 
       <button style="margin-bottom: 1rem;" nbButton status="primary" (click)="openModalFerias(null)">Marcar Ferias</button>       
-        <ng2-smart-table #ng2TbArma 
-          [settings]="tbArmaConfig" 
+        <ng2-smart-table #ng2Tbferia 
+          [settings]="tbFeriasConfig" 
           [source]="source" 
            (edit)="openModalEdiDoc($event)" 
           (delete)="openModalExclusion($event)">          
@@ -14,59 +14,54 @@
  </nb-card>
 
 
-  <ng-template #dialogArma let-data let-ref="dialogRef">
+  <ng-template #dialogferia let-data let-ref="dialogRef">
     <nb-card class="template">
-      <nb-card-header>{{ findOperation() }} de Arma</nb-card-header>
+      <nb-card-header>Marcar Ferias</nb-card-header>
       <nb-card-body>
-        <form [formGroup]="formArma" autocomplete="true">
+        <form [formGroup]="formFerias" autocomplete="true">
     
-          <div class="form-group">
-            <label for="numero">Introduza o numero de Arma *</label>
-    
-            <input class="form-control" id="numero" type="number" formControlName="numero" value placeholder="Nº de Arma">
-          </div>  
-  
-          <div class="form-group">
-            <label for="marca">Marca da Arma</label>
-            <input id="marca" type="text" class="form-control" formControlName="marca" placeholder="Marca">
-          </div>
-  
-          <div class="form-group">
-            <label for="modelo">Modelo</label>
-            <input id="modelo" type="text" class="form-control" formControlName="modelo" placeholder="Modelo">
-          </div>
-
-          <div class="form-group" >
-            <label for="calibre">Calibre</label>
-            <input id="calibre" type="text" class="form-control" formControlName="calibre"  >
-          </div>
-
-          <div class="form-group" >
-            <label for="n_carregador">Nº de Carregador</label>
-            <input id="n_carregador" type="number" class="form-control" formControlName="n_carregador"  >
-          </div>
-
-          <div class="form-group" >
-            <label for="n_municoes">Nº de Municoes</label>
-            <input id="n_municoes" type="number" class="form-control" formControlName="n_municoes"  >
-          </div>
-     
           <label for="id_agente">Nome do Efectivo Completo</label>
           <div class="form-group" >
            <!-- <input id="agente" type="number" class="form-control" formControlName="agente"  > -->
-            <nb-select placeholder="Selecione nome do Efectivo" [(selected)]="selectedItem"  style="width: 22em"  id="id_agente" formControlName="id_agente">
+            <nb-select  placeholder="Selecione nome do Efectivo" [(selected)]="selectedItem3" type="number" style="width: 45em"  id="id_agente" formControlName="id_agente">
               <nb-option [value]="nomes.idagente" *ngFor="let nomes of efectivocList"> {{nomes.nome}} {{nomes.apelido}}</nb-option>
             </nb-select>
           </div>
 
+          <div class="form-group">
+            <label for="data_inicio">Introduza data do inicio da Feria</label>
+    
+            <input class="form-control" id="data_inicio" type="date" formControlName="data_inicio" value placeholder="Data Inicio">
+          </div>  
+  
+          <div class="form-group">
+            <label for="data_fim">Introduza data do Fim da Feria</label>
+            <input id="data_fim" type="date" class="form-control" formControlName="data_fim" placeholder="Data Fim">
+          </div>
+
+          <label for="local_feria">Introduza onde vai ser gozados as Ferias</label>
+          <div class="form-group">
+            <nb-select placeholder="Selecione local" [(selected)]="selectedItem1" type="text" style="width: 22em"  id="local_feria" formControlName="local_feria">
+              <nb-option [value]="nomes.x" *ngFor="let nomes of selectFeriaGz"> {{nomes.x}}</nb-option>
+            </nb-select>
+          </div>
+      
+          <label for="entrega_arma">Entregou à Arma</label>
           <div class="form-group" >
-            <label for="estado">Estado da Arma</label>
-            <input id="estado" type="text" class="form-control" formControlName="estado"  >
+            <nb-select placeholder="Entregou à Arma" [(selected)]="selectedItem2" type="text" id="entrega_arma" formControlName="entrega_arma">
+              <nb-option value="SIM">SIM</nb-option>
+              <nb-option value="NÃO">NÃO</nb-option>
+            </nb-select>
           </div>
 
           <div class="form-group" >
-            <label for="data_apreensao">Observações</label>
-            <textarea class="form-control"  formControlName="obs" id="obs" type="obs" nbInput placeholder="Escrever Observações" >
+            <label for="n_oficio">Nº de oficio PF</label>
+            <input id="n_oficio" type="text" class="form-control" formControlName="n_oficio"  >
+          </div>
+
+          <div class="form-group" >
+            <label for="obs">Observações</label>
+            <textarea class="form-control"  formControlName="obs" id="obs" type="text" nbInput placeholder="Escrever Observações" >
             </textarea>
           </div>
         
@@ -83,9 +78,9 @@
 
   <ng-template #dialogDelete let-data let-ref="dialogRef">
     <nb-card>
-      <nb-card-header>ELIMINAR ARMA</nb-card-header>
+      <nb-card-header>ELIMINAR FERIA</nb-card-header>
       <nb-card-body>
-        Tens certeza que deseja excluir Arma do efectivo <span style="font-weight: bold">{{ data }}</span>  ?  
+        Tens certeza que deseja excluir Feria do efectivo <span style="font-weight: bold"> {{ data }}</span>  ?  
       </nb-card-body>
       <nb-card-footer>
         <button nbButton  status="danger" (click)="ref.close()">Cancelar</button>
@@ -95,3 +90,5 @@
   </ng-template>
 
  
+
+  

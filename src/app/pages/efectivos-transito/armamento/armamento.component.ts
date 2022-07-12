@@ -1,12 +1,15 @@
+import { variable } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogRef, NbDialogService, NbToastrService } from '@nebular/theme';
 import { Armamento } from 'app/pages/models/armamento';
+import { Efectivos } from 'app/pages/models/efectivos';
 import { ArmamentoService } from 'app/services/armamento.service';
 import { EfectivosService } from 'app/services/efectivo.service';
 import { LocalDataSource, Ng2SmartTableComponent } from 'ng2-smart-table';
 import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
+import { __values } from 'tslib';
 
 @Component({
   selector: 'armamento',
@@ -47,26 +50,28 @@ export class ArmamentoComponent implements OnInit {
 
   formArma = this.formBuilder.group({
 
-    idarma: [null],
-    numero: [null, Validators.required],
-    marca: [null, [Validators.required]],
-    modelo:  [null, Validators.required],
-    calibre:  [null, Validators.required],
+   // idarma: [null],
+   // numero: [null],
+   // marca: [null],
+   // modelo:  [null],
+   // calibre:  [null],
     n_carregador:[null, Validators.required], 
     n_municoes:[null, Validators.required],
-    estado:[null, Validators.required],
-    id_agente:[null, Validators.required],
-    fotografia:[null, Validators.required],
+    data_inspeArma:[null, Validators.required],
+    estado_arma:[null],
+   // estado:[null],
+    id_agente:[null],
+   // nome_agente:[null],
+   // nome_apelido:[null],
     obs:[null],
   });
-
 
   public findOperation(): string {
     return this.isAdd() ? 'Cadastro de Nova' : 'Editar dado da';
   }
 
   private isAdd(): boolean {
-    return !this.formArma.get('idarma').value;
+    return !this.formArma.get('idagente').value;
   }
   
    public btnSave() {
@@ -78,15 +83,25 @@ export class ArmamentoComponent implements OnInit {
   private findFormAdd() {
 
     //this.formArma.get('agente').setValue("1");
-    const doc = this.formArma.value;
-    return doc;
+    const editarArma = <Efectivos> {
+    
+      idagente: this.formArma.value.id_agente,
+      n_carregador: this.formArma.value.n_carregador,
+      n_municoes: this.formArma.value.n_municoes, 
+      estado_arma: this.formArma.value.estado_arma, 
+      data_inspeArma: this.formArma.value.data_inspeArma, 
+      obs: this.formArma.value.obs,
+   
+    }
+
+    return editarArma;
   }
 
   onSaveCarta(){
 
-    this.armamentoService.create(this.findFormAdd()).subscribe((data) => {
+    this.efectivoService.create(this.findFormAdd()).subscribe((data) => {
     
-      this.toastrService.success('Tarefa criada com sucesso.', 'Sucesso');
+      this.toastrService.success('Inspeção criada com sucesso.', 'Sucesso');
       this.dialogRef.close();
       //this.refresh();
       this.getListefectivo();
@@ -128,8 +143,8 @@ export class ArmamentoComponent implements OnInit {
     });
   }
 
-  private editDoc(){
-    this.armamentoService.edit(this.findFormAdd()).subscribe((res) => {
+  public editDoc(){
+    this.efectivoService.inspeArma(this.findFormAdd()).subscribe((res) => {
      /* this.tbDocData = this.tbDocData.map((documents: Documents) => {
         if (documents.iddoc === this.formCarta.value.iddoc) 
         //return new Documents(res.body);
@@ -163,27 +178,28 @@ export class ArmamentoComponent implements OnInit {
    }
 
    public openModalEdiDoc(event: Row) {
-    this.armamentoService.getListArmamentos().subscribe((res) => {
+    this.efectivoService.getListEfectivos().subscribe((res) => {
      /* this.userSelected = res.body;
       this.formCarta.reset();
       this.formCarta.get('tipodoc').patchValue(StatusEnum.CARTA);
 */
       if (event) {
-        const armamento: Armamento = event.getData();
-       console.log(armamento);
-        this.armamentoService.findById(armamento.idarma).subscribe((res) => {
+       const efectivos: Efectivos = event.getData();
+       console.log(efectivos.idagente);
+       this.efectivoService.findById(efectivos.idagente).subscribe((res) => {
           //this.formCarta.patchValue(res.body);
-          this.formArma.get('numero').setValue(armamento.numero);
-          this.formArma.get('marca').setValue(armamento.marca);
-          this.formArma.get('modelo').setValue(armamento.modelo);
-          this.formArma.get('calibre').setValue(armamento.calibre);
-          this.formArma.get('n_carregador').setValue(armamento.n_carregador);
-          this.formArma.get('n_municoes').setValue(armamento.n_municoes);
-          this.formArma.get('id_agente').setValue(armamento.id_agente);
-          this.formArma.get('estado').setValue(armamento.estado);
-          this.formArma.get('obs').setValue(armamento.obs);
+         this.formArma.get('id_agente').setValue(efectivos.idagente);
+         // this.formArma.get('numero').setValue(efectivos.n_arma);
+         // this.formArma.get('marca').setValue(efectivos.marca);
+         // this.formArma.get('modelo').setValue(efectivos.modelo);
+         // this.formArma.get('calibre').setValue(efectivos.calibre);
+          this.formArma.get('n_carregador').setValue(efectivos.n_carregador);
+          this.formArma.get('n_municoes').setValue(efectivos.n_municoes);
+          this.formArma.get('n_municoes').setValue(efectivos.n_municoes);
+         // this.formArma.get('id_agente').setValue(efectivos.idagente);
+          this.formArma.get('data_inspeArma').setValue(efectivos.data_inspeArma);
+          this.formArma.get('obs').setValue(efectivos.obs);
           
-         
         });
       }
 
@@ -193,9 +209,9 @@ export class ArmamentoComponent implements OnInit {
    private setConfigTbArma() {
     this.tbArmaConfig = {
       mode: 'external',
-      actions: { columnTitle: 'Ações', add: false, delete: false, position: 'right' },
+      actions: { columnTitle: 'Registar Inspeção', add: false, delete: false, position: 'right',  width:"19"},
       edit: {
-        editButtonContent: '<span class="nb-edit" width: "9%"  title="Editar"></span>',
+        editButtonContent: '<img src="assets/images/arrow-circle-right.svg" width="45" height="30">',
       },
       
       noDataMessage: 'Nenhum Arma cadastrado.',
@@ -219,14 +235,14 @@ export class ArmamentoComponent implements OnInit {
         },
       
         nome: {
-          title: 'Nome Completo dos efectivos',
+          title: 'Nome dos efectivos',
           type: "string",
           width: "29%",
           valuePrepareFunction: (cell, row) => { return row.nome + " " + row.apelido }
         },
 
         data_inspeArma: {
-          title: 'Data de inspecao',
+          title: 'Data de Inspeção',
           type: "string",
           width: "13%",
         },

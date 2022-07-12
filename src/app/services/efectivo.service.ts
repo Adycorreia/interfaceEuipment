@@ -5,9 +5,6 @@ import { ResponseApp } from "app/pages/models/response";
 import { Observable } from "rxjs";
 import { DefaultService } from "./default.service";
 
-
-
-
 @Injectable({
     providedIn: 'root'
   })
@@ -36,6 +33,10 @@ import { DefaultService } from "./default.service";
 
     edit(efectivos: Efectivos): Observable<ResponseApp<Efectivos>> {
       return this.http.put<ResponseApp<Efectivos>>(`${this.url}/${efectivos.idagente}`, efectivos);
+    }
+
+    inspeArma(efectivos: Efectivos): Observable<ResponseApp<Efectivos>> {
+      return this.http.put<ResponseApp<Efectivos>>(`${this.url}/arma/${efectivos.idagente}`, efectivos);
     }
   
   

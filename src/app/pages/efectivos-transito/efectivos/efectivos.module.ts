@@ -14,6 +14,7 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 import { EfectivosComponent } from './efectivos.component';
 import { EfectivosService } from 'app/services/efectivo.service';
+import { FeriasService } from 'app/services/ferias.service';
 
 
 @NgModule({
@@ -33,7 +34,7 @@ import { EfectivosService } from 'app/services/efectivo.service';
   declarations: [
     EfectivosComponent,
   ],
-  providers: [EfectivosService],
+  providers: [EfectivosService, FeriasService],
 
 })
 export class efectivosModule { }

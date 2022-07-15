@@ -1,0 +1,184 @@
+
+<form [formGroup]="searchForm" (ngSubmit)="onSearchFormSubmit()">
+  <nb-card formGroupName="search" nbSpinnerStatus="info" nbSpinnerSize="small">
+    <nb-card-header>Pesquisa de Equipamento</nb-card-header>
+    <nb-card-body>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="nameEquipment">Nome Equipamento</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nameEquipment"
+              placeholder="Equipamento"
+              formControlName="nameEquipment"
+            />
+          </div>
+        </div>
+        
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label>Tipo de Equipamento</label>
+            <select class="form-control" formControlName="equipmentType">
+              <option value=""></option>
+              <option *ngFor="let dado of requestype" [value]="dado.name" placeholder="Tipo Equipamento">
+                {{ dado.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+     
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="brand">Marca</label>
+            <select class="form-control" formControlName="brand">
+              <option value=""></option>
+              <option *ngFor="let dado of requesListbrand" [value]="dado.name" placeholder="Marca">
+                {{ dado.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="nameEmployee">Nome de Funcionario</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nameEmployee"
+              placeholder="Funcionario"
+              formControlName="nameEmployee"
+            />
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="room">Sala</label>
+            <select class="form-control" formControlName="room">
+              <option value=""></option>
+              <option *ngFor="let dado of requesLiving" [value]="dado.name">
+                {{ dado.name }}
+              </option>
+            </select>
+            
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="department">Direção</label>
+            <select class="form-control" formControlName="department">
+              <option value=""></option>
+              <option *ngFor="let dado of requesListEq" [value]="dado.name" placeholder="Tipo Equipamento">
+                {{ dado.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <button
+        nbButton
+        type="button"
+        class="mt-3 mr-2"
+        status="danger"
+        (click)="clearSearch()"
+      >
+        Limpar
+      </button>
+      <button
+        nbButton
+        status="primary"
+        type="submit"
+        class="mt-3"
+        [disabled]="!searchForm.dirty"
+        (click)="(onSearchFormSubmit)"
+      >
+        Pesquisar
+      </button>
+    </nb-card-body>
+  </nb-card>
+</form>
+
+
+<nb-card *ngIf="showForeignList" [nbSpinner]="loadingList" ngFor="">
+  <nb-card-header> Lista de Equipamentos </nb-card-header>
+  <nb-card-body>
+    <ng2-smart-table
+      [settings]="tbEpuiConfig"
+      [source]="source"
+      (userRowSelect)="onEpuipIdSelect($event)"
+    >
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+<!---
+<ng-template #dialogEquip let-data let-ref="dialogRef">
+  <nb-card style="width: 25em">
+    <nb-card-header>Novo Equipamento</nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="formEquip" autocomplete="true">
+        
+        <div class="form-group">
+        <label for="tipo">Tipo de Documento</label>
+        <nb-select class="w-100" id="tipodoc" formControlName="tipodoc" placeholder="Escolha o tipo de documento" [(selected)]="selectedItem">
+          <nb-option [value]="tipodoc.value" *ngFor="let tipodoc of selecttipodoc"> {{tipodoc.tipodoc}}</nb-option>
+        </nb-select>
+        </div>  
+    
+        <div class="form-group">
+          <label for="name">Introduza nome de Equipamento</label>
+
+          <input class="form-control" type="text" id="name" formControlName="name" value placeholder="Search">
+        </div>
+
+        <div class="form-group">
+          <label for="model">Introduza Modelo</label>
+          <input id="model" type="text" class="form-control" formControlName="model" placeholder="Modelo">
+        </div>
+
+        <div class="form-group">
+        <label for="tipo">Tipo de Documento</label>
+        <nb-select class="w-100" id="tipodoc" formControlName="tipodoc" placeholder="Escolha o tipo de documento" [(selected)]="selectedItem">
+          <nb-option [value]="tipodoc.value" *ngFor="let tipodoc of selecttipodoc"> {{tipodoc.tipodoc}}</nb-option>
+        </nb-select>
+        </div> 
+
+        <div class="form-group">
+          <label for="data_apreensao">Observações</label>
+          <textarea class="form-control" formControlName="obs" id="obs" type="obs" nbInput
+            placeholder="Escrever Observações">
+          </textarea>
+        </div>
+
+        <nb-checkbox status="primary" [checked]="opcao1">Click aque se tiver Cap apreendido</nb-checkbox>
+
+     
+     <div *ngFor="let item of opCap">
+     <nb-checkbox status="basic" type="checkbox" [checked]="item.selecionado" (change)="item.selecionado = $event.target.checked"> {{item.label}} </nb-checkbox>
+     </div>
+
+     <label></label>
+
+     <ng-container *ngFor="let item of opCap">
+     <div *ngIf="!item.selecionado">        
+     <textarea class="form-control"  formControlName="obs" id="obs" type="obs" nbInput placeholder="Escrever Observações" 
+     [checked]="item.selecionado" (change)="item.selecionado = $event.target.checked">
+     </textarea>
+    </div>
+      </ng-container>
+  
+
+      </form>
+
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton status="danger" (click)="ref.close()">Cancelar</button>
+      <button class="btn-action-modal" nbButton status="primary" (click)="btnSave($event)">Salvar</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+-->

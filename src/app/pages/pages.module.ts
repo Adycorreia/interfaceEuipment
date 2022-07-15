@@ -5,13 +5,12 @@ import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { DefaultdModule } from './default/default.module';
-import { TaskModule } from './task/task.module';
+
 
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { CartaModule } from './apreensão/apre-carta/apre-carta.module';
-import { TlivreteModule } from './apreensão/apre-tlivrete/apre-tlivrete.module';
-import { CapModule } from './apreensão/apre-cap/apre-cap.module';
+
 
 @NgModule({
   imports: [
@@ -24,7 +23,9 @@ import { CapModule } from './apreensão/apre-cap/apre-cap.module';
    // TlivreteModule,
     NbIconModule,
     NbEvaIconsModule,
-    CapModule,
+    ReactiveFormsModule,
+    FormsModule,
+
     
     
 

@@ -1,0 +1,85 @@
+
+<nb-card accent="info">
+  <nb-card-header>
+    Registar Equipamento </nb-card-header>
+
+  <nb-card-body>
+    <button style="margin-bottom: 1rem;" nbButton status="primary" (click)="openModalDoc(null)">Novo Cadastro</button>
+    <ng2-smart-table #ng2TbSmart 
+    [settings]="tbEpuiConfig" 
+    [source]="source">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #dialogForm let-data let-ref="dialogRef">
+  <nb-card style="width: 25em">
+    <nb-card-header>{{ findOperation() }} de Carta de Condução</nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="formSave" autocomplete="true">
+        <!--
+        <div class="form-group">
+        <label for="tipo">Tipo de Documento</label>
+        <nb-select class="w-100" id="tipodoc" formControlName="tipodoc" placeholder="Escolha o tipo de documento" [(selected)]="selectedItem">
+          <nb-option [value]="tipodoc.value" *ngFor="let tipodoc of selecttipodoc"> {{tipodoc.tipodoc}}</nb-option>
+        </nb-select>
+        </div>  
+         -->
+        <div class="form-group">
+          <label for="name">Introduza nome de Equipamento</label>
+
+          <input class="form-control" type="text" id="name" formControlName="name" value placeholder="Search">
+        </div>
+
+        <div class="form-group">
+          <label for="model">Introduza Modelo</label>
+          <input id="model" type="text" class="form-control" formControlName="model" placeholder="Modelo">
+        </div>
+
+        <div class="form-group">
+          <label for="data_apreensao">Observações</label>
+          <textarea class="form-control" formControlName="obs" id="obs" type="obs" nbInput
+            placeholder="Escrever Observações">
+          </textarea>
+        </div>
+
+        <nb-checkbox status="primary" [checked]="opcao1">Click aque se tiver Cap apreendido</nb-checkbox>
+
+        <!--   
+     <div *ngFor="let item of opCap">
+     <nb-checkbox status="basic" type="checkbox" [checked]="item.selecionado" (change)="item.selecionado = $event.target.checked"> {{item.label}} </nb-checkbox>
+     </div>
+
+     <label></label>
+
+     <ng-container *ngFor="let item of opCap">
+     <div *ngIf="!item.selecionado">        
+     <textarea class="form-control"  formControlName="obs" id="obs" type="obs" nbInput placeholder="Escrever Observações" 
+     [checked]="item.selecionado" (change)="item.selecionado = $event.target.checked">
+     </textarea>
+    </div>
+      </ng-container>
+    -->
+
+      </form>
+
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton status="danger" (click)="ref.close()">Cancelar</button>
+      <button class="btn-action-modal" nbButton status="primary" (click)="btnSave($event)">Salvar</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #dialogDelete let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>ELIMINAR CARTA DE CONDUÇÃO</nb-card-header>
+    <nb-card-body>
+      Tens certeza que deseja excluir Carta nº <span style="font-weight: bold">{{ data }}</span> ?
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton status="danger" (click)="ref.close()">Cancelar</button>
+      <button class="btn-action-modal" nbButton status="primary" (click)="btnDelete($event);">Excluir</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

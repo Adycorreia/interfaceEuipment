@@ -10,5 +10,5 @@
 
 export const environment = {
   production: false,
-  url: 'http://localhost:8080/api/',
+  url: 'http://10.73.225.19:8080/EquipmentManagement/',
 };

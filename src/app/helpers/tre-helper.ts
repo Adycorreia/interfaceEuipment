@@ -11,7 +11,44 @@
   }
 
 
+  export module TreHelper {
+    //receive base64 and return bytes to be rendered
+    export function base64ToArrayBuffer(base64: any) {
+      let binary_string = window.atob(base64);
+      let len = binary_string.length;
+      let bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binary_string.charCodeAt(i);
+      }
+      return bytes.buffer;
+    }
 
+
+    //receive base64 and return blobs to be rendered
+  export function base64ToBlob(base64: any) {
+    let binary_string = window.atob(base64);
+    let len = binary_string.length;
+    let bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binary_string.charCodeAt(i);
+    }
+    return new Blob([bytes], { type: "application/pdf" });
+  }
+
+    export function removeProperty(object: Object) {
+      for (var m in object) {
+        if (
+          object[m] == undefined ||
+          object[m] == null ||
+          object[m] == "" ||
+          Object.keys(m).length == 0
+        ) {
+          delete object[m];
+        }
+      }
+      return object;
+    }
+  }
 
 /*
 import { RootObject } from "../models/estrangeiro/rootObject";

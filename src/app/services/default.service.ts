@@ -1,4 +1,5 @@
-import { environment } from 'environments/environment';
+import { environment } from "environments/environment";
+
 
 export abstract class DefaultService {
     protected url: string;
@@ -8,3 +9,5 @@ export abstract class DefaultService {
       this.url = `${environment.url}${resource}`;
     }
 }
+
+

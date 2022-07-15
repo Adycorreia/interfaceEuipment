@@ -1,0 +1,425 @@
+<nb-card accent="danger" *ngIf="danger" ngFor="">
+  <nb-card-header><button nbButton outline status="primary" (click)="close()">Fichar detalhes</button></nb-card-header>
+  <nb-card-header>Detalhes do Equipamento <strong>
+      <h></h>
+    </strong>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-accordion accent="danger">
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          Dados de Equipamento
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <div class="card-row">
+            <div class="card-col">
+              <nb-card size="medium">
+                <nb-card-header> <button nbButton status="primary"><nb-icon icon="edit-2-outline"></nb-icon></button></nb-card-header>
+                <nb-card nbSpinnerSize="small">
+                  <nb-card-body>
+                    <div class="row">
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputFirstName">Tipo de Equipamento </label>
+                          <input type="text" class="form-control" value="{{requesEquip.equipmentType.name}}"
+                           disabled />
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputFirstName">Categoria </label>
+                          <input type="text" class="form-control" value="{{requesEquip.equipment.code}}"
+                            disabled />
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputFirstName">Modelo </label>
+                          <input type="text" class="form-control" value="{{requesEquip.equipment.name}}"
+                            disabled />
+                        </div>
+                      </div>
+                      <br>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputLastName">Marca</label>
+                          <input type="text" class="form-control" value="{{requesEquip.equipment.model}}"
+                            disabled />
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputLastName">Numero de Serial</label>
+                          <input type="text" class="form-control" value="{{requesEquip.equipment.serialNumber}}"
+                            disabled />
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Tipo de Sistema</label>
+                          <input type="text" class="form-control" value="{{requesEquip.equipment.systemType}}"
+                             disabled />
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Estado Equipamento</label>
+                          <input type="text" class="form-control" value="{{requesEquip.equipment.dmStateEquip}}"
+                            disabled />
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Processador</label>
+                          <input type="text" class="form-control" value="{{requesEquip.equipment.processor}}"
+                            disabled />
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Tamanho Tela</label>
+                          <input type="text" class="form-control" value="{{requesEquip.equipment.screen}}" disabled />
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Geração de CPU</label>
+                          <input type="text" class="form-control" value="{{requesEquip.equipment.generation}}"
+                            disabled />
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Velocidade CPU</label>
+                          <input type="text" class="form-control" value="{{requesEquip.equipment.velocity}}" disabled />
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Memoria RAM</label>
+                          <input type="text" class="form-control" value="{{requesEquip.equipment.ram}}"
+                           disabled />
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="inputBirthdayDate">Memoria RAM</label>
+                          <input type="text" class="form-control" value="{{requesEquip.equipment.rom}}"
+                            disabled />
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </nb-card-body>
+                </nb-card>
+              </nb-card>
+            </div>
+          </div>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          Dados do Funcionario
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <div class="card-row">
+            <div class="card-col">
+              <nb-card size="medium" style=" height: 20em;">
+              <nb-card-header> <button nbButton status="primary" ><nb-icon icon="edit-2-outline"></nb-icon></button></nb-card-header>
+              <nb-card nbSpinnerSize="small">
+                <nb-card-body>
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label for="inputFirstName">Nome Completo</label>
+                        <input type="text"  id="tipoImput" class="form-control" value="{{requesEquip.employee.name}}"
+                        disabled />
+                      </div>
+                    </div>
+
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label for="inputLastName">Função</label>
+                        <input type="text" class="form-control" value="{{requesEquip.employee.function}}"
+                           disabled />
+                      </div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label for="inputLastName">Posto</label>
+                        <input type="text" class="form-control" value="{{requesEquip.employee.name}}"
+                           disabled />
+                      </div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label for="inputBirthdayDate">Tipo</label>
+                        <input type="text" class="form-control" value="{{requesEquip.employee.dmTypeUser}}"
+                          disabled />
+                      </div>
+                    </div>
+
+                  </div>
+
+
+                </nb-card-body>
+              </nb-card>
+            </nb-card>
+            </div>
+          </div>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+      <!-- 
+        <nb-accordion-item>
+          <nb-accordion-item-header>
+          Ferias
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>  
+            <div class="card-row">
+             
+              <div class="card-col">
+                <nb-card size="medium">
+                  <nb-card-header>Dados da Feria</nb-card-header>
+                  <nb-card nbSpinnerSize="small">
+                    <nb-card-body>
+                      <div class="row">
+                        <table class="table">
+                          <thead>
+                              <tr>
+                                  <th>Inico da Feria</th>
+                                  <th>Fim da Feria</th>
+                                  <th>Gozado em </th>
+                                  <th>Entrega Arma</th>
+                                  <th>Nº Oficio</th>
+                                  <th>Despacha Por</th>
+                                 
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td>{{ideferiaAgente.data_inicio}}</td>
+                                  <td>{{ideferiaAgente.data_fim}}</td>
+                                  <td>{{ideferiaAgente.local_feria}} </td>
+                                  <td>{{ideferiaAgente.entrega_arma}} </td>
+                                  <td>{{ideferiaAgente.n_oficio}}</td>
+                                  <td>{{ideferiaAgente.despacho}} </td>
+                                 
+                              </tr>
+                          </tbody>
+                      </table>
+                      </div>
+                    </nb-card-body>
+                  </nb-card>
+                </nb-card>
+              </div>
+            </div> 
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      -->
+      
+      
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          Sala
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <div class="card-row">
+            <div class="card-col">
+              <nb-card size="medium" style=" height: 25em;">
+              <nb-card-header> <button nbButton status="primary" ><nb-icon icon="edit-2-outline"></nb-icon></button></nb-card-header>
+              <nb-card nbSpinnerSize="small">
+                <nb-card-body>
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label for="inputFirstName">Nome da Sala</label>
+                        <input type="text" class="form-control" value="{{requesEquip.livingRoom.name}}"
+                          disabled />
+                      </div>
+                    </div>
+
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label for="inputLastName">Numero</label>
+                        <input type="text" class="form-control" value="{{requesEquip.livingRoom.number}}"
+                          disabled />
+                      </div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label for="inputLastName">Piso</label>
+                        <input type="text" class="form-control" value="{{requesEquip.livingRoom.dmPiso}}"
+                          disabled />
+                      </div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label for="inputBirthdayDate">Departamento</label>
+                        <input type="text" class="form-control" value="{{requesEquip.livingRoom.dmDivision}}"
+                           disabled />
+                      </div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label for="inputBirthdayDate">Contacto</label>
+                        <input type="text" class="form-control" value="{{requesEquip.livingRoom.contactPhone}}"
+                          disabled />
+                      </div>
+                    </div>
+
+                  </div>
+
+
+                </nb-card-body>
+              </nb-card>
+              </nb-card>
+            </div>
+          </div>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          Departamento
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <div class="card-row">
+            <div class="card-col">
+              <nb-card size="medium" style=" height: 15em;">
+              <nb-card-header> <button nbButton status="primary"><nb-icon icon="edit-2-outline"></nb-icon></button></nb-card-header>
+              <nb-card nbSpinnerSize="small">
+                <nb-card-body>
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label for="inputFirstName">Nome de Departamento</label>
+                        <input type="text" class="form-control" value="{{requesEquip.department.name}}"
+                           disabled />
+                      </div>
+                    </div>
+
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label for="inputLastName">Codigo</label>
+                        <input type="text" class="form-control" value="{{requesEquip.department.code}}"
+                          disabled />
+                      </div>
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+              </nb-card>
+            </div>
+          </div>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+
+    <!---
+       <nb-accordion-item>
+        <nb-accordion-item-header>
+          Historico
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+    -->
+    </nb-accordion>
+  </nb-card-body>
+</nb-card>
+
+<div class="row mb-2">
+  <div class="col-lg-12">
+    <button
+      (click)="addNewRecolha()"
+      nbButton
+      type="submit"
+      class="mt-3 float-right moveHover"
+      style="background-color: #2360db"
+    >
+      Novo Equipamento
+    </button>
+  </div>
+</div>
+
+<data-equipment-search>
+  (searchFormEvent)="searchResult($event)"
+  (loadingSearchEvent)="loadingResult($event)"
+</data-equipment-search>
+<!---
+<nb-card accent="info">
+  <nb-card-header>
+    Registo de Equipamentos </nb-card-header>
+
+  <nb-card-body accent="danger" *ngIf="dangerSmartTable" ngFor="">
+    <button style="margin-bottom: 1rem;" nbButton status="primary" (click)="openModalDoc(null)">Novo Cadastro</button>
+    <ng2-smart-table #ng2TbEquip [settings]="tbEpuiConfig" [source]="source" (userRowSelect)="onEpuipIdSelect($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+
+-->
+<ng-template #dialogEquip let-data let-ref="dialogRef">
+  <nb-card style="width: 25em">
+    <nb-card-header>Novo Equipamento</nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="formEquip" autocomplete="true">
+        
+        <div class="form-group">
+          <label for="name">Nome de Equipamento</label>
+
+          <input class="form-control" type="text" id="name" formControlName="name" value placeholder="Search">
+        </div>
+
+        <div class="form-group">
+          <label for="model">Modelo</label>
+          <input id="model" type="text" class="form-control" formControlName="model" placeholder="Modelo">
+        </div>
+
+        <div class="form-group">
+        <label for="tipo">Tipo de Documento</label>
+        <nb-select class="w-100" id="tipodoc" formControlName="tipodoc" placeholder="Escolha o tipo de documento" [(selected)]="selectedItem">
+          <option *ngFor="let dado of requestype" [value]="dado.name" placeholder="Tipo Equipamento">
+            {{ dado.name }}
+          </option>
+        </nb-select>
+        </div> 
+
+        <div class="form-group">
+          <label for="tipo">Tipo de Documento</label>
+          <nb-select class="w-100" id="tipodoc" formControlName="tipodoc" placeholder="Escolha o tipo de documento" [(selected)]="selectedItem">
+            <option *ngFor="let dado of requesListbrand" [value]="dado.name" placeholder="Marca">
+              {{ dado.name }}
+            </option>
+          </nb-select>
+          </div> 
+
+        <div class="form-group">
+          <label for="data_apreensao">Observações</label>
+          <textarea class="form-control" formControlName="obs" id="obs" type="obs" nbInput
+            placeholder="Escrever Observações">
+          </textarea>
+        </div>
+
+     <label></label>
+
+     <ng-container *ngFor="let item of opCap">
+     <div *ngIf="!item.selecionado">        
+     <textarea class="form-control"  formControlName="obs" id="obs" type="obs" nbInput placeholder="Escrever Observações" 
+     [checked]="item.selecionado" (change)="item.selecionado = $event.target.checked">
+     </textarea>
+    </div>
+      </ng-container>
+  
+
+      </form>
+
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton status="danger" (click)="ref.close()">Cancelar</button>
+      <button class="btn-action-modal" nbButton status="primary" (click)="btnSave($event)">Salvar</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

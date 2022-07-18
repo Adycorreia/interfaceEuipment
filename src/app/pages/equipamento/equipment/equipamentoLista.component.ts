@@ -17,7 +17,7 @@ import { EquipmentdetailsService } from "app/services/equipmentdetails.service";
 import { LivingRoomService } from "app/services/LivingRoom.service";
 import { ParamService } from "app/services/parameterization.service";
 import { LocalDataSource, Ng2SmartTableComponent } from "ng2-smart-table";
-import { Row } from "ng2-smart-table/lib/lib/data-set/row";
+
 
 @Component({
   selector: 'equipamento',

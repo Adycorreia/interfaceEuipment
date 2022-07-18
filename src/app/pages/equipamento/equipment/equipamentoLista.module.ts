@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { NbAccordionModule, NbCardModule, NbCheckboxModule, NbStepperModule,  NbToggleModule } from '@nebular/theme';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

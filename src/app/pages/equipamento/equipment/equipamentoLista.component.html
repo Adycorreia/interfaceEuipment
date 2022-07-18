@@ -362,7 +362,7 @@
 
 -->
 <ng-template #dialogEquip let-data let-ref="dialogRef">
-  <nb-card style="width: 25em">
+  <nb-card style="width:45em">
     <nb-card-header>Novo Equipamento</nb-card-header>
     <nb-card-body>
       <form [formGroup]="formEquip" autocomplete="true">
@@ -378,8 +378,9 @@
           <input id="model" type="text" class="form-control" formControlName="model" placeholder="Modelo">
         </div>
 
-        <div class="form-group">
         <label for="tipo">Tipo de Documento</label>
+        <div class="form-group">
+       
         <nb-select class="w-100" id="tipodoc" formControlName="tipodoc" placeholder="Escolha o tipo de documento" [(selected)]="selectedItem">
           <option *ngFor="let dado of requestype" [value]="dado.name" placeholder="Tipo Equipamento">
             {{ dado.name }}
@@ -387,8 +388,8 @@
         </nb-select>
         </div> 
 
+        <label for="tipo">Tipo de Documento</label>
         <div class="form-group">
-          <label for="tipo">Tipo de Documento</label>
           <nb-select class="w-100" id="tipodoc" formControlName="tipodoc" placeholder="Escolha o tipo de documento" [(selected)]="selectedItem">
             <option *ngFor="let dado of requesListbrand" [value]="dado.name" placeholder="Marca">
               {{ dado.name }}

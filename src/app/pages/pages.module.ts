@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { NbIconModule, NbMenuModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
@@ -18,16 +18,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ThemeModule,
     NbMenuModule,
     DefaultdModule,
-    //TaskModule,
-  //  CartaModule,
-   // TlivreteModule,
     NbIconModule,
     NbEvaIconsModule,
     ReactiveFormsModule,
     FormsModule,
-
-    
-    
 
   ],
   declarations: [

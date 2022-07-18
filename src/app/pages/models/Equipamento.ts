@@ -4,6 +4,7 @@ export interface EquipamentoLista {
 
 id: string
 name: string
+brand: string
 model: string
 serialNumber: string
 processor: string
@@ -19,6 +20,9 @@ dateCreated: LocalData
 dateUpdated: LocalData
 userCreated: string
 userUpdated: string
+idEquipmentType: string
+idLivingRoom: string
+idEmployee: string
 
 
 

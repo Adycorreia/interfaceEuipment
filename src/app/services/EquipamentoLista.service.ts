@@ -30,8 +30,8 @@ import { DefaultService } from "./default.service";
       return this.http.get<ResponseApp<EquipamentoLista>>(`${this.url}/detail/${id}`, this.httpOptions);
     }
   
-    create(efectivos: EquipamentoLista): Observable<ResponseApp<EquipamentoLista>> {
-      return this.http.post<ResponseApp<EquipamentoLista>>(this.url, efectivos);
+    create(EquipmentoList: EquipamentoLista): Observable<ResponseApp<EquipamentoLista>> {
+      return this.http.post<ResponseApp<EquipamentoLista>>(`${this.url}/save`, EquipmentoList, this.httpOptions);
     }
 
     delete(id: string): Observable<ResponseApp<EquipamentoLista>> {

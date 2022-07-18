@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { NbAccordionModule, NbCardModule, NbCheckboxModule, NbStepperModule,  NbToggleModule } from '@nebular/theme';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -12,6 +12,7 @@ import { EquipamentoListaService } from 'app/services/EquipamentoLista.service';
 import { DataEquipmentSearchComponent } from './equipmentdetails/data-equipment-search.component';
 import { LivingRoomService } from 'app/services/LivingRoom.service';
 import { DepartmentService } from 'app/services/department';
+import { EmployeeListService } from 'app/services/Employee.service';
 
 
 
@@ -34,7 +35,7 @@ import { DepartmentService } from 'app/services/department';
     EquipamentoListaComponent,
     DataEquipmentSearchComponent,
   ],
-  providers: [EquipamentoListaService, ParamService, LivingRoomService, DepartmentService],
+  providers: [EquipamentoListaService, ParamService, LivingRoomService, DepartmentService, EmployeeListService],
 
 })
 export class EquipamentoListaModule { }

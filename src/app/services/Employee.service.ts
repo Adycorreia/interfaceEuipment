@@ -9,10 +9,10 @@ import { DefaultService } from "./default.service";
 @Injectable({
     providedIn: 'root'
   })
-  export class EquipamentoListaService extends DefaultService {
+  export class EmployeeListService extends DefaultService {
   
     constructor(private http: HttpClient) { 
-     super('equipment')
+     super('employee')
     }
   
     private httpOptions ={
@@ -22,7 +22,7 @@ import { DefaultService } from "./default.service";
       })
     };
     
-    getListEquipamento() {
+    getListEmployee() {
       return this.http.get<ResponseApp<EquipamentoLista[]>>(`${this.url}/list`,this.httpOptions);
       }
   

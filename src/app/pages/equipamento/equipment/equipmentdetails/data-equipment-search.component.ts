@@ -147,15 +147,15 @@ export class DataEquipmentSearchComponent implements OnInit {
     this.livingRoomService.getList().subscribe(
       (data: any) => {
         this.requesLiving = data.details[0];
-          console.log(this.requesLiving);
+         // console.log(this.requesLiving);
       },
       (err) => { }
     );
 
     this.equipamentoTypeService.findById("0").subscribe(
       (data: any) => {
-        this.requestype = data.details;
-          console.log(this.requestype);
+          this.requestype = data.details;
+         // console.log(this.requestype);
       },
       (err) => { }
     );
@@ -163,7 +163,7 @@ export class DataEquipmentSearchComponent implements OnInit {
     this.departmentService.getListBySelfid(this.selfId).subscribe(
       (data: any) => {
         this.requesListEq = data.details;
-        console.log(data);
+       // console.log(data);
       },
       (err) => { }
     );
@@ -171,7 +171,7 @@ export class DataEquipmentSearchComponent implements OnInit {
     this.domainService.getListBySelfidAndDomain(this.selfId, "DM_BRAND").subscribe(
       (data: any) => {
         this.requesListbrand = data.details;
-        console.log(data);
+       // console.log(data);
       },
       (err) => { }
     );
@@ -212,6 +212,12 @@ export class DataEquipmentSearchComponent implements OnInit {
 
         room: {
           title: 'Sala',
+          type: "string",
+        
+        },
+
+        nameEmployee: {
+          title: 'Funcionario',
           type: "string",
         
         },

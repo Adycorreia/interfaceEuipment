@@ -5,12 +5,14 @@ import { NbDialogRef, NbDialogService, NbToastrService } from "@nebular/theme";
 import { AllEquipmentDetails } from "app/pages/models/allEquipamentDetails";
 import { Department } from "app/pages/models/detailDepartament";
 import { DetailsDomain } from "app/pages/models/detailDomain";
+import { Employee } from "app/pages/models/detailEmployee";
 import { EquipmentType } from "app/pages/models/detailEquipmentType";
 import { LivingRoom } from "app/pages/models/detailRoom";
 import { DetailsEquipment } from "app/pages/models/detailsEquipament";
 import { EquipamentoLista } from "app/pages/models/Equipamento";
 import { DepartmentService } from "app/services/department";
 import { DomainService } from "app/services/domain.service";
+import { EmployeeListService } from "app/services/Employee.service";
 import { EquipamentoListaService } from "app/services/EquipamentoLista.service";
 import { EquipamentoTypeService } from "app/services/EquipamentoType.service";
 import { EquipmentdetailsService } from "app/services/equipmentdetails.service";
@@ -41,13 +43,14 @@ export class EquipamentoListaComponent implements OnInit {
   docSelected: EquipamentoLista;
   ResponseAp: any;
   requesEquip: AllEquipmentDetails[];
-  requesLiving: LivingRoom[];
+  requesLivings: LivingRoom[];
   requesListEq: DetailsEquipment[];
   requestype: EquipmentType[];
   requesDepar: Department[];
   dangerSmartTable: boolean = false;
   selfId: string = "0";
   requesListbrand: DetailsDomain[];
+  requesListEmploye: Employee[];
 
   danger: boolean = false;
 
@@ -61,11 +64,23 @@ export class EquipamentoListaComponent implements OnInit {
   formEquip = this.formBuilder.group({
 
     id: [null],
-    model: [null, Validators.required],
-    name: [null, [Validators.required]],
+    model: [null],
+    name: [null],
+    brand: [null],
+    serialNumber:  [null],
+    processor: [null],
+    rom:  [null],
+    ram:  [null],
+    generation:	 [null],
+    velocity:  [null],
+    systemType:	 [null],
+    dmStateEquip:  [null],
+    screen: [null],
+    idEquipmentType: [null],
+    idLivingRoom: [null],
+    idEmployee: [null],
     obs: [null]
   });
-
 
 
   opCap = [
@@ -83,6 +98,7 @@ export class EquipamentoListaComponent implements OnInit {
     private livingRoomService: LivingRoomService,
     private departmentService: DepartmentService,
     private equipmentdetailsService: EquipmentdetailsService,
+    private employeeListService: EmployeeListService,
     private domainService: DomainService,
     private equipamentoTypeService: EquipamentoTypeService,
   
@@ -92,40 +108,38 @@ export class EquipamentoListaComponent implements OnInit {
   ngOnInit(): void {
    // this.getListByEquipamento(),
      // this.setConfigTbEquip()
-     this.getListDetalis()
+    this.getListSave();
 
   }
  
-
-
-  
   public onEpuipIdSelect($event) {
     console.log($event);
-    console.log($event.data.id);
+   // console.log($event.data.id);
     if ($event.data.id) {
       let idEquip = $event.data.id;
 
       this.equipService.findById(idEquip).subscribe(
         (data: any) => {
-          console.log(data.details[0]);
+         // console.log(data.details[0]);
           this.danger = true;
           this.requesEquip = data.details[0];
-          console.log(this.requesEquip);
+         // console.log(this.requesEquip);
         }
       );
     }
   }
   addNewRecolha(){
-
+   // this.getListDetalis();
     this.dialogRef = this.dialogService.open(this.dialogEquip);
+ 
   }
 
-  getListDetalis() {
+  getListSave() {
 
     this.livingRoomService.getList().subscribe(
       (data: any) => {
-        this.requesLiving = data.details[0];
-          console.log(this.requesLiving);
+        this.requesLivings = data.details[0];
+          console.log(this.requesLivings);
       },
       (err) => { }
     );
@@ -138,26 +152,64 @@ export class EquipamentoListaComponent implements OnInit {
       (err) => { }
     );
 
-    this.departmentService.getListBySelfid(this.selfId).subscribe(
-      (data: any) => {
-        this.requesListEq = data.details;
-        console.log(data);
-      },
-      (err) => { }
-    );
-
     this.domainService.getListBySelfidAndDomain(this.selfId, "DM_BRAND").subscribe(
       (data: any) => {
         this.requesListbrand = data.details;
-        console.log(data);
+        console.log(this.requesListbrand);
       },
       (err) => { }
     );
 
+    this.employeeListService.getListEmployee().subscribe(
+      (data: any) => {
+        this.requesListEmploye = data.details[0];
+        console.log(data);
+      },
+      (err) => { }
+    );
     
   }
  
+  private findFormAdd() {
 
+    //this.formArma.get('agente').setValue("1");
+    const createEquipment = <EquipamentoLista> {
+    
+      id: this.formEquip.value.id,
+      name: this.formEquip.value.name,
+      brand: this.formEquip.value.brand,
+      model: this.formEquip.value.model,
+      serialNumber: this.formEquip.value.serialNumber,
+      processor: this.formEquip.value.processor,
+      rom: this.formEquip.value.rom,
+      ram: this.formEquip.value.ram,
+      generation: this.formEquip.value.generation,
+      velocity: this.formEquip.value.velocity,
+      systemType: this.formEquip.value.systemType,
+      dmStateEquip: this.formEquip.value.dmStateEquip,
+      screen: this.formEquip.value.screen,
+      idEquipmentType: this.formEquip.value.idEquipmentType,
+      idLivingRoom: this.formEquip.value.idLivingRoom,
+      idEmployee: this.formEquip.value.idEmployee,
+      obs: this.formEquip.value.obs,
+  
+    }
+
+    return createEquipment;
+  }
+
+  onSaveCarta() {
+
+    this.equipService.create(this.findFormAdd()).subscribe(
+      (data: any) => {
+        this.toastrService.success('Equipamento criada com sucesso.', 'Sucesso');
+        this.dialogRef.close();
+        this.requesLivings = data.details[0];
+          console.log(this.requesLivings);
+      },
+      (err) => { }
+    );
+    }
 
  /*
   public onEpuipIdSelect($event) {

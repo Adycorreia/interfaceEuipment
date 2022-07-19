@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Employee } from "app/pages/models/detailEmployee";
 import { EquipamentoLista } from "app/pages/models/Equipamento";
 import { ResponseApp } from "app/pages/models/response";
 import { Observable } from "rxjs";
@@ -23,25 +24,26 @@ import { DefaultService } from "./default.service";
     };
     
     getListEmployee() {
-      return this.http.get<ResponseApp<EquipamentoLista[]>>(`${this.url}/list`,this.httpOptions);
+      return this.http.get<ResponseApp<Employee[]>>(`${this.url}/list`, this.httpOptions);
       }
   
-    findById(id: string): Observable<ResponseApp<EquipamentoLista>> {
-      return this.http.get<ResponseApp<EquipamentoLista>>(`${this.url}/detail/${id}`, this.httpOptions);
+    findById(id: String): Observable<ResponseApp<Employee>> {
+      return this.http.get<ResponseApp<Employee>>(`${this.url}/detail/${id}`, this.httpOptions);
     }
   
-    create(efectivos: EquipamentoLista): Observable<ResponseApp<EquipamentoLista>> {
-      return this.http.post<ResponseApp<EquipamentoLista>>(this.url, efectivos);
+    create(employee: Employee): Observable<ResponseApp<Employee>> {
+      return this.http.post<ResponseApp<Employee>>(`${this.url}/save`, employee, this.httpOptions);
     }
 
-    delete(id: string): Observable<ResponseApp<EquipamentoLista>> {
-      return this.http.delete<ResponseApp<EquipamentoLista>>(`${this.url}/${id}`);
+    edit(employee: Employee): Observable<ResponseApp<Employee>> {
+      return this.http.put<ResponseApp<Employee>>(`${this.url}/update/${employee.id}`, employee, this.httpOptions);
     }
 
-    edit(efectivos: EquipamentoLista): Observable<ResponseApp<EquipamentoLista>> {
-      return this.http.put<ResponseApp<EquipamentoLista>>(`${this.url}/${efectivos.id}`, efectivos);
+    delete(id: string): Observable<ResponseApp<Employee>> {
+      return this.http.delete<ResponseApp<Employee>>(`${this.url}/${id}`);
     }
 
+  
 
   
   }

@@ -7,11 +7,11 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { ThemeModule } from 'app/@theme/theme.module';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { EmployeeComponent } from './employee.component';
 import { EquipamentoListaService } from 'app/services/EquipamentoLista.service';
 import { ParamService } from 'app/services/parameterization.service';
 import { LivingRoomService } from 'app/services/LivingRoom.service';
 import { EmployeeListService } from 'app/services/Employee.service';
+import { LivingRoomComponent } from './livingRoom.component';
 
 
 
@@ -30,11 +30,11 @@ import { EmployeeListService } from 'app/services/Employee.service';
    
   ],
   declarations: [
-    EmployeeComponent,
+    LivingRoomComponent,
   ],
   providers: [
     EquipamentoListaService, 
     ParamService, LivingRoomService, EmployeeListService],
 
 })
-export class EmployeeModule { }
+export class LivingRoomModule { }

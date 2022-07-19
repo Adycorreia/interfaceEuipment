@@ -28,7 +28,8 @@ import { LocalDataSource } from "ng2-smart-table";
 })
 export class DataEquipmentSearchComponent implements OnInit {
 
-  showForeignList: boolean = false;
+  showSmarttableList: boolean = false;
+  showFromgnList: boolean = true;
   searchForm: FormGroup;
   organicaPedido: any;
   origens: any;
@@ -69,6 +70,7 @@ export class DataEquipmentSearchComponent implements OnInit {
   close() {
     this.danger = false;
     this.dangerSmartTable = false;
+    this.showFromgnList = true;
   }
 
   source: LocalDataSource = new LocalDataSource();
@@ -126,7 +128,7 @@ export class DataEquipmentSearchComponent implements OnInit {
       .subscribe((data: any) => {
         this.treatResultOfDataList(data);
         this.source.load(data.details[0]);
-        this.showForeignList = true;
+        this.showSmarttableList = true;
        
       });
   }
@@ -179,7 +181,23 @@ export class DataEquipmentSearchComponent implements OnInit {
     
   }
  
+  public onEpuipIdSelect($event) {
+    console.log($event);
+    console.log($event.data.id);
+    if ($event.data.id) {
+      let idEquip = $event.data.id;
 
+      this.equipService.findById(idEquip).subscribe(
+        (data: any) => {
+         // console.log(data.details[0]);
+          this.danger = true;
+          this.showFromgnList= false
+          this.requesEquip = data.details[0];
+         // console.log(this.requesEquip);
+        }
+      );
+    }
+  }
 
     tbEpuiConfig = {
       mode: 'external',
@@ -202,11 +220,13 @@ export class DataEquipmentSearchComponent implements OnInit {
         brand: {
           title: 'Marca',
           type: "string",
+          width: "12%",
         
         },
         department: {
           title: 'Direção/Departamento',
           type: "string",
+          width: "25%",
          
         },
 

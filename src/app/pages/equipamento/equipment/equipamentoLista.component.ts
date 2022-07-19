@@ -51,6 +51,7 @@ export class EquipamentoListaComponent implements OnInit {
   selfId: string = "0";
   requesListbrand: DetailsDomain[];
   requesListEmploye: Employee[];
+  loadingList: boolean = false;
 
   danger: boolean = false;
 
@@ -126,7 +127,16 @@ export class EquipamentoListaComponent implements OnInit {
         this.requesLivings = data.details[0];
           console.log(this.requesLivings);
       },
-      (err) => { }
+      (err) => {
+        console.log(err);
+        this.loadingList = true;
+        this.paramService.ManageDataResponse(
+          "Contacte o fornecedor do seu serviço ",
+          "ERRO DE CONEXÃO",
+          4000
+        );
+        this.loadingList = false;  
+      }
     );
 
     this.equipamentoTypeService.findById("0").subscribe(
@@ -134,7 +144,15 @@ export class EquipamentoListaComponent implements OnInit {
         this.requestype = data.details;
           console.log(this.requestype);
       },
-      (err) => { }
+      (err) => { 
+        console.log(err);
+        this.loadingList = true;
+        this.paramService.ManageDataResponse(
+          "Contacte o fornecedor do seu serviço ",
+          "ERRO DE CONEXÃO",
+          4000
+        );
+        this.loadingList = false;  }
     );
 
     this.domainService.getListBySelfidAndDomain(this.selfId, "DM_BRAND").subscribe(
@@ -142,7 +160,14 @@ export class EquipamentoListaComponent implements OnInit {
         this.requesListbrand = data.details;
         console.log(this.requesListbrand);
       },
-      (err) => { }
+      (err) => {console.log(err);
+        this.loadingList = true;
+        this.paramService.ManageDataResponse(
+          "Contacte o fornecedor do seu serviço ",
+          "ERRO DE CONEXÃO",
+          4000
+        );
+        this.loadingList = false;   }
     );
 
     this.employeeListService.getListEmployee().subscribe(
@@ -150,7 +175,14 @@ export class EquipamentoListaComponent implements OnInit {
         this.requesListEmploye = data.details[0];
         console.log(data);
       },
-      (err) => { }
+      (err) => { console.log(err);
+        this.loadingList = true;
+        this.paramService.ManageDataResponse(
+          "Contacte o fornecedor do seu serviço ",
+          "ERRO DE CONEXÃO",
+          4000
+        );
+        this.loadingList = false;  }
     );
     
   }
@@ -192,7 +224,14 @@ export class EquipamentoListaComponent implements OnInit {
         this.requesLivings = data.details[0];
           console.log(this.requesLivings);
       },
-      (err) => { }
+      (err) => {console.log(err);
+        this.loadingList = true;
+        this.paramService.ManageDataResponse(
+          "Contacte o fornecedor do seu serviço ",
+          "ERRO DE CONEXÃO",
+          4000
+        );
+        this.loadingList = false;   }
     );
     }
 

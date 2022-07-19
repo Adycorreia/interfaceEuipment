@@ -1,7 +1,7 @@
 
 <nb-card accent="info">
   <nb-card-header>
-    Cadastros dos Funcionarios</nb-card-header>
+    Cadastros das Salas</nb-card-header>
 
   <nb-card-body>
     <button style="margin-bottom: 1rem;" nbButton status="primary" (click)="openModalFrom(null)">Novo Cadastro</button>
@@ -17,7 +17,7 @@
 
 <ng-template #dialogForm let-data let-ref="dialogRef">
   <nb-card style="width: 25em">
-    <nb-card-header >{{ findOperation() }} Funcionario</nb-card-header>
+    <nb-card-header >{{ findOperation() }} Sala</nb-card-header>
     <nb-card-body>
       <form [formGroup]="formSave" autocomplete="true">
         <!--
@@ -28,38 +28,43 @@
         </nb-select>
         </div> 
       -->
+
+      <div class="form-group">
+        <label for="name">Introduza o Nome</label>
+        <input class="form-control" type="text" id="name" formControlName="name" value placeholder="Nome">
+      </div>
+
+      <div class="form-group">
+        <label for="number">Introduza o Numero</label>
+        <input class="form-control" type="text" id="number" formControlName="number" value placeholder="Numero">
+      </div>
+
+      
+
         <div class="form-group">
-          <label>Tipo de Funcionario</label>
-          <select class="form-control" formControlName="dmTypeUser" id="dmTypeUser">
-            <option *ngFor="let dado of requesListbrand" [value]="dado.name" placeholder="Tipo Funcionario" >
+          <label> Introduza o Piso</label>
+          <select class="form-control" formControlName="dmPiso" id="dmPiso">
+            <option *ngFor="let dado of requesListPiso" [value]="dado.name" placeholder="Piso" >
+              {{ dado.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Introduza Divisão</label>
+          <select class="form-control" formControlName="dmDivision" id="dmDivision">
+            <option *ngFor="let dado of requesListPiso" [value]="dado.name" placeholder="Escolha o tipo Divisão" >
               {{ dado.name }}
             </option>
           </select>
         </div>
       
         <div class="form-group">
-          <label for="name">Introduza nome do Funcionario</label>
-          <input class="form-control" type="text" id="name" formControlName="name" value placeholder="Search">
+          <label for="contactPhone">Introduza Contacto</label>
+          <input class="form-control" type="text" id="contactPhone" formControlName="contactPhone" value placeholder="Numro telefone">
         </div>
 
-        <div class="form-group">
-          <label for="patent">Introduza o Posto</label>
-          <input id="patent" type="text" class="form-control" formControlName="patent" placeholder="Posto">
-        </div>
-
-        <div class="form-group">
-          <label for="function">Introduza Função</label>
-          <input id="function" type="text" class="form-control" formControlName="function" placeholder="Função">
-        </div>
-
-        <div class="form-group">
-          <label>Sala onde Encontra-se</label>
-          <select class="form-control" formControlName="idLivingRoom" id="idLivingRoom">
-            <option *ngFor="let dado of requesLivings" [value]="dado.id" placeholder="Escolha a Sala" >
-              {{ dado.name }}
-            </option>
-          </select>
-        </div>
+       
   <!-- 
         <div class="form-group">
           <label for="data_apreensao">Observações</label>

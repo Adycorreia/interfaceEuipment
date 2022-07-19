@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { LivingRoom } from "app/pages/models/detailLivingRom";
 import { EquipamentoLista } from "app/pages/models/Equipamento";
 import { ResponseApp } from "app/pages/models/response";
 import { Observable } from "rxjs";
@@ -23,23 +24,23 @@ import { DefaultService } from "./default.service";
     };
     
     getList() {
-      return this.http.get<ResponseApp<EquipamentoLista[]>>(`${this.url}/list`,this.httpOptions);
+      return this.http.get<ResponseApp<LivingRoom[]>>(`${this.url}/list`, this.httpOptions);
       }
   
-    findById(id: string): Observable<ResponseApp<EquipamentoLista>> {
-      return this.http.get<ResponseApp<EquipamentoLista>>(`${this.url}/detail/${id}`, this.httpOptions);
+    findById(id: string): Observable<ResponseApp<LivingRoom>> {
+      return this.http.get<ResponseApp<LivingRoom>>(`${this.url}/detail/${id}`, this.httpOptions);
     }
   
-    create(efectivos: EquipamentoLista): Observable<ResponseApp<EquipamentoLista>> {
-      return this.http.post<ResponseApp<EquipamentoLista>>(this.url, efectivos);
+    create(efectivos: LivingRoom): Observable<ResponseApp<LivingRoom>> {
+      return this.http.post<ResponseApp<LivingRoom>>(this.url, efectivos);
     }
 
-    delete(id: string): Observable<ResponseApp<EquipamentoLista>> {
-      return this.http.delete<ResponseApp<EquipamentoLista>>(`${this.url}/${id}`);
+    delete(id: string): Observable<ResponseApp<LivingRoom>> {
+      return this.http.delete<ResponseApp<LivingRoom>>(`${this.url}/${id}`);
     }
 
-    edit(efectivos: EquipamentoLista): Observable<ResponseApp<EquipamentoLista>> {
-      return this.http.put<ResponseApp<EquipamentoLista>>(`${this.url}/${efectivos.id}`, efectivos);
+    edit(livingRoom: LivingRoom): Observable<ResponseApp<LivingRoom>> {
+      return this.http.put<ResponseApp<LivingRoom>>(`${this.url}/${livingRoom.id}`, livingRoom);
     }
 
 

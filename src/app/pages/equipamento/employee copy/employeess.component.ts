@@ -3,31 +3,25 @@ import { FormBuilder, FormGroup, NgControl, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NbDialogRef, NbDialogService, NbToastrService } from "@nebular/theme";
 import { AllEquipmentDetails } from "app/pages/models/allEquipamentDetails";
-import { DetailsDomain } from "app/pages/models/detailDomain";
-import { Employee } from "app/pages/models/detailEmployee";
-import { LivingRoom } from "app/pages/models/detailLivingRom";
 import { EquipamentoLista } from "app/pages/models/Equipamento";
-import { DomainService } from "app/services/domain.service";
-import { EmployeeListService } from "app/services/Employee.service";
 import { EquipamentoListaService } from "app/services/EquipamentoLista.service";
-import { LivingRoomService } from "app/services/LivingRoom.service";
 import { ParamService } from "app/services/parameterization.service";
 import { LocalDataSource, Ng2SmartTableComponent } from "ng2-smart-table";
 import { Row } from "ng2-smart-table/lib/lib/data-set/row";
 
 
 @Component({
-  selector: 'employee',
-  styleUrls: ['employee.component.scss'],
-  templateUrl: './employee.component.html',
+  selector: 'employees',
+  styleUrls: ['employees.component.scss'],
+  templateUrl: './employees.component.html',
 })
-export class EmployeeComponent implements OnInit {
+export class EmployeesComponent implements OnInit {
   @ViewChild('ng2TbSmart') ng2TbSmart: Ng2SmartTableComponent;
   @ViewChild('dialogForm') dialogForm: TemplateRef<any>;
   @ViewChild('dialogDelete') dialogDelete: TemplateRef<any>;
 
   public findOperation(): string {
-    return this.isAdd() ? 'Cadastro de Novo' : 'Edição do';
+    return this.isAdd() ? 'Novo cadastro' : 'Edição';
   }
 
   source: LocalDataSource = new LocalDataSource();
@@ -36,16 +30,13 @@ export class EmployeeComponent implements OnInit {
 
 
   tbDocData: EquipamentoLista[];
-  tbEmployeConfig: Object;
+  tbEpuiConfig: Object;
   tbdocConfig: Object;
   userSelected: EquipamentoLista[];
   opcao1: boolean = false;
   docSelected: EquipamentoLista;
   ResponseAp: any;
   requesEquip: AllEquipmentDetails[];
-  selfId: string = "0";
-  requesListbrand: DetailsDomain[];
-  requesLivings: LivingRoom[];
 
   danger: boolean = false;
   /*
@@ -58,22 +49,23 @@ export class EmployeeComponent implements OnInit {
   formSave = this.formBuilder.group({
 
     id: [null],
-    patent: [null, Validators.required],
+    model: [null, Validators.required],
     name: [null, [Validators.required]],
-    function: [null, [Validators.required]],
-    dmTypeUser: [null, [Validators.required]],
-    idLivingRoom: [null, [Validators.required]],
+    obs: [null]
   });
 
 
 
+  opCap = [
+    { selecionado: true, label: 'Click para escrever Observações' },
+  ];
+  ResponseAptest: void;
+
   constructor(private formBuilder: FormBuilder,
     private dialogService: NbDialogService,
-    private employeeListService: EmployeeListService,
-    private livingRoomService: LivingRoomService,
+    private equipService: EquipamentoListaService,
     private toastrService: NbToastrService,
     private paramService: ParamService,
-    private domainService: DomainService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
   ) { }
@@ -81,7 +73,8 @@ export class EmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getListByList(),
-      this.setConfigTbEmploye()
+      this.setConfigTbEquip()
+
   }
   /*
    private setRouteReuse(): void {
@@ -91,7 +84,7 @@ export class EmployeeComponent implements OnInit {
 
   getListByList() {
 
-    this.employeeListService.getListEmployee().subscribe(
+    this.equipService.getListEquipamento().subscribe(
       (data: any) => {
         this.source.load(data.details[0]);
         console.log(data);
@@ -105,38 +98,6 @@ export class EmployeeComponent implements OnInit {
           );
           this.loadingList = false; }
     );
-
-    this.livingRoomService.getList().subscribe(
-      (data: any) => {
-        this.requesLivings = data.details[0];
-          console.log(this.requesLivings);
-      },
-      (err) => {
-        console.log(err);
-        this.loadingList = true;
-        this.paramService.ManageDataResponse(
-          "Contacte o fornecedor do seu serviço ",
-          "ERRO DE CONEXÃO",
-          4000
-        );
-        this.loadingList = false;  
-      }
-    );
-
-    this.domainService.getListBySelfidAndDomain(this.selfId, "DM_TIPO_USER").subscribe(
-      (data: any) => {
-        this.requesListbrand = data.details;
-        console.log(this.requesListbrand);
-      },
-      (err) => {console.log(err);
-        this.loadingList = true;
-        this.paramService.ManageDataResponse(
-          "Contacte o fornecedor do seu serviço ",
-          "ERRO DE CONEXÃO",
-          4000
-        );
-        this.loadingList = false;   }
-    );
   }
 
   private isAdd(): boolean {
@@ -146,10 +107,9 @@ export class EmployeeComponent implements OnInit {
   public btnSave() {
     if (this.formSave.invalid) return this.setFormInvalid();
 
-    if (this.isAdd()) this.onSave();
+    if (this.isAdd()) this.onSaveCarta();
     else this.editDoc();
   }
-
 
   /*
     public btnSave() {
@@ -163,37 +123,23 @@ export class EmployeeComponent implements OnInit {
   
   */
 
-  onSave() {
+  onSaveCarta() {
 
-    this.employeeListService.create(this.findFormAdd()).subscribe(
-      (data: any) => {
-        this.toastrService.success('Tarefa criada com sucesso.', 'Sucesso');
-        this.dialogRef.close();
-        // this.ng2TbCarta.source.refresh();
-        this.getListByList();;
-      },
-      (err) => {
-        console.log(err);
-        this.loadingList = true;
-        this.paramService.ManageDataResponse(
-          "Contacte o fornecedor do seu serviço ",
-          "ERRO DE CONEXÃO",
-          4000
-        );
-        this.loadingList = false;  
-      }
-    );
+    this.equipService.create(this.findFormAdd()).subscribe((data) => {
 
-    }
+      this.toastrService.success('Tarefa criada com sucesso.', 'Sucesso');
+      this.dialogRef.close();
+      // this.ng2TbCarta.source.refresh();
+      this.getListByList();
+    });
+
+  }
 
   private setFormInvalid() {
     this.toastrService.warning('Existem um ou mais campos obrigatórios que não foram preenchidos.', 'Atenção');
-    this.formSave.get('patent').markAsTouched();
+    this.formSave.get('model').markAsTouched();
     this.formSave.get('name').markAsTouched();
-    this.formSave.get('function').markAsTouched();
-    this.formSave.get('dmTypeUser').markAsTouched();
-    this.formSave.get('idLivingRoom').markAsTouched();
-
+    this.formSave.get('obs').markAsTouched();
     //this.formCarta.get('tipodoc').setValue("CARTA");
 
   }
@@ -201,12 +147,11 @@ export class EmployeeComponent implements OnInit {
 
   private findFormAdd() {
 
-    this.formSave.get('id').setValue("0");
     const doc = this.formSave.value;
     return doc;
   }
 
-  public openModalFrom(event: Row) {
+  public openModalDoc(event: Row) {
     this.formSave.reset();
     /*
       if (event) {
@@ -227,7 +172,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   public btnDelete() {
-    this.employeeListService.delete(this.docSelected.id).subscribe((res) => {
+    this.equipService.delete(this.docSelected.id).subscribe((res) => {
       //console.log(this.docSelected.iddoc);
       // this.tbDocData = this.tbDocData.filter(((documents) => documents.iddoc !== this.docSelected.iddoc));
       this.toastrService.success('Carta de Condução excluída com sucesso.', 'Sucesso');
@@ -238,25 +183,24 @@ export class EmployeeComponent implements OnInit {
   }
 
 
-  public openModalEdit(event: Row) {
-    this.employeeListService.getListEmployee().subscribe((res) => {
+  public openModalEdiDoc(event: Row) {
+    this.equipService.getListEquipamento().subscribe((res) => {
       /* this.userSelected = res.body;
        this.formCarta.reset();
        this.formCarta.get('tipodoc').patchValue(StatusEnum.CARTA);
- */  
+ */
       if (event) {
-        const employee: Employee = event.getData();
-        console.log(employee);
-  
-        this.employeeListService.findById(employee.id).subscribe((res) => {
-          //this.formSave.patchValue(res.body);
-          this.formSave.get('id').setValue(employee.id);
-          this.formSave.get('dmTypeUser').setValue(employee.dmTypeUser);
-          this.formSave.get('name').setValue(employee.name);
-          this.formSave.get('patent').setValue(employee.patent);
-          this.formSave.get('function').setValue(employee.function);
-          this.formSave.get('idLivingRoom').setValue(employee.idLivingRoom);
-         
+        const equipamento: EquipamentoLista = event.getData();
+        // console.log(documents);
+        this.equipService.findById(equipamento.id).subscribe((res) => {
+          //this.formCarta.patchValue(res.body);
+          this.formSave.get('id').setValue(equipamento.id);
+          this.formSave.get('name').setValue(equipamento.name);
+          this.formSave.get('model').setValue(equipamento.model);
+
+          this.formSave.get('obs').setValue(equipamento.obs);
+
+
         });
       }
 
@@ -264,8 +208,39 @@ export class EmployeeComponent implements OnInit {
     });
   }
 
+  /*
+    public openModalEdit(event: Row) {
+      this.docService.getListDocuments().subscribe((res) => {
+        
+        if (event) {
+          this.findById(event);
+        }
+  
+        this.dialogRef = this.dialogService.open(this.dialogCarta);
+      });
+    }
+    
+      public findById(event:Row){
+  
+        const documents: Documents = event.getData();
+        console.log(documents);
+        this.docService.findById(documents.iddoc).subscribe((res) => {
+          //this.formCarta.patchValue(res.body);
+          this.formCarta.get('iddoc').setValue(documents.iddoc);
+          this.formCarta.get('n_carta').setValue(documents.n_carta);
+          this.formCarta.get('condutor').setValue(documents.condutor);
+          this.formCarta.get('motivo').setValue(documents.motivo);
+          this.formCarta.get('data_apreensao').setValue(documents.data_apreensao);
+          this.formCarta.get('tipodoc').setValue(documents.tipodoc);
+          this.formCarta.get('obs').setValue(documents.obs);          
+         
+        });
+  
+      }
+  */
+
   private editDoc() {
-    this.employeeListService.edit(this.formSave.value).subscribe((res) => {
+    this.equipService.edit(this.formSave.value).subscribe((res) => {
       /* this.tbDocData = this.tbDocData.map((documents: Documents) => {
          if (documents.iddoc === this.formCarta.value.iddoc) 
          //return new Documents(res.body);
@@ -283,9 +258,9 @@ export class EmployeeComponent implements OnInit {
     console.log($event);
     console.log($event.data.id);
     if ($event.data.id) {
-      let idEmploye = $event.data.id;
+      let idEquip = $event.data.id;
 
-      this.employeeListService.findById(idEmploye).subscribe(
+      this.equipService.findById(idEquip).subscribe(
         (data: any) => {
           console.log(data.details[0]);
           this.danger = true;
@@ -296,39 +271,41 @@ export class EmployeeComponent implements OnInit {
     }
   }
 
- 
- 
 
-
-  private setConfigTbEmploye() {
-    this.tbEmployeConfig = {
+  private setConfigTbEquip() {
+    this.tbEpuiConfig = {
       mode: 'external',
-      actions: { columnTitle: 'Ações', add: false, delete: false, position: 'right' },
-      edit: {
-        editButtonContent: '<span class="nb-edit"  title="Editar"></span>',
-      },
-     
-      noDataMessage: 'Nenhum Funcionario cadastrado.',
+      actions: { columnTitle: 'Ações', add: false, edit: false, delete: false, position: 'right' },
+
+      noDataMessage: 'Nenhum Carta de Condução cadastrado.',
       columns: {
         name: {
-          title: 'Nome Completo',
+          title: 'Nome Equipamento',
           type: "string",
+          width: "13%",
         },
-        patent: {
-          title: 'Posto',
+        model: {
+          title: 'Modelo',
           type: "string",
-     
+          width: "25%",
+          sort: true,
         },
 
-        function: {
-          title: 'Função',
+        serialNumber: {
+          title: 'Funcionario',
           type: "string",
-        
+          width: "25%",
         },
-        dmTypeUser: {
+        processor: {
           title: 'Tipo',
           type: "string",
-       
+          width: "15%",
+        },
+
+        generation: {
+          title: 'Sala',
+          type: "string",
+          width: "15%",
         },
 
 

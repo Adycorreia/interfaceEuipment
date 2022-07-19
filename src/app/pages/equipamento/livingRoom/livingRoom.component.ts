@@ -9,7 +9,6 @@ import { LivingRoom } from "app/pages/models/detailLivingRom";
 import { EquipamentoLista } from "app/pages/models/Equipamento";
 import { DomainService } from "app/services/domain.service";
 import { EmployeeListService } from "app/services/Employee.service";
-import { EquipamentoListaService } from "app/services/EquipamentoLista.service";
 import { LivingRoomService } from "app/services/LivingRoom.service";
 import { ParamService } from "app/services/parameterization.service";
 import { LocalDataSource, Ng2SmartTableComponent } from "ng2-smart-table";
@@ -17,17 +16,17 @@ import { Row } from "ng2-smart-table/lib/lib/data-set/row";
 
 
 @Component({
-  selector: 'employee',
-  styleUrls: ['employee.component.scss'],
-  templateUrl: './employee.component.html',
+  selector: 'livingRoom',
+  styleUrls: ['livingRoom.component.scss'],
+  templateUrl: './livingRoom.component.html',
 })
-export class EmployeeComponent implements OnInit {
+export class LivingRoomComponent implements OnInit {
   @ViewChild('ng2TbSmart') ng2TbSmart: Ng2SmartTableComponent;
   @ViewChild('dialogForm') dialogForm: TemplateRef<any>;
   @ViewChild('dialogDelete') dialogDelete: TemplateRef<any>;
 
   public findOperation(): string {
-    return this.isAdd() ? 'Cadastro de Novo' : 'Edição do';
+    return this.isAdd() ? 'Cadastro de Nova' : 'Edição da';
   }
 
   source: LocalDataSource = new LocalDataSource();
@@ -44,7 +43,7 @@ export class EmployeeComponent implements OnInit {
   ResponseAp: any;
   requesEquip: AllEquipmentDetails[];
   selfId: string = "0";
-  requesListbrand: DetailsDomain[];
+  requesListPiso: DetailsDomain[];
   requesLivings: LivingRoom[];
 
   danger: boolean = false;
@@ -58,11 +57,11 @@ export class EmployeeComponent implements OnInit {
   formSave = this.formBuilder.group({
 
     id: [null],
-    patent: [null, Validators.required],
-    name: [null, [Validators.required]],
-    function: [null, [Validators.required]],
-    dmTypeUser: [null, [Validators.required]],
-    idLivingRoom: [null, [Validators.required]],
+    name: [null, Validators.required],
+    number: [null, [Validators.required]],
+    dmPiso: [null, [Validators.required]],
+    dmDivision: [null, [Validators.required]],
+    contactPhone: [null, [Validators.required]],
   });
 
 
@@ -91,7 +90,7 @@ export class EmployeeComponent implements OnInit {
 
   getListByList() {
 
-    this.employeeListService.getListEmployee().subscribe(
+    this.livingRoomService.getList().subscribe(
       (data: any) => {
         this.source.load(data.details[0]);
         console.log(data);
@@ -123,10 +122,10 @@ export class EmployeeComponent implements OnInit {
       }
     );
 
-    this.domainService.getListBySelfidAndDomain(this.selfId, "DM_TIPO_USER").subscribe(
+    this.domainService.getListBySelfidAndDomain(this.selfId, "DM_PISO").subscribe(
       (data: any) => {
-        this.requesListbrand = data.details;
-        console.log(this.requesListbrand);
+        this.requesListPiso = data.details;
+        console.log(this.requesListPiso);
       },
       (err) => {console.log(err);
         this.loadingList = true;
@@ -188,11 +187,11 @@ export class EmployeeComponent implements OnInit {
 
   private setFormInvalid() {
     this.toastrService.warning('Existem um ou mais campos obrigatórios que não foram preenchidos.', 'Atenção');
-    this.formSave.get('patent').markAsTouched();
     this.formSave.get('name').markAsTouched();
-    this.formSave.get('function').markAsTouched();
-    this.formSave.get('dmTypeUser').markAsTouched();
-    this.formSave.get('idLivingRoom').markAsTouched();
+    this.formSave.get('number').markAsTouched();
+    this.formSave.get('dmPiso').markAsTouched();
+    this.formSave.get('dmDivision').markAsTouched();
+    this.formSave.get('contactPhone').markAsTouched();
 
     //this.formCarta.get('tipodoc').setValue("CARTA");
 
@@ -201,7 +200,7 @@ export class EmployeeComponent implements OnInit {
 
   private findFormAdd() {
 
-    this.formSave.get('id').setValue("0");
+    //this.formSave.get('id').setValue("0");
     const doc = this.formSave.value;
     return doc;
   }
@@ -245,17 +244,17 @@ export class EmployeeComponent implements OnInit {
        this.formCarta.get('tipodoc').patchValue(StatusEnum.CARTA);
  */  
       if (event) {
-        const employee: Employee = event.getData();
-        console.log(employee);
+        const livingRoom: LivingRoom = event.getData();
+        console.log(livingRoom);
   
-        this.employeeListService.findById(employee.id).subscribe((res) => {
+        this.employeeListService.findById(livingRoom.id).subscribe((res) => {
           //this.formSave.patchValue(res.body);
-          this.formSave.get('id').setValue(employee.id);
-          this.formSave.get('dmTypeUser').setValue(employee.dmTypeUser);
-          this.formSave.get('name').setValue(employee.name);
-          this.formSave.get('patent').setValue(employee.patent);
-          this.formSave.get('function').setValue(employee.function);
-          this.formSave.get('idLivingRoom').setValue(employee.idLivingRoom);
+          this.formSave.get('id').setValue(livingRoom.id);
+          this.formSave.get('name').setValue(livingRoom.name);
+          this.formSave.get('number').setValue(livingRoom.dmPiso);
+          this.formSave.get('dmPiso').setValue(livingRoom.dmPiso);
+          this.formSave.get('dmDivision').setValue(livingRoom.dmDivision);
+          this.formSave.get('contactPhone').setValue(livingRoom.contactPhone);
          
         });
       }
@@ -311,22 +310,29 @@ export class EmployeeComponent implements OnInit {
       noDataMessage: 'Nenhum Funcionario cadastrado.',
       columns: {
         name: {
-          title: 'Nome Completo',
+          title: 'Nome',
           type: "string",
         },
-        patent: {
-          title: 'Posto',
+        number: {
+          title: 'Numero',
           type: "string",
      
         },
 
-        function: {
-          title: 'Função',
+        dmPiso: {
+          title: 'Piso',
           type: "string",
         
         },
-        dmTypeUser: {
-          title: 'Tipo',
+
+        dmDivision: {
+          title: 'Divisão',
+          type: "string",
+       
+        },
+
+        contactPhone: {
+          title: 'Nº Telefone',
           type: "string",
        
         },

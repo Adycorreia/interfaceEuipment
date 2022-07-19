@@ -7,6 +7,8 @@ import { DefaultComponent } from './default/default.component';
 import { TaskComponent } from './task/task.component';
 
 import { EquipamentoListaComponent } from './equipamento/equipment/equipamentoLista.component';
+import { EmployeeComponent } from './equipamento/employee/employee.component';
+import { LivingRoomComponent } from './equipamento/livingRoom/livingRoom.component';
 
 
 
@@ -29,6 +31,16 @@ const routes: Routes = [{
     {
       path: 'equipamento',
       component: EquipamentoListaComponent,
+    },
+
+    {
+      path: 'employee',
+      component: EmployeeComponent,
+    },
+
+    {
+      path: 'livingRoom',
+      component: LivingRoomComponent,
     },
   
   ],

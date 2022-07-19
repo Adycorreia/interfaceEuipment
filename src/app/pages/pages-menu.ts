@@ -7,17 +7,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/default',
     home: true,
   },
- 
+
   {
     title: 'TAREFAS',
     group: true,
   },
-/*Gestão de Equipamentos*/
+  /*Gestão de Equipamentos*/
   {
     title: "Gestão de Equipamentos",
     icon: "list-outline",
     link: '/pages/equipamento',
-    
+
   },
 
   {
@@ -28,23 +28,31 @@ export const MENU_ITEMS: NbMenuItem[] = [
   /*Parametrização*/
   {
     title: "Parametrização",
-    icon: "list-outline",
+    icon: "options-2-outline",
     children: [
 
-  /*Gestão de Efectivos */
-  {
-    title: 'Departamento',
-    icon: 'outline',
+      {
+        title: 'Funcionario',
+        icon: 'person-done-outline',
+        link: '/pages/employee',
+      },
 
-  },  
-   /*Gestão de Apreensões */
-  {
-    title: "Sala",
-    icon: "unlock-outline",
+      {
+        title: 'Departamento',
+        icon: 'layers-outline',
+       
+      },
 
-  },
+      {
+        title: "Sala",
+        icon: "browser-outline",
+        link: '/pages/livingRoom',
 
-              ],
+      },
+
+    
+
+    ],
   },
 
 ];

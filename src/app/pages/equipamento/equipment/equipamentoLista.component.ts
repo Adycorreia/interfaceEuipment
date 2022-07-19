@@ -112,22 +112,7 @@ export class EquipamentoListaComponent implements OnInit {
 
   }
  
-  public onEpuipIdSelect($event) {
-    console.log($event);
-   // console.log($event.data.id);
-    if ($event.data.id) {
-      let idEquip = $event.data.id;
 
-      this.equipService.findById(idEquip).subscribe(
-        (data: any) => {
-         // console.log(data.details[0]);
-          this.danger = true;
-          this.requesEquip = data.details[0];
-         // console.log(this.requesEquip);
-        }
-      );
-    }
-  }
   addNewRecolha(){
    // this.getListDetalis();
     this.dialogRef = this.dialogService.open(this.dialogEquip);
